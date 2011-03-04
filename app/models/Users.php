@@ -64,7 +64,7 @@ class Users extends NObject implements IAuthenticator
 	
 	
 	
-	public function getUsernameById($id)
+	public function findUsernameByUserId($id)
 	{
 		return $this->connection->select('username')->from($this->table)->where('id=%i', $id);
 	}

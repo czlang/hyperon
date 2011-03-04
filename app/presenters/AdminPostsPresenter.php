@@ -83,16 +83,42 @@ final class AdminPostsPresenter extends AdminPresenter
 	 */
 	protected function createComponentPostForm()
 	{			
-		$form = new NAppForm;		
+
+		$action = array(
+	    	'1' => 'Publish now!',
+	    	'2' => 'Save draft',
+		);		
+
+		$user = NEnvironment::getUser();
+
+		if($user->isLoggedIn()) $user_id = $user->getIdentity()->data['id'];
+		else $user_id = 0;
 		
-		$form->addText('title', 'Titulek: *')
-			->addRule(NForm::FILLED, 'Nezapomeňte titulek.');
-		$form->addTextarea('body', 'Obsah novinky: *')				
-			->addRule(NForm::FILLED, 'Nezapomeňte obsah novinky.')
-			->getControlPrototype()->class = "editor";				
+		//$users = new Users();
+		//$username = $users->findUsernameByUserId($user_id)->fetchSingle();
+
+
+		$form = new NAppForm;
+
+		$form->addGroup()->setOption('container', NHtml::el('div')->id('action'));
+
+			$form->addRadioList('content_type', '', $action)
+				->setValue(1)
+				->addRule(NForm::FILLED, 'Vyberte typ obsahu');
+
+		$form->addGroup();
+			$form->addText('title', '')
+				->addRule(NForm::FILLED, 'Nezapomeňte titulek.');
+			$form->addTextarea('body', '')
+				->addRule(NForm::FILLED, 'Nezapomeňte obsah novinky.')
+				->getControlPrototype()->class = "editor";
+
+			$form->addHidden('author', '')
+				->setValue($user_id);
 			
-		$form->addSubmit('send', 'Uložit novinku')->onClick[] = array($this, 'sendPostClicked');
-		$form->addSubmit('cancel', 'Neukládat')->setValidationScope(NULL)->onClick[] = array($this, 'CancelClicked');
+		$form->addGroup();
+			$form->addSubmit('send', 'Uložit novinku')->onClick[] = array($this, 'sendPostClicked');
+			//$form->addSubmit('cancel', 'Neukládat')->setValidationScope(NULL)->onClick[] = array($this, 'CancelClicked');
 		
 		return $form;
 	}

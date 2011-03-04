@@ -100,7 +100,7 @@ final class AuthPresenter extends BasePresenter
 
 			$logged_user = $user->getIdentity()->getData();
 
-			$this->redirect('Users:');
+			$this->redirect('AdminPosts:newpost');
 		} catch (AuthenticationException $e) {
 			$form->addError($e->getMessage());
 		}
