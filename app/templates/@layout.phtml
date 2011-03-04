@@ -23,24 +23,19 @@
 
 <body>
 
-{dump $logged_user}
-
 	<div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
 
 	<h1><a href="{$baseUri}">{$settings["web_name"]}</a></h1>
+
+	<p><a href="{plink AdminPosts:newpost}">post!</a></p>
 
 	<div id="main">
 		{include #content}
 	</div>    
     
-	<p><a href="{plink AdminPosts:newpost}">post!</a></p>
 
-	{foreach $posts as $post}
-		<h2>{$post->title}</h2>
-		<p>{!$post->date|date}</p>
-		{!$post->body|texy}
-		
-	{/foreach}
+
+	
 
 </body>
 </html>

@@ -36,9 +36,8 @@ final class AuthPresenter extends BasePresenter
     
 	public function renderLogin()
 	{
-        
-
-
+		$this->twitterLoginLinkConstruct();
+        $this->facebookLogin();
 	}
 	
 	
@@ -164,6 +163,96 @@ final class AuthPresenter extends BasePresenter
 
     	}
     }
+
+
+
+
+ 
+    public function twitterLoginLinkConstruct()
+    {
+        // Twitter login link construction
+        $config = NConfig::fromFile(APP_DIR . '/config.ini')->common->const;
+
+        $twitter_oauth = new TwitterOAuth($config['TW_CONSUMER_KEY'], $config['TW_CONSUMER_SECRET']);
+
+        $twitter_request_token = $twitter_oauth->getRequestToken();
+
+        $namespace = NEnvironment::getSession('twitter_auth');
+
+        $namespace->request_token_key = $twitter_request_token['oauth_token'];
+        $namespace->request_token_secret = $twitter_request_token['oauth_token_secret'];
+
+        $this->template->twitter_login_url = $twitter_oauth->getAuthorizeURL($twitter_request_token['oauth_token']);
+    }
+
+
+
+
+    public function facebookLogin()
+    {
+
+        $config = NConfig::fromFile(APP_DIR . '/config.ini')->common->const;
+
+        $facebook = new Facebook(array(
+            'appId'  => $config['FB_APPID'],
+            'secret' => $config['FB_SECRET'],
+            'cookie' => true,
+        ));
+
+        $this->template->facebook_login_url = $facebook->getLoginUrl();
+
+        $from_facebook = $this->getParam('session');
+        
+        if(isset($from_facebook)){
+            $session = $facebook->getSession();
+
+            if ($session) {
+                $uid = $facebook->getUser();
+                $me = $facebook->api('/me');
+                $username = $me['name'];
+                $password = sha1($me['name'] . $session['access_token']);
+                $session['name'] = $me['name'];
+
+                $users = new Users();
+                $existing_facebook_user = $users->findFacebookUser($session['uid'])->fetchAll();
+
+                $user = Environment::getUser();
+
+                if($existing_facebook_user){
+                    $users->updateFacebookUser($session['uid'], $password, $session['sig'], $session['access_token']);
+                    $user->login($username, $password);
+                    $logged_user = $user->getIdentity()->getData();
+                    $this->redirect('Users:user', $username);
+                }
+                    else{
+                        $ch = curl_init('https://graph.facebook.com/' . $session['uid'] . '/picture?type=large');
+						curl_setopt($ch, CURLOPT_HEADER, 1);
+						curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+						$header_string = curl_exec($ch);
+						$pieces = explode(" ", $header_string);
+						$location = trim(str_replace("P3P:", "", $pieces["14"]));
+						curl_close($ch);
+
+						$ch2 = curl_init($location);
+ 						$filename = String::webalize($me['name']) . '.' . rand(0, 1000) . '.jpg';
+						$fp = fopen(WWW_DIR . '/upload/avatars/' . $filename, 'wb');
+						curl_setopt($ch2, CURLOPT_FILE, $fp);
+						curl_exec($ch2);
+						curl_close($ch2);
+						fclose($fp);
+
+						$session['avatar'] = $filename;
+
+                        $users->insertFacebookUser($session);
+                        $user->login($username, $password);
+                        $this->flashMessage('Registrace proběhla úspěšně! Tohle je Váš zbrusu nový profil na Muzikopedii.', 'info');
+                        $this->redirect('Users:user', $username);
+                    }
+                }
+
+            }
+    }
+
 
 	
 }
