@@ -7,5 +7,34 @@ body {
 	font-size: 90%;
 	color: #333;
 	background: #fff;
+	margin: 20px;
+}
+
+a[href^="error:"]{background:red;color:white;}
+div.flash{color:black;background:#FFF9D7;border:1px solid #E2C822;padding:1em;margin:1em 0;}
+.error{padding-left:20px;}
+
+a:hover,
+a:focus
+{
+	text-decoration: none;
+}
+
+.cleaner{
+	clear: both;
+}
+
+.floating-list-menu, 
+.no-style-list
+{
+	margin:0;padding:0;
+}
+.floating-list-menu li{
+	list-style:none;
+	float:left;
+	margin:0 15px 0 0px;
+}
+.no-style-list li{
+	list-style:none;
 }
 
