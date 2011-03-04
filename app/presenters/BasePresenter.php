@@ -28,11 +28,21 @@ abstract class BasePresenter extends NPresenter
 		}
 
 
+		$settings = new Settings();
+		$settings = $settings->findAll()->fetchPairs('name', 'value');
+		$this->template->settings = $settings;
+
+
+		$posts = new Posts();
+		$this->template->posts = $posts->findAll()->orderBy('date DESC')->fetchAll();
+
+
 		$texy = new Texy();
 			$texy->encoding = 'UTF-8';
 			
-			$texy->headingModule->balancing = TexyHeadingModule::FIXED; // prepina nadpisy v texy do absolutniho rezimu			
+			$texy->headingModule->balancing = TexyHeadingModule::FIXED; // prepina nadpisy v texy do absolutniho rezimu
 			$texy->mergeLines = false;			
+
 
 		$this->template->registerHelper('texy', array($texy, 'process'));
 		$this->template->registerHelper('untexy', array($texy, 'toText'));
@@ -41,6 +51,8 @@ abstract class BasePresenter extends NPresenter
 
 
 	public function renderDefault(){
+
+
 
 	}
 
@@ -52,15 +64,6 @@ abstract class BasePresenter extends NPresenter
 		return $basePath; 
 	}
 
-
-
-    public function basketCount(){
-		$session = NEnvironment::getSession();
-        $basket = new Basket();
-        
-        $basket_count = $basket->countBySessid($session->getId());
-		return $basket_count;
-	}
 
 
 

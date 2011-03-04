@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content="en">
+    
+	{if isset($robots)}<meta name="robots" content="{$robots}">{/if}
+
+	<title>{$settings["web_name"]} admin</title>
+		
+	<link rel="shortcut icon" href="{$baseUri}favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/blueprint.css" type="text/css">
+	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/screen.css" type="text/css">
+    <link rel="stylesheet" media="print" href="{$baseUri}css/print.css" type="text/css">	
+
+	<script type="text/javascript" src="{$baseUri}js/jquery-1.5.min.js"></script>
+    <script type="text/javascript" src="{$baseUri}js/jquery-ui-1.8.10.custom.min.js"></script>
+    <script type="text/javascript" src="{$baseUri}js/jquery.ui.nestedSortable.js"></script>
+
+	<script type="text/javascript" src="{$baseUri}ckeditor/ckeditor.js"></script>	
+	
+
+	
+</head>
+<body id="body">
+
+{*dump $logged_user*}
+{*
+	<p class="logout"><span>{$logged_user["username"]}({$logged_user["realname"]})</span><a href="{plink Auth:logout}">Logout</a></p>
+*}
+	<div id="admin-header"> 
+		<h1><a href="{$baseUri}" title="DIA-LOG - administrace">{$settings["web_name"]}</a></h1>
+{*
+		<p class="visit-site-button"><a href="{$baseUri}" title="Visit site">Přejít na web &rarr;</a></p>
+		<div class="cleaner"></div>
+*}
+	</div>		
+
+	<div id="flash-box">
+		{foreach $flashes as $flash}<div class="flash {$flash->type}">{$flash->message}</div>{/foreach}
+	</div>
+		
+	<div id="admin-content">
+
+		<div id="admin-primary">				
+			{include #content}
+		</div>
+
+	</div>
+
+	
+</body>
+</html>

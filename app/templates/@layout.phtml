@@ -6,7 +6,7 @@
 	<meta name="description" content="">
 	<meta name="robots" content="{$robots}" n:ifset="$robots">
 
-	<title>Hyperon</title>
+	<title>{$settings["web_name"]}</title>
 
     <link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/blueprint.css" type="text/css">
 	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/screen.css" type="text/css">
@@ -22,11 +22,24 @@
 
 <body>
 
+{dump $logged_user}
+
 	<div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
+
+	<h1><a href="{$baseUri}">{$settings["web_name"]}</a></h1>
 
 	<div id="main">
 		{include #content}
 	</div>    
     
+	<p><a href="{plink AdminPosts:newpost}">post!</a></p>
+
+	{foreach $posts as $post}
+		<h2>{$post->title}</h2>
+		<p>{!$post->date|date}</p>
+		{!$post->body|texy}
+		
+	{/foreach}
+
 </body>
 </html>
