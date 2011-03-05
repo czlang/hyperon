@@ -50,7 +50,19 @@ class Posts extends NObject
 	{
 		return $this->connection->select('*')->from($this->table);
 	}
-	
+
+
+	public function findAllFrontend()
+	{
+		return $this->connection
+			->select('posts.*, users.*')
+			->from($this->table)
+				->join('users')
+				->on('posts.author_id = users.id')
+				->where('state = %i', 1)
+				->orderBy('date DESC');
+	}
+
 	
 	
 	public function findLatest($limit)

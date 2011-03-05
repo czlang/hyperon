@@ -37,8 +37,15 @@ final class AdminPostsPresenter extends AdminPresenter
 	
 
 
-    public function renderNewPost()
+    public function renderNewPost($data)
 	{
+		//NDebug::dump($data);
+/*
+if(isset($draft)){
+	$posts = new Posts();
+	$save_draft = $posts->insert($post);
+}
+*/
 		
 	}
 
@@ -102,7 +109,7 @@ final class AdminPostsPresenter extends AdminPresenter
 
 		$form->addGroup()->setOption('container', NHtml::el('div')->id('action'));
 
-			$form->addRadioList('content_type', '', $action)
+			$form->addRadioList('state', '', $action)
 				->setValue(1)
 				->addRule(NForm::FILLED, 'Vyberte typ obsahu');
 
@@ -113,7 +120,7 @@ final class AdminPostsPresenter extends AdminPresenter
 				->addRule(NForm::FILLED, 'Nezapomeňte obsah novinky.')
 				->getControlPrototype()->class = "editor";
 
-			$form->addHidden('author', '')
+			$form->addHidden('author_id', '')
 				->setValue($user_id);
 			
 		$form->addGroup();

@@ -12,29 +12,36 @@
 
     <link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/blueprint.css" type="text/css">
 	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/screen.css" type="text/css">
-    <link rel="stylesheet" media="print" href="{$baseUri}css/print.css" type="text/css">	
+    <link rel="stylesheet" media="print" href="{$baseUri}/css/print.css" type="text/css">	
 
-	<script type="text/javascript" src="{$baseUri}js/jquery-1.5.min.js"></script>
-    <script type="text/javascript" src="{$baseUri}js/jquery-ui-1.8.10.custom.min.js"></script>
-    <script type="text/javascript" src="{$baseUri}js/jquery.ui.nestedSortable.js"></script>
+    <script type="text/javascript" src="{$basePath}/js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="{$basePath}/js/jquery.autosave.min.js"></script>
+	<script type="text/javascript" src="{$basePath}/js/netteForms.js"></script>
+	<script type="text/javascript" src="{$basePath}/js/nette-ajax.js"></script>
 
-	<script type="text/javascript" src="{$baseUri}ckeditor/ckeditor.js"></script>	
-	
 
-	
+	<script type="text/javascript">
+
+$(document).ready(function(){
+
+   $("form").autosave({
+        callbacks: {
+          trigger: ["interval", function() {}]
+        }      
+    });
+
+});
+
+
+	</script>	
+
 </head>
 <body id="body">
 
-{*dump $logged_user*}
-{*
 	<p class="logout"><span>{$logged_user["username"]}({$logged_user["realname"]})</span><a href="{plink Auth:logout}">Logout</a></p>
-*}
+
 	<div id="admin-header"> 
 		<h1><a href="{$baseUri}" title="DIA-LOG - administrace">{$settings["web_name"]}</a></h1>
-{*
-		<p class="visit-site-button"><a href="{$baseUri}" title="Visit site">Přejít na web &rarr;</a></p>
-		<div class="cleaner"></div>
-*}
 	</div>		
 
 	<div id="flash-box">

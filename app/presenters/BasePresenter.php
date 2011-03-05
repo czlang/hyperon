@@ -50,7 +50,7 @@ abstract class BasePresenter extends NPresenter
 		}
 
 
-	$this->template->viewName = $this->view;
+		$this->template->viewName = $this->view;
 
       $a = strrpos($this->name, ':');
 
@@ -71,19 +71,9 @@ abstract class BasePresenter extends NPresenter
 
 
 		$posts = new Posts();
-		$this->template->posts = $posts->findAll()->orderBy('date DESC')->fetchAll();
-
-/*
-		$texy = new Texy();
-			$texy->encoding = 'UTF-8';
-			
-			$texy->headingModule->balancing = TexyHeadingModule::FIXED; // prepina nadpisy v texy do absolutniho rezimu
-			$texy->mergeLines = false;			
+		$this->template->posts = $posts->findAllFrontend()->fetchAll();
 
 
-		$this->template->registerHelper('texy', array($texy, 'process'));
-		$this->template->registerHelper('untexy', array($texy, 'toText'));
-*/
 	}
 
 
