@@ -41,7 +41,7 @@ abstract class BasePresenter extends NPresenter
 
 
 
-    public function  beforeRender() {       
+	public function  beforeRender() {       
 
 		$user = NEnvironment::getUser();
 
@@ -52,27 +52,25 @@ abstract class BasePresenter extends NPresenter
 
 		$this->template->viewName = $this->view;
 
-      $a = strrpos($this->name, ':');
+		$a = strrpos($this->name, ':');
 
-      if($a === FALSE) {
-        $this->template->moduleName = '';
-        $this->template->presenterName = $this->name;
-      } else {
-        $this->template->moduleName = substr($this->name, 0, $a + 1);
-        $this->template->presenterName = substr($this->name, $a + 1);
-      }
-
-
-
+		if($a === FALSE) {
+		    $this->template->moduleName = '';
+		    $this->template->presenterName = $this->name;
+      	} else {
+		    $this->template->moduleName = substr($this->name, 0, $a + 1);
+		    $this->template->presenterName = substr($this->name, $a + 1);
+      	}
 
 		$settings = new Settings();
 		$settings = $settings->findAll()->fetchPairs('name', 'value');
 		$this->template->settings = $settings;
 
 
-		$posts = new Posts();
-		$this->template->posts = $posts->findAllFrontend()->fetchAll();
 
+		$this->template->registerHelper('timeAgoInWords', 'Helpers::timeAgoInWords');
+		$this->template->registerHelper('humanizeTime', 'Helpers::humanizeTime');
+		$this->template->registerHelper('humanizeTimeDate', 'Helpers::humanizeTimeDate');
 
 	}
 
@@ -101,6 +99,15 @@ abstract class BasePresenter extends NPresenter
       $template->registerFilter('NTemplateFilters::texyElements');
     }
 
+
+
+	public function getPostTags($post_id)
+	{
+		$posts_tags = new PostsTags();
+		$post_tags = $posts_tags->findAllByPostId($post_id)->fetchAll();
+	
+		return $post_tags;
+	}
 
 
 

@@ -55,7 +55,7 @@ class Posts extends NObject
 	public function findAllFrontend()
 	{
 		return $this->connection
-			->select('posts.*, users.*')
+			->select('posts.*, users.id as user_id, users.username as username')
 			->from($this->table)
 				->join('users')
 				->on('posts.author_id = users.id')
@@ -91,6 +91,21 @@ class Posts extends NObject
 		')->from($this->table);
 	}
 	
+
+
+	public function findAllByTagId($tag_id)
+	{
+		return $this->connection->select('posts.*, users.username')
+			->from($this->table)
+				->join('posts_tags')
+					->on('posts_tags.post_id = posts.id')
+				->join('users')
+					->on('posts.author_id = users.id')
+				->where('posts_tags.tag_id = %i', $tag_id)
+				->and('posts.state = %i', 1)
+				->orderBy('date DESC');
+	}
+
 
 
 	public function find($id)

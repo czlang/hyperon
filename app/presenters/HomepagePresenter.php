@@ -22,6 +22,10 @@ class HomepagePresenter extends BasePresenter
 	{
         $users = new Users();
         $this->template->users = $users->findAll()->fetchAll();
+
+		$posts = new Posts();
+		$posts = $posts->findAllFrontend()->fetchAll();
+		$this->template->posts = $posts;
 	}
 
 

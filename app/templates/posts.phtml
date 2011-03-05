@@ -1,0 +1,15 @@
+	{foreach $posts as $post}
+		<h2>{$post->title}</h2>
+		<p>{!$post->date|timeAgoInWords}</p>
+		{!$post->body|texy}
+		<p>napsal {$post->username}</p>
+
+		<div>
+			tagy:
+			{foreach $presenter->getPostTags($post->id) as $tag}
+				<a href="{plink Posts:tag, $tag->tag_url}">{$tag->tag}</a>
+			{/foreach}
+		</div>
+
+	{/foreach}
+
