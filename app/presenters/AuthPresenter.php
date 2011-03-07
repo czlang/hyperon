@@ -36,8 +36,8 @@ final class AuthPresenter extends BasePresenter
     
 	public function renderLogin()
 	{
-		$this->twitterLoginLinkConstruct();
-        $this->facebookLogin();
+		//$this->twitterLoginLinkConstruct();
+        //$this->facebookLogin();
 	}
 	
 	

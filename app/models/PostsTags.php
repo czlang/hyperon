@@ -49,6 +49,14 @@ class PostsTags extends NObject
 					->on('tags.id = posts_tags.tag_id')
 				->where('post_id = %i', $post_id);
 	}
+
+
+
+	public function insert(array $data)
+	{
+		return $this->connection->insert($this->table, $data)->execute();
+	}
+
 	
 
 }

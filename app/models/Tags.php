@@ -46,6 +46,26 @@ class Tags extends NObject
 
 
 
-	
+
+	public function findTagIdByTag($tag)
+	{	
+		return $this->connection->select('id')->from($this->table)->where('tag = %s', $tag)->fetchSingle();
+	}
+
+
+
+
+	public function findTagsIds($tag)
+	{	
+		return $this->connection->select('id')->from($this->table)->where('tag = %s', $tag)->fetchSingle();
+	}
+
+
+
+
+	public function insert(array $data)
+	{
+		return $this->connection->insert($this->table, $data)->execute(dibi::IDENTIFIER);
+	}
 
 }

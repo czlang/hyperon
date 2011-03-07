@@ -119,12 +119,13 @@ if(isset($draft)){
 			$form->addTextarea('body', '')
 				->addRule(NForm::FILLED, 'Nezapomeňte obsah novinky.')
 				->getControlPrototype()->class = "editor";
+			$form->addText('tags', '');
 
 			$form->addHidden('author_id', '')
 				->setValue($user_id);
 			
-		$form->addGroup();
-			$form->addSubmit('send', 'Uložit novinku')->onClick[] = array($this, 'sendPostClicked');
+		$form->addGroup()->setOption('container', NHtml::el('div')->id('send'));
+			$form->addSubmit('send', 'Uložit')->onClick[] = array($this, 'sendPostClicked');
 			//$form->addSubmit('cancel', 'Neukládat')->setValidationScope(NULL)->onClick[] = array($this, 'CancelClicked');
 		
 		return $form;
