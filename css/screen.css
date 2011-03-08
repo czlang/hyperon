@@ -91,4 +91,8 @@ a:focus
 	font-size: 110%;
 }
 
+#all-tags{
+	float: left;
+	margin: -110px 0 0 5px;
+}
 

@@ -6,3 +6,14 @@
 		{widget postForm}
 	</div>
 	
+
+
+<p id="all-tags">Tagy:
+	{foreach $tags as $tag}
+		<a href="#" onclick="return $('#frmpostForm-tags').addTag({$tag->tag});">{$tag->tag}</a>
+	{/foreach}
+</p>
+
+ 
+
+

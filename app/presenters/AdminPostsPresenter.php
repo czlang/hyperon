@@ -47,6 +47,9 @@ if(isset($draft)){
 }
 */
 		
+		$tags = new Tags();
+		$this->template->tags = $tags->findAll()->fetchAll();
+
 	}
 
 	
