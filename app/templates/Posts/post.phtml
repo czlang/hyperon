@@ -1,5 +1,6 @@
-	{foreach $posts as $post}
-		<h2><a href="{plink Posts:post, $post->url}">{$post->title}</a></h2>
+{block content}
+	
+		<h1>{$post->title}</h1>
 		<p>{!$post->date|timeAgoInWords}</p>
 		{!$post->body|texy}
 		<p>napsal {$post->username}</p>
@@ -11,5 +12,5 @@
 			{/foreach}
 		</div>
 
-	{/foreach}
+	
 

@@ -63,6 +63,21 @@ class Posts extends NObject
 				->orderBy('date DESC');
 	}
 
+
+
+
+	public function findSingleFrontend($url)
+	{
+		return $this->connection
+			->select('posts.*, users.id as user_id, users.username as username')
+			->from($this->table)
+				->join('users')
+				->on('posts.author_id = users.id')
+				->where('state = %i', 1)
+				->and('url = %s', $url);
+	}
+
+
 	
 	
 	public function findLatest($limit)
@@ -161,8 +176,10 @@ class Posts extends NObject
 
 	public function update($id, array $data)
 	{		
-		$data['post_url'] = String::webalize($data['post_title']);	
-			
+		$data['url'] = NString::webalize($data['title']);	
+		if($data['tags'] == ''){
+			unset($data['tags']);
+		}	
 		return $this->connection->update($this->table, $data)->where('id=%i', $id)->execute();
 	}
 

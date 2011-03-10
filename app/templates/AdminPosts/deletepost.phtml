@@ -1,0 +1,12 @@
+{block #content}
+
+
+<h2>Delete Post</h2>
+
+{if $post}
+<p>REALLY delete ‘{$post->title}’?</p>
+{widget deletePostForm}
+
+{else}
+<p>Sorry, but can't find this.</p>
+{/if}

@@ -20,6 +20,16 @@ final class PostsPresenter extends BasePresenter
 
 
 
+	public function renderPost($post_url){
+		$posts = new Posts();
+		$post = $posts->findSingleFrontend($post_url)->fetch();
+		$this->template->post = $post;
+
+	}
+
+
+
+
 	public function renderTag($tag_url){
 		
 		$tags = new Tags();

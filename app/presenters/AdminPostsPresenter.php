@@ -61,12 +61,13 @@ if(isset($draft)){
 		$posts = new Posts();
         $post_info = $posts->find($id)->fetch();
         $this->template->post_info = $post_info;
-		$this->template->title = 'Janhanus.cz - admin - Úprava novinky - ' . $post_info->post_title . '';
+		//$this->template->title = 'Janhanus.cz - admin - Úprava novinky - ' . $post_info->post_title . '';
 
 		$form = $this['postForm'];
 		if (!$form->isSubmitted()) {
 			$posts = new Posts;
 			$row = $posts->find($id)->fetch();
+
 			if (!$row) {
 				throw new BadRequestException('Record not found');
 			}
@@ -84,6 +85,14 @@ if(isset($draft)){
 		$this->template->post = $post->find($id)->fetch();			
 	}
 
+
+
+	public function renderArchives()
+	{			
+		$posts = new Posts();
+		$this->template->posts = $posts->findAll()->orderBy('date DESC')->fetchAll();
+
+	}
 
 
 	
@@ -167,9 +176,9 @@ if(isset($draft)){
 	 */
 	protected function createComponentDeletePostForm()
 	{
-		$form = new AppForm;		
+		$form = new NAppForm;		
 		
-		$form->addSubmit('delete', 'Ano smazat!')->getControlPrototype()->class('default');
+		$form->addSubmit('delete', 'Yes delete!')->getControlPrototype()->class('default');
 		$form->addSubmit('cancel', 'Cancel');
 		$form->onSubmit[] = array($this, 'deletePostFormSubmitted');		
 
@@ -182,7 +191,7 @@ if(isset($draft)){
 	* Delete post form clicked.
 	* 
 	*/
-	public function deletePostFormSubmitted(AppForm $form)
+	public function deletePostFormSubmitted(NAppForm $form)
 	{
 		if ($form['delete']->isSubmittedBy()) {
 			$post = new Posts;
@@ -190,7 +199,7 @@ if(isset($draft)){
 			$this->flashMessage('Post deleted!');
 		}
 
-		$this->redirect('AdminPosts:');
+		$this->redirect('AdminPosts:archives');
 	}
 	
 	
@@ -202,7 +211,7 @@ if(isset($draft)){
 	*/
     public function CancelClicked(SubmitButton $button)
     {    	
-		$this->redirect('AdminPosts:');    	
+		$this->redirect('AdminPosts:archives');    	
     }
     
 		
