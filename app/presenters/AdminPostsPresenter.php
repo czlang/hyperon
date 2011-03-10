@@ -119,6 +119,23 @@ if(isset($draft)){
 
 		$form = new NAppForm;
 
+
+$renderer = $form->renderer;
+//$renderer->wrappers['form']['container'] = NHtml::el('div')->id('form');
+//$renderer->wrappers['form']['errors'] = FALSE;
+$renderer->wrappers['group']['container'] = NULL;
+//$renderer->wrappers['group']['label'] = 'h3';
+$renderer->wrappers['pair']['container'] = NULL;
+$renderer->wrappers['controls']['container'] = '';
+$renderer->wrappers['control']['container'] = 'p';
+//$renderer->wrappers['control']['.odd'] = 'odd';
+$renderer->wrappers['control']['errors'] = TRUE;
+//$renderer->wrappers['label']['container'] = 'dt';
+//$renderer->wrappers['label']['suffix'] = ':';
+//$renderer->wrappers['control']['requiredsuffix'] = " \xE2\x80\xA2";
+
+
+
 		$form->addGroup()->setOption('container', NHtml::el('div')->id('action'));
 
 			$form->addRadioList('state', '', $action)
@@ -126,17 +143,20 @@ if(isset($draft)){
 				->addRule(NForm::FILLED, 'Vyberte typ obsahu');
 
 		$form->addGroup();
-			$form->addText('title', '')
+			$form->addText('title', 'Title *')
 				->addRule(NForm::FILLED, 'Nezapomeňte titulek.');
-			$form->addTextarea('perex', '');
-			$form->addTextarea('body', '')
+
+			$form->addTextarea('perex', 'Perex');
+
+			$form->addTextarea('body', 'Body *')
 				->addRule(NForm::FILLED, 'Nezapomeňte obsah novinky.')
 				->getControlPrototype()->class = "editor";
 
-			$form->addText('meta_description', '');
-			$form->addText('meta_keywords', '');
+			$form->addText('meta_description', 'Meta description');
 
-			$form->addText('tags', '');
+			$form->addText('meta_keywords', 'Meta keywords');
+
+			$form->addText('tags', 'Tags');
 
 			$form->addHidden('author_id', '')
 				->setValue($user_id);

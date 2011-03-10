@@ -78,21 +78,25 @@ a:focus
 #newpost-form{
 	width: 1200px;
 }
-#newpost-form fieldset{
-	margin: 0;
-	padding: 0;
-	border: none;
+
+#newpost-form label.required{
+	color: maroon;
 }
-#newpost-form form table th
+#newpost-form label{
+	margin: 0 0 -10px 0;
+	padding: 0;
+}
+
+#newpost-form input,
+#newpost-form textarea
 {
-	margin: 0;
-	padding: 0;
+	margin: -4px 0 0 0; 
 }
+
 #newpost-form #action{
 	float: right;
 	margin: 5px 0 0 0;
 }
-
 #newpost-form .text{
 	font-family: sans-serif;
 	padding: 6px 6px 6px 15px;
