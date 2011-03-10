@@ -1,9 +1,14 @@
+
 {block content}
 	
 		<h1>{$post->title}</h1>
-		<p>{!$post->date|timeAgoInWords}</p>
+		
+
+		{!$post->perex|texy}
+
 		{!$post->body|texy}
-		<p>napsal {$post->username}</p>
+
+		<p>{!$post->date|timeAgoInWords} napsal {$post->username}</p>
 
 		<div>
 			tagy:

@@ -61,6 +61,11 @@ $router[] = new NRoute('<post_url>', array(
 	'action' => 'post',
 	'id' => 'url',
 ));
+$router[] = new NRoute('tag/<tag_url>', array(
+	'presenter' => 'Posts',
+	'action' => 'tag',
+	'id' => 'tag_url',
+));
 /*
 $router[] = new NRoute('prodejci/<username>/', array(
 	'presenter' => 'Products',

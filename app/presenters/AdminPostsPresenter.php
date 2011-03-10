@@ -128,6 +128,7 @@ if(isset($draft)){
 		$form->addGroup();
 			$form->addText('title', '')
 				->addRule(NForm::FILLED, 'Nezapomeňte titulek.');
+			$form->addTextarea('perex', '');
 			$form->addTextarea('body', '')
 				->addRule(NForm::FILLED, 'Nezapomeňte obsah novinky.')
 				->getControlPrototype()->class = "editor";

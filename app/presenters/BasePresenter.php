@@ -85,19 +85,19 @@ abstract class BasePresenter extends NPresenter
 
 
 
-  public function templatePrepareFilters($template) {
-      parent::templatePrepareFilters($template);
-
-      // texy
-      NTemplateFilters::$texy = new Texy();
-      NTemplateFilters::$texy->encoding = 'utf-8';
-      NTemplateFilters::$texy->allowedTags = Texy::NONE;
-      NTemplateFilters::$texy->allowedStyles = Texy::NONE;
-      NTemplateFilters::$texy->setOutputMode(Texy::HTML5);
-
-      // filter
-      $template->registerFilter('NTemplateFilters::texyElements');
-    }
+	public function templatePrepareFilters($template) {
+		parent::templatePrepareFilters($template);
+		
+		// texy
+		NTemplateFilters::$texy = new Texy();
+		NTemplateFilters::$texy->encoding = 'utf-8';
+		NTemplateFilters::$texy->allowedTags = Texy::NONE;
+		NTemplateFilters::$texy->allowedStyles = Texy::NONE;
+		NTemplateFilters::$texy->setOutputMode(Texy::HTML5);
+		
+		// filter
+		$template->registerFilter('NTemplateFilters::texyElements');
+	}
 
 
 

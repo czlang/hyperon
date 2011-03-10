@@ -96,8 +96,16 @@ a:focus
 #newpost-form .text{
 	font-family: sans-serif;
 	padding: 6px 6px 6px 15px;
-	width: 1000px;
+	width: 1010px;
 	font-size: 130%;
+}
+#newpost-form #frmpostForm-perex{
+	font-family: sans-serif;
+	font-size: 100%;
+	line-height: 145%;
+	padding: 15px;
+	width: 1000px;	
+	height: 150px;
 }
 #newpost-form #frmpostForm-body{
 	font-family: sans-serif;

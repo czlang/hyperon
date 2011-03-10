@@ -2,7 +2,15 @@
 		<div class="post">
 			
 			<h2><a href="{plink Posts:post, $post->url}">{$post->title}</a></h2>
-			{!$post->body|texy}
+
+			{if $post->perex}
+				{!$post->perex|texy}
+				<p><a href="{plink Posts:post, $post->url}">Číst více</a></p>
+			{else}
+				{!$post->body|texy}
+			{/if}
+			
+
 			<p>{!$post->date|timeAgoInWords} napsal {$post->username}</p>
 	
 			<div>
