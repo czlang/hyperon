@@ -226,7 +226,6 @@ class Posts extends NObject
 		unset($data['tags']);
 		$data['id'] = $new_post_id;		
 		return $this->connection->insert($this->table, $data)->execute(dibi::IDENTIFIER);
-
 	}
 
 

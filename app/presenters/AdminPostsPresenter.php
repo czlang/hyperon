@@ -40,12 +40,12 @@ final class AdminPostsPresenter extends AdminPresenter
     public function renderNewPost($data)
 	{
 		//NDebug::dump($data);
-/*
-if(isset($draft)){
-	$posts = new Posts();
-	$save_draft = $posts->insert($post);
-}
-*/
+		/*
+		if(isset($draft)){
+			$posts = new Posts();
+			$save_draft = $posts->insert($post);
+		}
+		*/
 		
 		$tags = new Tags();
 		$this->template->tags = $tags->findAll()->fetchAll();
@@ -71,6 +71,7 @@ if(isset($draft)){
 			if (!$row) {
 				throw new BadRequestException('Record not found');
 			}
+			//NDebug::dump($row);
 			$form->setDefaults($row);
 		}
 	}
@@ -106,7 +107,12 @@ if(isset($draft)){
 		$action = array(
 	    	'1' => 'Publish now!',
 	    	'2' => 'Save draft',
-		);		
+		);
+
+		$lang = array(
+	    	'1' => 'Česky',
+	    	'2' => 'Anglicky',
+		);
 
 		$user = NEnvironment::getUser();
 
@@ -133,6 +139,11 @@ if(isset($draft)){
 			$form->addRadioList('state', '', $action)
 				->setValue(1)
 				->addRule(NForm::FILLED, 'Vyberte typ obsahu');
+
+			$form->addRadioList('lang', '', $lang)
+				->setValue(1)
+				->addRule(NForm::FILLED, 'Vyberte jazyk');
+
 
 		$form->addGroup();
 			$form->addText('title', 'Title *')
@@ -178,8 +189,8 @@ if(isset($draft)){
 				$this->redirect('Homepage:');
 			} else {
 				$posts->insert($button->getForm()->getValues());
-				$this->flashMessage('Posted!.', 'info');
-				$this->redirect('Homepage:');
+				//$this->flashMessage('Posted!.', 'info');
+				//$this->redirect('Homepage:');
 			}
     	}
     }

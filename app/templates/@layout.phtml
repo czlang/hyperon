@@ -1,10 +1,25 @@
+
+{if isset($post->lang)}
+	{if $post->lang == 1}
+		{var $lang = "cs"}
+	{else}
+		{var $lang = "en"}
+	{/if}
+{else}
+	{var $lang = "cs"}
+{/if}
+
+
 <!DOCTYPE html>
 <html>
+{*<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{$lang}" lang="{$lang}">*}
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 	<meta name="description" content="{if isset($post->meta_description)}{$post->meta_description}{/if}">
 	<meta name="keywords" content="{if isset($post->meta_keywords)}{$post->meta_keywords}{/if}">
+
+	<meta http-equiv="Content-Language" content="{$lang}" />
 
 	<meta name="robots" content="{$robots}" n:ifset="$robots">
 
@@ -23,21 +38,20 @@
 
 
 </head>
-
 <body>
 
 	<div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
 
+
 	<h1><a href="{$baseUri}">{$settings["web_name"]}</a></h1>
 
+
 	<p><a href="{plink AdminPosts:newpost}">post!</a></p>
+
 
 	<div id="main">
 		{include #content}
 	</div>    
-    
-
-
 	
 
 </body>
