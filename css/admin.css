@@ -88,7 +88,8 @@ a:focus
 }
 
 #newpost-form input,
-#newpost-form textarea
+#newpost-form textarea,
+#newbeep-form textarea
 {
 	margin: -4px 0 0 0; 
 }
@@ -111,7 +112,8 @@ a:focus
 	width: 1000px;	
 	height: 150px;
 }
-#newpost-form #frmpostForm-body{
+#newpost-form #frmpostForm-body
+{
 	font-family: sans-serif;
 	font-size: 100%;
 	line-height: 145%;
@@ -119,7 +121,9 @@ a:focus
 	width: 1000px;	
 	height: 600px;
 }
-#newpost-form .button{
+#newpost-form .button,
+#newbeep-form .button
+{
 	padding: 16px;
 	font-size: 110%;
 }
@@ -127,6 +131,15 @@ a:focus
 #all-tags{
 	float: left;
 	margin: -110px 0 0 5px;
+}
+
+#newbeep-form textarea{
+	font-family: sans-serif;
+	font-size: 100%;
+	line-height: 145%;
+	padding: 15px;
+	width: 800px;	
+	height: 150px;
 }
 
 

@@ -7,8 +7,7 @@ body {
 	font-size: 90%;
 	color: #333;
 	background: #fff;
-	margin: 40px 20px 20px 40px;
-	width: 700px;
+	padding: 30px 30px 30px 40px;
 }
 
 a[href^="error:"]{background:red;color:white;}
@@ -40,10 +39,32 @@ a:focus
 }
 
 
+#main{
+	width: 600px;
+	float: left;
+	padding: 0 40px 0 0px;
+}
+
+#secondary{
+	width: 300px;
+	float: left;
+	padding: 64px 0px 0 80px;
+	font-size: 90%;
+	line-height: 130%;
+}
+
+
 .post{
 	margin-bottom: 70px;
 }
 
+.beep{
+	margin-bottom: 50px;
+}
+.beep .info{
+	color: #808080;
+	margin-top: -10px;
+}
 
 #facebook-login-box{
 	margin: 0 0 40px 0;
@@ -52,5 +73,7 @@ a:focus
 #twitter-login-box{
 	margin: 0 0 40px 0;
 }
+
+
 
 

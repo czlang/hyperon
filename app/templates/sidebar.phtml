@@ -1,0 +1,11 @@
+	{foreach $beeps as $beep}
+		<div class="beep">
+			
+			{!$beep->beep|texy}		
+
+			<p class="info">{!$beep->date|timeAgoInWords} napsal {$beep->username}</p>	
+
+		</div>
+
+	{/foreach}
+

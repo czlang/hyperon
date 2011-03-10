@@ -52,6 +52,18 @@ final class AdminPostsPresenter extends AdminPresenter
 
 	}
 
+
+
+
+
+    public function renderNewBeep()
+	{
+		$tags = new Tags();
+		$this->template->tags = $tags->findAll()->fetchAll();
+
+	}
+
+
 	
     
     public function renderEditPost($id = 0)
@@ -189,8 +201,8 @@ final class AdminPostsPresenter extends AdminPresenter
 				$this->redirect('Homepage:');
 			} else {
 				$posts->insert($button->getForm()->getValues());
-				//$this->flashMessage('Posted!.', 'info');
-				//$this->redirect('Homepage:');
+				$this->flashMessage('Posted!.', 'info');
+				$this->redirect('Homepage:');
 			}
     	}
     }
@@ -231,6 +243,111 @@ final class AdminPostsPresenter extends AdminPresenter
 	}
 	
 	
+
+
+	
+	/**
+	 * New beep form component factory.
+	 * @return mixed
+	 */
+	protected function createComponentBeepForm()
+	{
+
+		$user = NEnvironment::getUser();
+
+		if($user->isLoggedIn()) $user_id = $user->getIdentity()->data['id'];
+		else $user_id = 0;
+	
+
+		$form = new NAppForm;
+
+		$renderer = $form->renderer;
+		$renderer->wrappers['group']['container'] = NULL;
+		$renderer->wrappers['pair']['container'] = NULL;
+		$renderer->wrappers['controls']['container'] = '';
+		$renderer->wrappers['control']['container'] = 'p';
+		$renderer->wrappers['control']['errors'] = TRUE;
+
+		$form->addGroup();
+
+			$form->addTextarea('beep', 'Beep *')
+				->addRule(NForm::FILLED, 'Nezapomeňte obsah novinky.')
+				->getControlPrototype()->class = "editor";
+
+			//$form->addText('tags', 'Tags');
+
+			$form->addHidden('author_id', '')
+				->setValue($user_id);
+			
+
+		$form->addSubmit('send', 'Beep!')->onClick[] = array($this, 'sendBeepClicked');
+
+		
+		return $form;
+	}
+
+
+
+
+
+   /**
+	* New post form clicked.
+	* 
+	*/
+    public function sendBeepClicked(NSubmitButton $button)
+    {
+    	if ($button->getForm()->getValues()){
+    		$id = (int) $this->getParam('id');
+			$beeps = new Beeps();
+			if ($id > 0) {
+				$beeps->update($id, $button->getForm()->getValues());
+				$this->flashMessage('Beep!');
+				$this->redirect('Homepage:');
+			} else {
+				$beeps->insert($button->getForm()->getValues());
+				$this->flashMessage('Beep!.', 'info');
+				$this->redirect('Homepage:');
+			}
+    	}
+    }
+	
+		
+	
+	
+    /**
+
+	 * Post delete form component factory.
+	 * @return mixed
+	 */
+	protected function createComponentDeleteBeepForm()
+	{
+		$form = new NAppForm;		
+		
+		$form->addSubmit('delete', 'Yes delete this beep!')->getControlPrototype()->class('default');
+		$form->addSubmit('cancel', 'Cancel');
+		$form->onSubmit[] = array($this, 'deleteBeepFormSubmitted');		
+
+		return $form;
+	}
+	
+	
+	
+   /**
+	* Delete beep form clicked.
+	* 
+	*/
+	public function deleteBeepFormSubmitted(NAppForm $form)
+	{
+		if ($form['delete']->isSubmittedBy()) {
+			$beeps = new Beeps();
+			$beeps->delete($this->getParam('id'));
+			$this->flashMessage('Beep deleted!');
+		}
+
+		$this->redirect('AdminPosts:archives');
+	}
+
+
 
 
    /**

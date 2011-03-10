@@ -67,6 +67,11 @@ abstract class BasePresenter extends NPresenter
 		$this->template->settings = $settings;
 
 
+		$beeps = new Beeps();
+		$beeps = $beeps->findAll()->fetchAll();
+		$this->template->beeps = $beeps;
+
+
 
 		$this->template->registerHelper('timeAgoInWords', 'Helpers::timeAgoInWords');
 		$this->template->registerHelper('humanizeTime', 'Helpers::humanizeTime');
