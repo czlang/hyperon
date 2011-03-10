@@ -55,12 +55,13 @@ $router = $application->getRouter();
 
 
 //$router[] = new NRoute('/<username>', 'Products:user');
-/*
-$router[] = new NRoute('prodejci/', array(
-	'presenter' => 'Products',
-	'action' => 'users',
-));
 
+$router[] = new NRoute('<post_url>', array(
+	'presenter' => 'Posts',
+	'action' => 'post',
+	'id' => 'url',
+));
+/*
 $router[] = new NRoute('prodejci/<username>/', array(
 	'presenter' => 'Products',
 	'action' => 'user',
