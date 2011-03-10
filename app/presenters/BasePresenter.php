@@ -68,7 +68,7 @@ abstract class BasePresenter extends NPresenter
 
 
 		$beeps = new Beeps();
-		$beeps = $beeps->findAll()->fetchAll();
+		$beeps = $beeps->findAll()->orderBy('date DESC')->fetchAll();
 		$this->template->beeps = $beeps;
 
 

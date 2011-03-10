@@ -31,7 +31,7 @@ final class AdminPostsPresenter extends AdminPresenter
 	public function renderDefault()
 	{		
 		$posts = new Posts;
-		$this->template->posts = $posts->findAll()->orderBy('post_date DESC');	
+		$this->template->posts = $posts->findAll()->orderBy('post_date DESC');
 
 	}		
 	
@@ -91,6 +91,40 @@ final class AdminPostsPresenter extends AdminPresenter
     
     
 		
+	public function renderDeleteBeep($id)
+	{
+		$this->template->title = 'Delete beep';
+		$beep = new Beeps();		
+		$this->template->beep = $beep->find($id)->fetch();			
+	}
+
+
+
+
+
+    public function renderEditBeep($id = 0)
+	{
+		$id = $this->getParam('id');
+		
+		$beeps = new Beeps();
+        $beep_info = $beeps->find($id)->fetch();
+        $this->template->beep_info = $beep_info;
+
+		$form = $this['beepForm'];
+		if (!$form->isSubmitted()) {
+			$row = $beep_info;
+
+			if (!$row) {
+				throw new BadRequestException('Record not found');
+			}
+
+			$form->setDefaults($row);
+		}
+	}
+    
+    
+    
+		
 	public function renderDeletePost($id)
 	{
 		$this->template->title = 'Smazat novinku';
@@ -100,10 +134,17 @@ final class AdminPostsPresenter extends AdminPresenter
 
 
 
+
+
+
 	public function renderArchives()
 	{			
 		$posts = new Posts();
 		$this->template->posts = $posts->findAll()->orderBy('date DESC')->fetchAll();
+
+
+		$beeps = new Beeps();
+		$this->template->beeps = $beeps->findAll()->orderBy('date DESC')->fetchAll();
 
 	}
 

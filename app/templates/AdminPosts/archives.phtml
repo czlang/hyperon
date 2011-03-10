@@ -5,18 +5,10 @@
 
 <table id="posts-table">
 	<tr>
-		<th>
-			&nbsp;
-		</th>
-		<th>
-			Publikováno
-		</th>
-		<th>
-			&nbsp;
-		</th>
-		<th>
-			&nbsp;
-		</th>
+		<th>Posts</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
 	</tr>
 	
 	{foreach $posts as $post}		
@@ -38,5 +30,33 @@
 	</tr>
 	{/foreach}	
 </table> 
+
+
+<table id="beeps-table">
+	<tr>
+		<th>Beeps</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
+	</tr>
+	
+	{foreach $beeps as $beep}
+	<tr>
+		<td class="title">
+			{!$beep->beep|striptags|truncate:100}
+		</td>
+		<td class="time">
+			{$post->date|date}
+		</td>
+		<td class="edit">
+			<a class="edit-link" href="{plink AdminPosts:editbeep, $beep->id}">Edit</a>
+		</td>
+		<td class="delete">	
+			<a class="delete-link" href="{plink AdminPosts:deletebeep, $beep->id}">Delete</a>
+		</td>
+	</tr>
+	{/foreach}	
+</table> 
+
 
 <div class="cleaner"></div>

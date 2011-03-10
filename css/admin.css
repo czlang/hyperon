@@ -8,7 +8,14 @@ body {
 }
 
 a[href^="error:"]{background:red;color:white;}
-div.flash{color:black;background:#FFF9D7;border:1px solid #E2C822;padding:1em;margin:1em 0;}
+
+div.flash{
+	color: black;
+	background: #FFF9D7;
+	padding: 10px 30px 5px 30px;
+	margin: -2px 0 0 0;
+}
+
 .error{padding-left:20px;}
 
 a:hover,
@@ -76,7 +83,7 @@ a:focus
 
 
 #newpost-form{
-	width: 1200px;
+	width: 1050px;
 }
 
 #newpost-form label.required{
@@ -96,12 +103,12 @@ a:focus
 
 #newpost-form #action{
 	float: right;
-	margin: 5px 0 0 0;
+	margin: 18px 0 0 0;
 }
 #newpost-form .text{
 	font-family: sans-serif;
 	padding: 6px 6px 6px 15px;
-	width: 1010px;
+	width: 810px;
 	font-size: 130%;
 }
 #newpost-form #frmpostForm-perex{
@@ -109,7 +116,7 @@ a:focus
 	font-size: 100%;
 	line-height: 145%;
 	padding: 15px;
-	width: 1000px;	
+	width: 800px;	
 	height: 150px;
 }
 #newpost-form #frmpostForm-body
@@ -118,7 +125,7 @@ a:focus
 	font-size: 100%;
 	line-height: 145%;
 	padding: 15px;
-	width: 1000px;	
+	width: 800px;	
 	height: 600px;
 }
 #newpost-form .button,
@@ -144,9 +151,21 @@ a:focus
 
 
 #posts-table{
-	width: 900px;	
+	width: 600px;	
+	float: left;
+	margin-left: -10px;
 }
-#posts-table tr:hover{
+
+#beeps-table{
+	font-size: 90%;
+	width: 300px;
+	float: left;
+	margin-left: 90px;
+}
+
+#posts-table tr:hover,
+#beeps-table tr:hover
+{
 	background: #EFEFEF; 
 }
 
