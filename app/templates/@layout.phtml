@@ -3,7 +3,9 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-	<meta name="description" content="">
+	<meta name="description" content="{if isset($post->meta_description)}{$post->meta_description}{/if}">
+	<meta name="keywords" content="{if isset($post->meta_keywords)}{$post->meta_keywords}{/if}">
+
 	<meta name="robots" content="{$robots}" n:ifset="$robots">
 
 	<title>{$settings["web_name"]}</title>

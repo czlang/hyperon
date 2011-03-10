@@ -11,6 +11,8 @@ CREATE TABLE `posts` (
   `author_id` int(11) NOT NULL,
   `state` int(11) NOT NULL COMMENT '1-public, 2 - draft',
   `date` varchar(255) COLLATE utf8_czech_ci NOT NULL,
+  `meta_keywords` varchar(255) COLLATE utf8_czech_ci NOT NULL,
+  `meta_description` varchar(255) COLLATE utf8_czech_ci NOT NULL,
   `url` varchar(255) COLLATE utf8_czech_ci NOT NULL,
   `title` varchar(255) COLLATE utf8_czech_ci NOT NULL,
   `perex` text COLLATE utf8_czech_ci NOT NULL,
@@ -64,4 +66,4 @@ CREATE TABLE `users` (
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 
--- 2011-03-10 15:08:14
+-- 2011-03-10 15:34:34

@@ -132,6 +132,10 @@ if(isset($draft)){
 			$form->addTextarea('body', '')
 				->addRule(NForm::FILLED, 'Nezapomeňte obsah novinky.')
 				->getControlPrototype()->class = "editor";
+
+			$form->addText('meta_description', '');
+			$form->addText('meta_keywords', '');
+
 			$form->addText('tags', '');
 
 			$form->addHidden('author_id', '')
