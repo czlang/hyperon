@@ -120,20 +120,12 @@ if(isset($draft)){
 		$form = new NAppForm;
 
 
-$renderer = $form->renderer;
-//$renderer->wrappers['form']['container'] = NHtml::el('div')->id('form');
-//$renderer->wrappers['form']['errors'] = FALSE;
-$renderer->wrappers['group']['container'] = NULL;
-//$renderer->wrappers['group']['label'] = 'h3';
-$renderer->wrappers['pair']['container'] = NULL;
-$renderer->wrappers['controls']['container'] = '';
-$renderer->wrappers['control']['container'] = 'p';
-//$renderer->wrappers['control']['.odd'] = 'odd';
-$renderer->wrappers['control']['errors'] = TRUE;
-//$renderer->wrappers['label']['container'] = 'dt';
-//$renderer->wrappers['label']['suffix'] = ':';
-//$renderer->wrappers['control']['requiredsuffix'] = " \xE2\x80\xA2";
-
+		$renderer = $form->renderer;
+		$renderer->wrappers['group']['container'] = NULL;
+		$renderer->wrappers['pair']['container'] = NULL;
+		$renderer->wrappers['controls']['container'] = '';
+		$renderer->wrappers['control']['container'] = 'p';
+		$renderer->wrappers['control']['errors'] = TRUE;
 
 
 		$form->addGroup()->setOption('container', NHtml::el('div')->id('action'));

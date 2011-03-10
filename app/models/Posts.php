@@ -138,9 +138,9 @@ class Posts extends NObject
 	
 	
 	
-	public function findUrl($post_cid)
+	public function findUrl($url)
 	{
-		return $this->connection->select('post_url')->from($this->table)->where('id=%i', $post_cid);
+		return $this->connection->select('url')->from($this->table)->where('url=%s', $url);
 	}
 	
 	
@@ -190,6 +190,14 @@ class Posts extends NObject
 		$data['date'] = time();
 		$data['url'] = NString::webalize($data['title']);
 
+		$url_already_exists = $this->findUrl($data['url'])->fetchSingle();
+
+
+		if($url_already_exists){
+			$data['url'] = $url_already_exists . "-" . time();
+		}
+
+
 		if(isset($data['tags'])){
 
 			$tags_md = new Tags();
@@ -218,6 +226,7 @@ class Posts extends NObject
 		unset($data['tags']);
 		$data['id'] = $new_post_id;		
 		return $this->connection->insert($this->table, $data)->execute(dibi::IDENTIFIER);
+
 	}
 
 
