@@ -9,7 +9,8 @@ DROP TABLE IF EXISTS `posts`;
 CREATE TABLE `posts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `author_id` int(11) NOT NULL,
-  `state` int(11) NOT NULL COMMENT '1-public, 2 - draft',
+  `state` tinyint(4) NOT NULL COMMENT '1-public, 2 - draft',
+  `lang` tinyint(4) NOT NULL COMMENT '1 - czech, 2 - english',
   `date` varchar(255) COLLATE utf8_czech_ci NOT NULL,
   `meta_keywords` varchar(255) COLLATE utf8_czech_ci NOT NULL,
   `meta_description` varchar(255) COLLATE utf8_czech_ci NOT NULL,
@@ -66,4 +67,4 @@ CREATE TABLE `users` (
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 
--- 2011-03-10 15:34:34
+-- 2011-03-10 19:28:23
