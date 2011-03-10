@@ -11,7 +11,7 @@
 	<link rel="shortcut icon" href="{$baseUri}favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/blueprint.css" type="text/css">
-	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/screen.css" type="text/css">
+	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/admin.css" type="text/css">
 	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/jquery.tagsinput.css" type="text/css">
     <link rel="stylesheet" media="print" href="{$baseUri}/css/print.css" type="text/css">	
 
@@ -44,11 +44,25 @@ $(document).ready(function(){
 </head>
 <body id="body">
 
+{*
 	<p class="logout"><span>{$logged_user["username"]}({$logged_user["realname"]})</span><a href="{plink Auth:logout}">Logout</a></p>
 
 	<div id="admin-header"> 
-		<h1><a href="{$baseUri}" title="DIA-LOG - administrace">{$settings["web_name"]}</a></h1>
-	</div>		
+		<p><a href="{$baseUri}" title="DIA-LOG - administrace">{$settings["web_name"]}</a></p>
+	</div>
+*}		
+
+
+	<div id="nav" class="floating-list-menu">
+		<ul>
+			<li><a href="{plink AdminPosts:archives}">Archives</a></li>
+			<li><a href="">Settings</a></li>
+			<li><a href="">Users</a></li>
+		<ul>
+		<div class="cleaner"></div>
+	</div>
+
+	<div class="cleaner"></div>
 
 	<div id="flash-box">
 		{foreach $flashes as $flash}<div class="flash {$flash->type}">{$flash->message}</div>{/foreach}

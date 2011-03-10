@@ -1,0 +1,119 @@
+body {
+	font-family: Constantia, Palatino, 'palatino linotype', serif;
+	font-size: 100%;
+	color: #333;
+	background: #fff;
+	margin: 0;
+	padding: 0;
+}
+
+a[href^="error:"]{background:red;color:white;}
+div.flash{color:black;background:#FFF9D7;border:1px solid #E2C822;padding:1em;margin:1em 0;}
+.error{padding-left:20px;}
+
+a:hover,
+a:focus
+{
+	text-decoration: none;
+}
+
+.cleaner{
+	clear: both;
+}
+
+.floating-list-menu, 
+.no-style-list
+{
+	margin:0;padding:0;
+}
+.floating-list-menu li{
+	list-style:none;
+	float:left;
+	margin:0 0px 0 0px;
+}
+.no-style-list li{
+	list-style:none;
+}
+
+
+#nav{
+	background: #EAEAEA;
+	margin: 0;
+	padding: 0;
+	height: 60px;	
+	border-bottom: solid 1px #DFDFDF;
+}
+#nav ul{
+	margin: 0;
+	padding: 0;
+}
+#nav li{
+	padding: 20px 0px 20px 0px;
+}
+#nav a{	
+	margin: 20px 0 0 0;	
+	padding: 20px 30px 20px 30px;
+	border-right: solid 1px #DFDFDF;  
+}
+#nav a:hover,
+#nav a:focus
+{
+	background: #EFEFEF;
+}
+
+
+#admin-content{
+	margin: 20px 0 0 0;
+	padding: 0px 50px 20px 50px;
+}
+
+#admin-content h2{
+	font-family: Constantia, Palatino, 'palatino linotype', serif;
+	letter-spacing: -1px;
+}
+
+
+
+
+#newpost-form{
+	width: 1200px;
+}
+#newpost-form fieldset{
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+#newpost-form form table th
+{
+	margin: 0;
+	padding: 0;
+}
+#newpost-form #action{
+	float: right;
+	margin: 5px 0 0 0;
+}
+
+#newpost-form .text{
+	font-family: sans-serif;
+	padding: 6px;
+	width: 1000px;
+	font-size: 130%;
+}
+#newpost-form #frmpostForm-body{
+	font-family: sans-serif;
+	padding: 6px;
+	width: 1000px;	
+	height: 600px;
+	font-size: 110%;
+}
+#newpost-form .button{
+	padding: 16px;
+	font-size: 110%;
+}
+
+#all-tags{
+	float: left;
+	margin: -110px 0 0 5px;
+}
+
+
