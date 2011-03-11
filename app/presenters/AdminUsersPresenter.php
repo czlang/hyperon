@@ -80,7 +80,7 @@ final class AdminUsersPresenter extends AdminPresenter
 				->addRule(NForm::MIME_TYPE, 'Uploaded file is not image', 'image/*');
 				
 		if($db_user->avatar){
-			$form->addImage('actual_avatar', './upload/avatars/' . $db_user->avatar);
+			$form->addImage('actual_avatar', $this->basePath() . '/upload/avatars/' . $db_user->avatar);
 		}
 				
 		$form->addTextarea('about', 'About:')->setValue($db_user->about);			

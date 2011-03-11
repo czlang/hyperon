@@ -121,8 +121,6 @@ class Users extends NObject implements IAuthenticator
 				$filename = NString::webalize($data['avatar']->name, '.');
 				$data['avatar'] = mb_strtolower(NString::webalize($data['realname']), 'UTF-8') . '_' . $filename;
 			}
-
-		NDebug::dump($data);
 			
 		return $this->connection->update($this->table, $data)->where('id=%i', $id)->execute();
 	}
