@@ -18,6 +18,7 @@
 abstract class BasePresenter extends NPresenter
 {
 
+	
 
 
 	protected function createTemplate() {
@@ -46,7 +47,8 @@ abstract class BasePresenter extends NPresenter
 		$user = NEnvironment::getUser();
 
 		if($user->isLoggedIn()){
-			$this->template->logged_user = $user->getIdentity()->getData();
+			$logged_user = $user->getIdentity()->getData();
+			$this->template->logged_user = $logged_user;
 		}
 
 

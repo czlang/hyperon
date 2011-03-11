@@ -55,13 +55,15 @@ $(document).ready(function(){
 
 	<div id="nav" class="floating-list-menu">
 		<ul>
-			<li><a href="{plink AdminPosts:newpost}">Post</a></li>
-			<li><a href="{plink AdminPosts:newbeep}">Beep</a></li>
-			<li><a href="{plink AdminPosts:archives}">Archives</a></li>
+			<li class="home-link"><a href="{plink Homepage:}">&laquo;</a></li>
+			<li{ifCurrent AdminPosts:newpost} class="active"{/ifCurrent}><a href="{plink AdminPosts:newpost}">Post</a></li>
+			<li{ifCurrent AdminPosts:newbeep} class="active"{/ifCurrent}><a href="{plink AdminPosts:newbeep}">Beep</a></li>
+			<li{ifCurrent AdminPosts:archives} class="active"{/ifCurrent}><a href="{plink AdminPosts:archives}">Archives</a></li>
 {*
 			<li><a href="">Settings</a></li>
-			<li><a href="">Users</a></li>
 *}
+			<li{ifCurrent AdminUsers:} class="active"{/ifCurrent}><a href="{plink AdminUsers:}">Users</a></li>
+
 		<ul>
 		<div class="cleaner"></div>
 	</div>

@@ -109,27 +109,21 @@ class Users extends NObject implements IAuthenticator
 	
 	public function update($id, array $data)
 	{	
-		//$username = mb_strtolower($data['username'], 'UTF-8');
-		/*
-		if(!isset($data['password'])){
-			unset($data['password2']);			
-		}
-			else{
-				$data['password'] = sha1($username . $data['password']);
-			}
-		*/
         unset($data['password']);
 		unset($data['password2']);
 		unset($data['user_id']);
-		/*
+
+
 		if($data['avatar'] == ''){
-			unset($data['avatar']);			
+			unset($data['avatar']);
 		}
 			else{
-				$filename = String::webalize($data['avatar']->name, '.');
-				$data['avatar'] = mb_strtolower(String::webalize($data['username']), 'UTF-8') . '_' . $filename;
+				$filename = NString::webalize($data['avatar']->name, '.');
+				$data['avatar'] = mb_strtolower(NString::webalize($data['realname']), 'UTF-8') . '_' . $filename;
 			}
-		*/			
+
+		NDebug::dump($data);
+			
 		return $this->connection->update($this->table, $data)->where('id=%i', $id)->execute();
 	}
 	
