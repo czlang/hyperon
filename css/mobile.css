@@ -1,0 +1,23 @@
+body{
+	font-family: sans-serif;
+	font-size: 90%;
+	line-height: 150%;
+	color: #333;
+	background: #fff;
+	margin: 0;
+	padding: 0;	
+}
+h1{
+	font-size: 170%;
+}
+h2{
+	font-size: 130%;
+}
+pre{
+	width: 450px;
+	overflow: auto;
+}
+#header h1{
+	margin: 0;
+	padding: 0;
+}
