@@ -56,6 +56,11 @@ $router = $application->getRouter();
 
 //$router[] = new NRoute('/<username>', 'Products:user');
 
+$router[] = new NRoute('rss/posts', array(
+	'presenter' => 'Feed',
+	'action' => 'default',
+));
+
 $router[] = new NRoute('<post_url>', array(
 	'presenter' => 'Posts',
 	'action' => 'post',
@@ -66,13 +71,7 @@ $router[] = new NRoute('tag/<tag_url>', array(
 	'action' => 'tag',
 	'id' => 'tag_url',
 ));
-/*
-$router[] = new NRoute('prodejci/<username>/', array(
-	'presenter' => 'Products',
-	'action' => 'user',
-    'id' => 'username',
-));
-*/
+
 
 $router[] = new NSimpleRouter('Homepage:default');
 
