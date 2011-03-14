@@ -42,6 +42,10 @@ a:focus
 	list-style:none;
 }
 
+.logout{
+	margin: 10px 115px 0 0;
+	color: #646464;
+}
 
 #nav{
 	background: #E0E0E0;
