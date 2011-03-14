@@ -99,11 +99,11 @@ class Posts extends NObject
 	{
 		return $this->connection->select('
 			id, 
-			post_title as title, 
-			post_date as pubDate, 
-			post_url as link, 
-			post_body as description
-		')->from($this->table);
+			title as title, 
+			date as pubDate, 
+			url as link, 
+			body as description
+		')->from($this->table)->where('posts.state = %i', 1);
 	}
 	
 

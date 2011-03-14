@@ -25,6 +25,8 @@
 
 	<title>{$settings["web_name"]}</title>
 
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="{plink Feed:}" />	
+
 	<link rel="stylesheet" media="screen and (min-width: 540px)" href="{$basePath}/css/blueprint.css" type="text/css">
 	<link rel="stylesheet" media="screen and (min-width: 540px)" href="{$basePath}/css/screen.css" type="text/css">
 	<link rel="stylesheet" media="screen and (max-width: 540px)" href="{$basePath}/css/mobile.css" type="text/css" />	
@@ -56,6 +58,7 @@
 	
 	
 	<div id="secondary">
+		<p><a href="{plink Feed:}">RSS</a></p>
 		{include sidebar.phtml}
 	</div>
 
