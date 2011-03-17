@@ -201,6 +201,14 @@ a:focus
 	margin-right: 10px; 
 }
 
+.texy-syntax{
+	position: relative;
+	top: -1150px;
+	left: 900px;	
+}
+.texy-syntax h5{
+	margin-bottom: 0;
+}
 
 .logout{
 	float: right;
