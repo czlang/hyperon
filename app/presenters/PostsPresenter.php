@@ -30,21 +30,18 @@ final class PostsPresenter extends BasePresenter
 			else{
 				throw new NBadRequestException(404);
 			}
-
 	}
 
 
 
 
-	public function renderTag($tag_url){
-		
+	public function renderTag($tag_url){		
 		$tags = new Tags();
 		$tag = $tags->findByUrl($tag_url)->fetch();
 
 		$posts = new Posts();
 		$posts = $posts->findAllByTagId($tag->id)->and('posts.state = %i', 1)->orderBy('date DESC')->fetchAll();
 		$this->template->posts = $posts;
-
 	}
 
 
