@@ -23,7 +23,13 @@ final class PostsPresenter extends BasePresenter
 	public function renderPost($post_url){
 		$posts = new Posts();
 		$post = $posts->findSingleFrontend($post_url)->fetch();
-		$this->template->post = $post;
+
+		if($post){
+			$this->template->post = $post;
+		}
+			else{
+				throw new NBadRequestException(404);
+			}
 
 	}
 
