@@ -63,6 +63,9 @@ final class AdminPostsPresenter extends AdminPresenter
         $post_info = $posts->find($id)->fetch();
         $this->template->post_info = $post_info;
 
+		$tags = new Tags();
+		$this->template->tags = $tags->findAll()->fetchAll();
+
 		$form = $this['postForm'];
 		if (!$form->isSubmitted()) {
 			$posts = new Posts;
@@ -104,8 +107,7 @@ final class AdminPostsPresenter extends AdminPresenter
 	 * @return mixed
 	 */
 	protected function createComponentPostForm()
-	{			
-
+	{
 		$action = array(
 	    	'1' => 'Post',
 	    	'2' => 'Beep',
@@ -118,16 +120,23 @@ final class AdminPostsPresenter extends AdminPresenter
 		);
 
 		$user = NEnvironment::getUser();
-
 		if($user->isLoggedIn()) $user_id = $user->getIdentity()->data['id'];
-		else $user_id = 0;
-		
-		//$users = new Users();
-		//$username = $users->findUsernameByUserId($user_id)->fetchSingle();
+		else $user_id = 0;	
 
+		$post_id = (int) $this->getParam('id');
+		if($post_id){
+			$posts_tags = new PostsTags();
+			$post_tags = $posts_tags->findAllByPostId($post_id)->fetchAll();
+			$post_tags_string = "";
+			foreach ($post_tags as $key=>$value) {
+				$post_tags_string .= ($value["tag"]) . ", ";
+			}
+		}
+		else{
+			$post_tags = "";
+		}
 
 		$form = new NAppForm;
-
 
 		$renderer = $form->renderer;
 		$renderer->wrappers['group']['container'] = NULL;
@@ -162,10 +171,18 @@ final class AdminPostsPresenter extends AdminPresenter
 
 			$form->addText('meta_keywords', 'Meta keywords');
 
-			$form->addText('tags', 'Tags');
+			if($post_id){
+				$form->addText('tags', 'Tags')->setValue($post_tags_string);
+			}
+			else{
+				$form->addText('tags', 'Tags');
+			}
 
 			$form->addHidden('author_id', '')
 				->setValue($user_id);
+
+			$form->addHidden('id', '')
+				->setValue($post_id);
 			
 		$form->addGroup()->setOption('container', NHtml::el('div')->id('send'));
 			$form->addSubmit('send', 'Uložit')->onClick[] = array($this, 'sendPostClicked');
@@ -189,7 +206,7 @@ final class AdminPostsPresenter extends AdminPresenter
 			if ($id > 0) {
 				$posts->update($id, $button->getForm()->getValues());
 				$this->flashMessage('The post has been updated.');
-				$this->redirect('Homepage:');
+				$this->redirect('AdminPosts:editpost', $id);
 			} else {
 				$posts->insert($button->getForm()->getValues());
 				$this->flashMessage('Posted!.', 'info');

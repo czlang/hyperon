@@ -52,6 +52,14 @@ class PostsTags extends NObject
 
 
 
+
+	public function deleteAllByPostId($post_id)
+	{	
+		dibi::query("DELETE FROM [" . $this->table . "] WHERE [post_id] = %i", $post_id);
+	}
+
+
+
 	public function insert(array $data)
 	{
 		return $this->connection->insert($this->table, $data)->execute();

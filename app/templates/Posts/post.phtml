@@ -2,6 +2,12 @@
 {block content}
 	
 		<h1>{$post->title}</h1>
+
+		{if isset($logged_user)}
+			{if ($logged_user['role']== 'admin')}
+				<p><a href="{plink AdminPosts:editpost, $post->id}">Edit</a> | <a href="{plink Auth:logout}">Logout</a></p>
+			{/if}
+		{/if}
 		
 
 		{!$post->perex|texy}

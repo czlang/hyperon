@@ -170,58 +170,73 @@ class Posts extends NObject
 
 	
 
-	public function update($id, array $data)
-	{		
-		$data['url'] = NString::webalize($data['title']);	
-		if($data['tags'] == ''){
-			unset($data['tags']);
-		}	
-		return $this->connection->update($this->table, $data)->where('id=%i', $id)->execute();
-	}
-
-
 
 	public function insert(array $data)
 	{
+		unset($data['id']);
+
 		$data['date'] = time();
 		$data['url'] = NString::webalize($data['title']);
 
 		$url_already_exists = $this->findUrl($data['url'])->fetchSingle();
 
-
 		if($url_already_exists){
 			$data['url'] = $url_already_exists . "-" . time();
 		}
 
-
 		if(isset($data['tags'])){
-
-			$tags_md = new Tags();
-			$posts_tags_md = new PostsTags();
-
-			$new_post_id = $this->getMaxId() + 1;
-
-			$tags = (explode(",", $data['tags']));
-
-			foreach ($tags as $key=>$value) {
-				$existing_tag_id = $tags_md->findTagIdByTag($value) + 0;
-				if($existing_tag_id){
-					$posts_tags_data = array('tag_id' => $existing_tag_id, 'post_id' => $new_post_id);
-					$posts_tags_md->insert($posts_tags_data);
-				}
-					else{
-						$new_tags = array('tag' => $value, 'tag_url' => NString::webalize($value));
-						$tags_md->insert($new_tags);
-						$new_tags_ids = $tags_md->findTagsIds($new_tags['tag']);
-						$posts_tags_ids = array('tag_id' => $new_tags_ids, 'post_id' => $new_post_id);
-						$posts_tags_md->insert($posts_tags_ids);
-					}
-   			}
+			$this->solveTags($data);		
 		}
 
 		unset($data['tags']);
-		$data['id'] = $new_post_id;		
+				
 		return $this->connection->insert($this->table, $data)->execute(dibi::IDENTIFIER);
+	}
+
+
+
+	public function solveTags($data)
+	{
+		$tags_md = new Tags();
+		$posts_tags_md = new PostsTags();
+
+		if(isset($data["id"])){
+			$post_id = $data["id"];
+			$posts_tags_md->deleteAllByPostId($data["id"]);
+		}
+		else{
+			$post_id = $this->getMaxId() + 1;
+		}
+
+		$tags = (explode(",", $data['tags']));
+
+		foreach ($tags as $key=>$value) {
+			$existing_tag_id = $tags_md->findTagIdByTag($value) + 0;
+			if($existing_tag_id){
+				$posts_tags_data = array('tag_id' => $existing_tag_id, 'post_id' => $post_id);
+				$posts_tags_md->insert($posts_tags_data);
+			}
+				else{
+					$new_tags = array('tag' => $value, 'tag_url' => NString::webalize($value));
+					$tags_md->insert($new_tags);
+					$new_tags_ids = $tags_md->findTagsIds($new_tags['tag']);
+					$posts_tags_ids = array('tag_id' => $new_tags_ids, 'post_id' => $post_id);
+					$posts_tags_md->insert($posts_tags_ids);
+				}
+ 			}
+	}
+
+
+
+
+	public function update($id, array $data)
+	{		
+		$data['url'] = NString::webalize($data['title']);	
+		if(isset($data['tags'])){
+			$this->solveTags($data);		
+		}	
+		unset($data['tags']);
+		return $this->connection->update($this->table, $data)->where('id=%i', $id)->execute();
 	}
 
 
