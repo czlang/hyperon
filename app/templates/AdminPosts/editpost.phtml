@@ -1,6 +1,13 @@
 {block #content}
 
-<h2>Úprava novinky <a href="{plink Posts:post, $post_info->url}">{$post_info->title}</a></h2>
+<h2>Editing  
+	{if ($post_info->state == 1)}
+		post
+	{elseif ($post_info->state == 2)}
+		beep
+	{/if}
+	<a href="{plink Posts:post, $post_info->url}">{$post_info->title}</a>
+</h2>
 
 	<div id="newpost-form">
 		{widget postForm}
