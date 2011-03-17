@@ -190,6 +190,17 @@ a:focus
 	background: #EFEFEF; 
 }
 
+.draft-post{
+	color: #AEAEAE;
+}
+
+.draft-sign{
+	font-variant: small-caps;
+	color: #AEAEAE;
+	margin-left: -50px;
+	margin-right: 10px; 
+}
+
 
 .logout{
 	float: right;

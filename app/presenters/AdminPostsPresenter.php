@@ -92,7 +92,7 @@ final class AdminPostsPresenter extends AdminPresenter
 	public function renderArchives()
 	{			
 		$posts = new Posts();
-		$this->template->posts = $posts->findAll()->where('state = %i', 1)->orderBy('date DESC')->fetchAll();
+		$this->template->posts = $posts->findAll()->where('state = %i', 1)->or('state = %i', 3)->orderBy('date DESC')->fetchAll();
 
 		$beeps = $posts->findAllFrontend()->where('state = %i', 2)->orderBy('date DESC')->fetchAll();		
 		$this->template->beeps = $beeps;

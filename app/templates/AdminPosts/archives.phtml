@@ -13,7 +13,11 @@
 	
 	{foreach $posts as $post}		
 	<tr>
-		<td class="title" title="{!$post->body|striptags|truncate:200}">
+		<td class="title {if($post->state) == 3}draft-post{/if}" title="{!$post->body|striptags|truncate:200}">
+			{if($post->state) == 3}
+				<span class="draft-sign">Draft</span>
+			{/if}
+
 			{*<a href="{plink Posts:post, $post->url}">*}
 				{$post->title}
 			{*</a> *}
