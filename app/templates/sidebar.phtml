@@ -1,9 +1,16 @@
 	{foreach $beeps as $beep}
 		<div class="beep">
 			
-			{!$beep->beep|texy}		
+			{!$beep->body|texy}
 
-			<p class="info">{!$beep->date|timeAgoInWords} napsal {$beep->username}</p>	
+			<p class="info">{!$beep->date|timeAgoInWords} napsal {$beep->username}</p>
+
+			<div>
+				tagy:
+				{foreach $presenter->getPostTags($beep->id) as $tag}
+					<a href="{plink Posts:tag, $tag->tag_url}">{$tag->tag}</a>
+				{/foreach}
+			</div>	
 
 		</div>
 

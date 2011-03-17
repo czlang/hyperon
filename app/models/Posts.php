@@ -58,9 +58,7 @@ class Posts extends NObject
 			->select('posts.*, users.id as user_id, users.username as username')
 			->from($this->table)
 				->join('users')
-				->on('posts.author_id = users.id')
-				->where('state = %i', 1)
-				->orderBy('date DESC');
+				->on('posts.author_id = users.id');
 	}
 
 
@@ -103,7 +101,7 @@ class Posts extends NObject
 			date as pubDate, 
 			url as link, 
 			body as description
-		')->from($this->table)->where('posts.state = %i', 1);
+		')->from($this->table);
 	}
 	
 
@@ -116,9 +114,7 @@ class Posts extends NObject
 					->on('posts_tags.post_id = posts.id')
 				->join('users')
 					->on('posts.author_id = users.id')
-				->where('posts_tags.tag_id = %i', $tag_id)
-				->and('posts.state = %i', 1)
-				->orderBy('date DESC');
+				->where('posts_tags.tag_id = %i', $tag_id);
 	}
 
 

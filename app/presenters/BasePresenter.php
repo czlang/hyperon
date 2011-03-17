@@ -67,13 +67,19 @@ abstract class BasePresenter extends NPresenter
 		$settings = new Settings();
 		$settings = $settings->findAll()->fetchPairs('name', 'value');
 		$this->template->settings = $settings;
+		
+		$posts = new Posts();
 
-
-		$beeps = new Beeps();
-		$beeps = $beeps->findAll()->orderBy('date DESC')->fetchAll();
+		$tag_url = $this->getParam('tag_url');
+		if(isset($tag_url)){
+			$tags = new Tags();
+			$tag = $tags->findByUrl($tag_url)->fetch();
+			$beeps = $posts->findAllByTagId($tag->id)->and('posts.state = %i', 2)->orderBy('date DESC')->fetchAll();
+		}
+		else{
+			$beeps = $posts->findAllFrontend()->where('state = %i', 2)->orderBy('date DESC')->fetchAll();
+		}		
 		$this->template->beeps = $beeps;
-
-
 
 		$this->template->registerHelper('timeAgoInWords', 'Helpers::timeAgoInWords');
 		$this->template->registerHelper('humanizeTime', 'Helpers::humanizeTime');

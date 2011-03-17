@@ -44,26 +44,15 @@ $(document).ready(function(){
 </head>
 <body id="body">
 
-
 	<p class="logout"><span>{$logged_user["username"]} ({$logged_user["realname"]})</span> <br> <a href="{plink Auth:logout}">Logout</a></p>
-{*
-	<div id="admin-header"> 
-		<p><a href="{$baseUri}" title="DIA-LOG - administrace">{$settings["web_name"]}</a></p>
-	</div>
-*}		
-
 
 	<div id="nav" class="floating-list-menu">
 		<ul>
 			<li class="home-link"><a href="{plink Homepage:}">&laquo;</a></li>
-			<li{ifCurrent AdminPosts:newpost} class="active"{/ifCurrent}><a href="{plink AdminPosts:newpost}">Post</a></li>
-			<li{ifCurrent AdminPosts:newbeep} class="active"{/ifCurrent}><a href="{plink AdminPosts:newbeep}">Beep</a></li>
+			<li{ifCurrent AdminPosts:newpost} class="active"{/ifCurrent}><a href="{plink AdminPosts:newpost}">Post</a></li>			
 			<li{ifCurrent AdminPosts:archives} class="active"{/ifCurrent}><a href="{plink AdminPosts:archives}">Archives</a></li>
-{*
-			<li><a href="">Settings</a></li>
-*}
+			{*<li><a href="">Settings</a></li>*}
 			<li{ifCurrent AdminUsers:} class="active"{/ifCurrent}><a href="{plink AdminUsers:}">Users</a></li>
-
 		<ul>
 		<div class="cleaner"></div>
 	</div>

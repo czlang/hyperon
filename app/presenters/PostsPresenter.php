@@ -36,7 +36,7 @@ final class PostsPresenter extends BasePresenter
 		$tag = $tags->findByUrl($tag_url)->fetch();
 
 		$posts = new Posts();
-		$posts = $posts->findAllByTagId($tag->id)->fetchAll();
+		$posts = $posts->findAllByTagId($tag->id)->and('posts.state = %i', 1)->orderBy('date DESC')->fetchAll();
 		$this->template->posts = $posts;
 
 	}

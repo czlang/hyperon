@@ -47,9 +47,13 @@ final class FeedPresenter extends BasePresenter
         $rss->setChannelProperty("lastBuildDate", time());
 
         // items
-        $posts = new Posts;
-		$items = $posts->findAllForRSS()->orderBy('id DESC')->limit('0, 10')->fetchAll();
-
+        $posts = new Posts();
+		$items = $posts->findAllForRSS()
+					->where('posts.state = %i', 1)
+					//->or('posts.state = %i', 2)	//wanna beeps in rss ?
+					->orderBy('id DESC')
+					->limit('0, 10')
+					->fetchAll();
 
         foreach ($items as $item) {
         	$item["link"] = $this->link("//Posts:post", $item["link"]);

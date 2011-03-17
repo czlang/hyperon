@@ -43,16 +43,16 @@
 	{foreach $beeps as $beep}
 	<tr>
 		<td class="title">
-			{!$beep->beep|striptags|truncate:100}
+			{!$beep->body|striptags|truncate:100}
 		</td>
 		<td class="time">
 			{$post->date|date}
 		</td>
 		<td class="edit">
-			<a class="edit-link" href="{plink AdminPosts:editbeep, $beep->id}">Edit</a>
+			<a class="edit-link" href="{plink AdminPosts:editpost, $beep->id}">Edit</a>
 		</td>
 		<td class="delete">	
-			<a class="delete-link" href="{plink AdminPosts:deletebeep, $beep->id}">Delete</a>
+			<a class="delete-link" href="{plink AdminPosts:deletepost, $beep->id}">Delete</a>
 		</td>
 	</tr>
 	{/foreach}	

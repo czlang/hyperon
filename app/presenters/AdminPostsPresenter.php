@@ -55,17 +55,6 @@ final class AdminPostsPresenter extends AdminPresenter
 
 
 
-
-    public function renderNewBeep()
-	{
-		$tags = new Tags();
-		$this->template->tags = $tags->findAll()->fetchAll();
-
-	}
-
-
-	
-    
     public function renderEditPost($id = 0)
 	{
 		$id = $this->getParam('id');
@@ -73,7 +62,6 @@ final class AdminPostsPresenter extends AdminPresenter
 		$posts = new Posts();
         $post_info = $posts->find($id)->fetch();
         $this->template->post_info = $post_info;
-		//$this->template->title = 'Janhanus.cz - admin - Úprava novinky - ' . $post_info->post_title . '';
 
 		$form = $this['postForm'];
 		if (!$form->isSubmitted()) {
@@ -82,69 +70,30 @@ final class AdminPostsPresenter extends AdminPresenter
 
 			if (!$row) {
 				throw new BadRequestException('Record not found');
-			}
-			//NDebug::dump($row);
+			}			
 			$form->setDefaults($row);
 		}
 	}
     
     
     
-		
-	public function renderDeleteBeep($id)
-	{
-		$this->template->title = 'Delete beep';
-		$beep = new Beeps();		
-		$this->template->beep = $beep->find($id)->fetch();			
-	}
-
-
-
-
-
-    public function renderEditBeep($id = 0)
-	{
-		$id = $this->getParam('id');
-		
-		$beeps = new Beeps();
-        $beep_info = $beeps->find($id)->fetch();
-        $this->template->beep_info = $beep_info;
-
-		$form = $this['beepForm'];
-		if (!$form->isSubmitted()) {
-			$row = $beep_info;
-
-			if (!$row) {
-				throw new BadRequestException('Record not found');
-			}
-
-			$form->setDefaults($row);
-		}
-	}
-    
-    
-    
-		
 	public function renderDeletePost($id)
 	{
 		$this->template->title = 'Smazat novinku';
-		$post = new Posts;		
+		$post = new Posts();		
 		$this->template->post = $post->find($id)->fetch();			
 	}
-
-
-
 
 
 
 	public function renderArchives()
 	{			
 		$posts = new Posts();
-		$this->template->posts = $posts->findAll()->orderBy('date DESC')->fetchAll();
+		$this->template->posts = $posts->findAll()->where('state = %i', 1)->orderBy('date DESC')->fetchAll();
 
+		$beeps = $posts->findAllFrontend()->where('state = %i', 2)->orderBy('date DESC')->fetchAll();		
+		$this->template->beeps = $beeps;
 
-		$beeps = new Beeps();
-		$this->template->beeps = $beeps->findAll()->orderBy('date DESC')->fetchAll();
 
 	}
 
@@ -158,8 +107,9 @@ final class AdminPostsPresenter extends AdminPresenter
 	{			
 
 		$action = array(
-	    	'1' => 'Publish now!',
-	    	'2' => 'Save draft',
+	    	'1' => 'Post',
+	    	'2' => 'Beep',
+	    	'3' => 'Draft',
 		);
 
 		$lang = array(
@@ -199,8 +149,8 @@ final class AdminPostsPresenter extends AdminPresenter
 
 
 		$form->addGroup();
-			$form->addText('title', 'Title *')
-				->addRule(NForm::FILLED, 'Nezapomeňte titulek.');
+			$form->addText('title', 'Title');
+				//->addRule(NForm::FILLED, 'Nezapomeňte titulek.');
 
 			$form->addTextarea('perex', 'Perex');
 
@@ -284,110 +234,6 @@ final class AdminPostsPresenter extends AdminPresenter
 	}
 	
 	
-
-
-	
-	/**
-	 * New beep form component factory.
-	 * @return mixed
-	 */
-	protected function createComponentBeepForm()
-	{
-
-		$user = NEnvironment::getUser();
-
-		if($user->isLoggedIn()) $user_id = $user->getIdentity()->data['id'];
-		else $user_id = 0;
-	
-
-		$form = new NAppForm;
-
-		$renderer = $form->renderer;
-		$renderer->wrappers['group']['container'] = NULL;
-		$renderer->wrappers['pair']['container'] = NULL;
-		$renderer->wrappers['controls']['container'] = '';
-		$renderer->wrappers['control']['container'] = 'p';
-		$renderer->wrappers['control']['errors'] = TRUE;
-
-		$form->addGroup();
-
-			$form->addTextarea('beep', 'Beep *')
-				->addRule(NForm::FILLED, 'Nezapomeňte obsah novinky.')
-				->getControlPrototype()->class = "editor";
-
-			//$form->addText('tags', 'Tags');
-
-			$form->addHidden('author_id', '')
-				->setValue($user_id);
-			
-
-		$form->addSubmit('send', 'Beep!')->onClick[] = array($this, 'sendBeepClicked');
-
-		
-		return $form;
-	}
-
-
-
-
-
-   /**
-	* New post form clicked.
-	* 
-	*/
-    public function sendBeepClicked(NSubmitButton $button)
-    {
-    	if ($button->getForm()->getValues()){
-    		$id = (int) $this->getParam('id');
-			$beeps = new Beeps();
-			if ($id > 0) {
-				$beeps->update($id, $button->getForm()->getValues());
-				$this->flashMessage('Beep!');
-				$this->redirect('Homepage:');
-			} else {
-				$beeps->insert($button->getForm()->getValues());
-				$this->flashMessage('Beep!.', 'info');
-				$this->redirect('Homepage:');
-			}
-    	}
-    }
-	
-		
-	
-	
-    /**
-
-	 * Post delete form component factory.
-	 * @return mixed
-	 */
-	protected function createComponentDeleteBeepForm()
-	{
-		$form = new NAppForm;		
-		
-		$form->addSubmit('delete', 'Yes delete this beep!')->getControlPrototype()->class('default');
-		$form->addSubmit('cancel', 'Cancel');
-		$form->onSubmit[] = array($this, 'deleteBeepFormSubmitted');		
-
-		return $form;
-	}
-	
-	
-	
-   /**
-	* Delete beep form clicked.
-	* 
-	*/
-	public function deleteBeepFormSubmitted(NAppForm $form)
-	{
-		if ($form['delete']->isSubmittedBy()) {
-			$beeps = new Beeps();
-			$beeps->delete($this->getParam('id'));
-			$this->flashMessage('Beep deleted!');
-		}
-
-		$this->redirect('AdminPosts:archives');
-	}
-
 
 
 
