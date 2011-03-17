@@ -47,7 +47,7 @@ $user->setExpiration("+ 365 days", FALSE);
 $application = NEnvironment::getApplication();
 
 $application->errorPresenter = 'Error';
-$application->catchExceptions = true;
+$application->catchExceptions = FALSE;
 
 $application->onStartup[] = 'Users::initialize';
 
