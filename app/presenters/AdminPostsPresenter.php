@@ -115,8 +115,8 @@ final class AdminPostsPresenter extends AdminPresenter
 		);
 
 		$lang = array(
-	    	'1' => 'Česky',
-	    	'2' => 'Anglicky',
+	    	'1' => 'Czech',
+	    	'2' => 'English',
 		);
 
 		$user = NEnvironment::getUser();
@@ -141,20 +141,10 @@ final class AdminPostsPresenter extends AdminPresenter
 		$renderer = $form->renderer;
 		$renderer->wrappers['group']['container'] = NULL;
 		$renderer->wrappers['pair']['container'] = NULL;
+		$renderer->wrappers['label']['container'] = '';
 		$renderer->wrappers['controls']['container'] = '';
 		$renderer->wrappers['control']['container'] = 'p';
 		$renderer->wrappers['control']['errors'] = TRUE;
-
-
-		$form->addGroup()->setOption('container', NHtml::el('div')->id('action'));
-
-			$form->addRadioList('state', '', $action)
-				->setValue(1)
-				->addRule(NForm::FILLED, 'Vyberte typ obsahu');
-
-			$form->addRadioList('lang', '', $lang)
-				->setValue(1)
-				->addRule(NForm::FILLED, 'Vyberte jazyk');
 
 
 		$form->addGroup();
@@ -164,7 +154,7 @@ final class AdminPostsPresenter extends AdminPresenter
 			$form->addTextarea('perex', 'Perex');
 
 			$form->addTextarea('body', 'Body *')
-				->addRule(NForm::FILLED, 'Nezapomeňte obsah novinky.')
+				->addRule(NForm::FILLED, 'Dont forget the post body.')
 				->getControlPrototype()->class = "editor";
 
 			$form->addText('meta_description', 'Meta description');
@@ -183,10 +173,23 @@ final class AdminPostsPresenter extends AdminPresenter
 
 			$form->addHidden('id', '')
 				->setValue($post_id);
-			
-		$form->addGroup()->setOption('container', NHtml::el('div')->id('send'));
-			$form->addSubmit('send', 'Uložit')->onClick[] = array($this, 'sendPostClicked');
-			//$form->addSubmit('cancel', 'Neukládat')->setValidationScope(NULL)->onClick[] = array($this, 'CancelClicked');
+
+
+
+		$form->addGroup()->setOption('container', NHtml::el('div')->id('panel'));
+
+			$form->addRadioList('state', '', $action)
+				->setValue(1)
+				->addRule(NForm::FILLED, 'Content type');
+
+			$form->addRadioList('lang', '', $lang)
+				->setValue(1)
+				->addRule(NForm::FILLED, 'Choose language');
+
+			$form->getElementPrototype()->div = 'blabla';
+
+
+			$form->addSubmit('send', 'Save')->onClick[] = array($this, 'sendPostClicked');			
 		
 		return $form;
 	}

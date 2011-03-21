@@ -22,6 +22,7 @@ NDebug::enable();
 //NDebug::enable(NDebug::DEVELOPMENT);
 //NDebug::enable(NDebug::PRODUCTION);
 NDebug::$strictMode = TRUE;
+NDebug::$showBar = FALSE;
 
 //NDebug::$maxDepth = 10;  // hloubka zanoření polí
 //NDebug::$maxLen   = 999999; // maximální délka řetězce
