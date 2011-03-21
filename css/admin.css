@@ -179,7 +179,12 @@ a:focus
 	font-size: 90%;
 	width: 400px;
 	float: left;
-	margin-left: 90px;
+	margin-left: 90px;	
+}
+#beeps-table .title{
+	display: block;
+	width: 200px;
+	overflow: hidden;	
 }
 
 #posts-table tr:hover,
