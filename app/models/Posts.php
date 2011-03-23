@@ -57,7 +57,7 @@ class Posts extends NObject
 		return $this->connection
 			->select('posts.*, users.id as user_id, users.username as username')
 			->from($this->table)
-				->join('users')
+				->leftJoin('users')
 				->on('posts.author_id = users.id');
 	}
 
@@ -69,7 +69,7 @@ class Posts extends NObject
 		return $this->connection
 			->select('posts.*, users.id as user_id, users.username as username')
 			->from($this->table)
-				->join('users')
+				->leftJoin('users')
 				->on('posts.author_id = users.id')
 				->where('state = %i', 1)
 				->and('url = %s', $url);
