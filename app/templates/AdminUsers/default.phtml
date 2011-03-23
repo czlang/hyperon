@@ -11,8 +11,11 @@
 	</tr>
 	
 	{foreach $registered_users as $registered_user}
-	<tr {if $logged_user['id'] == $registered_user['id']}class="logged"{/if}>
+	<tr class="{if $logged_user['id'] == $registered_user['id']}logged{/if}{if !$registered_user->password}invited{/if}">
 		<td class="realname">
+			{if !$registered_user->password}
+				<span class="invited-sign">Invited</span>
+			{/if}
 			{$registered_user->realname}
 		</td>
 		<td class="email">
@@ -32,4 +35,13 @@
 	{/foreach}	
 </table> 
 	
+<div class="cleaner"></div>
+
+<h3>Invite new user</h3>
+	{widget inviteUserForm}
+
+<h3>Add new user</h3>
+	<p><a href="{plink AdminUsers:adduser}">Add user</a></p>
+
+
 

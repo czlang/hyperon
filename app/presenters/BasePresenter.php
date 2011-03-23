@@ -124,6 +124,14 @@ abstract class BasePresenter extends NPresenter
 
 
 
+	public function baseUri(){
+		$httpRequest = NEnvironment::getHttpRequest();
+		$baseUri = "http://" . $httpRequest->getUri()->host . "" . $httpRequest->getUri()->basePath; 			
+		return $baseUri;
+	}
+
+
+
 	public function basePath(){
 		$httpRequest = NEnvironment::getHttpRequest();
 		$basePath = $httpRequest->getUri()->basePath;

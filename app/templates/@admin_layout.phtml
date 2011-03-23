@@ -34,12 +34,8 @@ $(document).ready(function(){
 	        }      
 	    });
 	*}
-
-
-	{ifCurrent AdminPosts:newpost}
-		$(':input:visible:enabled:first').focus();
-	{/ifCurrent}
-
+	
+	$(':input:visible:enabled:first').focus();
 
 	$('#frmpostForm-perex, #frmpostForm-body').autoResize({
 	    onResize : function() {

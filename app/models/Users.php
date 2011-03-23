@@ -113,7 +113,6 @@ class Users extends NObject implements IAuthenticator
 		unset($data['password2']);
 		unset($data['user_id']);
 
-
 		if($data['avatar'] == ''){
 			unset($data['avatar']);
 		}
@@ -128,21 +127,76 @@ class Users extends NObject implements IAuthenticator
 
 
 	public function insert(array $data)
-	{		
-		//$username = mb_strtolower($data['username'], 'UTF-8');
-        //$data['username'] = '';
-		$data['password'] = sha1($data['email'] . $data['password']);
-		$data['register_time'] = time(); 
-		$data['realname'] = '';
-		$data['role'] = 'member';
-		$data['avatar'] = 'default.png';
-		$data['about'] = '';		
-		$data['public_email'] = '0';
-		$data['send_news'] = '0';
+	{
+		$data['password'] = sha1($data['email'] . $data['password']);		
+		$data['role'] = 'admin';
+
+		$filename = NString::webalize($data['avatar']->name, '.');
+		$data['avatar'] = mb_strtolower(NString::webalize($data['realname']), 'UTF-8') . '_' . $filename;
+
+		unset($data['user_id']);
 		unset($data['password2']);
 		unset($data['nospam']);
-		return $this->connection->insert($this->table, $data)->execute(dibi::IDENTIFIER);		
+		return $this->connection->insert($this->table, $data)->execute(dibi::IDENTIFIER);
+		
 	}
+
+
+
+	public function register(array $data)
+	{
+		$invited = $this->getInvited($data["email"])->fetch();
+
+		if($invited){
+			$this->deleteInvited($data["email"]);
+		}
+			else{
+				echo "not invited sorry";
+				break;
+			}
+
+		$filename = NString::webalize($data['avatar']->name, '.');
+		$data['avatar'] = mb_strtolower(NString::webalize($data['realname']), 'UTF-8') . '_' . $filename;
+
+		$data['password'] = sha1($data['email'] . $data['password']);		
+		$data['role'] = 'admin';		
+		unset($data['user_id']);
+		unset($data['password2']);
+		unset($data['nospam']);
+		return $this->connection->insert($this->table, $data)->execute(dibi::IDENTIFIER);
+		
+	}
+
+
+
+	public function insertInvited($hash, $email)
+	{		
+		$data['username'] = $hash;
+		$data['email'] = $email;
+		return $this->connection->insert($this->table, $data)->execute(dibi::IDENTIFIER);				
+	}
+
+
+
+	public function getInvited($email)
+	{
+		return $this->connection->select('*')->from($this->table)->where('email=%s', $email);						
+	}
+
+
+
+	public function getInvitedByHash($hash)
+	{
+		return $this->connection->select('*')->from($this->table)->where('username=%s', $hash);						
+	}
+
+
+
+	public function deleteInvited($email)
+	{
+		return $this->connection->delete($this->table)->where('email=%s', $email)->execute();						
+	}
+
 
     
     public function insertTwitterUser(array $data)

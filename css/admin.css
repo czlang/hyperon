@@ -197,11 +197,15 @@ a:focus
 	background: #EFEFEF; 
 }
 
-.draft-post{
+.draft-post,
+.invited
+{
 	color: #AEAEAE;
 }
 
-.draft-sign{
+.draft-sign,
+.invited-sign
+{
 	font-variant: small-caps;
 	color: #AEAEAE;
 	margin-left: -50px;

@@ -188,7 +188,6 @@ final class AdminPostsPresenter extends AdminPresenter
 
 			$form->getElementPrototype()->div = 'blabla';
 
-
 			$form->addSubmit('send', 'Save')->onClick[] = array($this, 'sendPostClicked');			
 		
 		return $form;
