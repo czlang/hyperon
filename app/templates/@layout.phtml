@@ -23,7 +23,7 @@
 
 	<meta name="robots" content="{$robots}" n:ifset="$robots">
 
-	<title>{$settings["web_name"]}</title>
+	<title>{if isset($post->title)}{$post->title} - {/if}{$settings["web_name"]}</title>
 
 	<link rel="alternate" type="application/rss+xml" title="RSS" href="{plink Feed:}" />	
 
