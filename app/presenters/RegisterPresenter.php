@@ -20,8 +20,14 @@ final class RegisterPresenter extends BasePresenter
 
 	public function renderDefault()
 	{        
-		//$hash = $this->getParam('hash');
-		//NDebug::dump($hash);
+		$hash = $this->getParam('hash');
+		
+		$users = new Users();
+		$ala_hashes = $users->findAll()->where('password is %s', NULL)->fetchPairs('id', 'username');
+
+		if(!$hash OR !in_array($hash, $ala_hashes)){
+			$this->redirect('Homepage:');
+		}
 	}
 
 
