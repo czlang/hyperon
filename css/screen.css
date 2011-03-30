@@ -59,7 +59,9 @@ a:focus
 	font-size: 90%;
 	line-height: 130%;
 }
-
+#secondary pre{
+	width: 300px;
+}
 
 .post{
 	margin-bottom: 70px;
@@ -72,6 +74,32 @@ a:focus
 	color: #808080;
 	margin-top: -10px;
 }
+
+
+pre{
+	width: 580px;
+	line-height: 140%;	
+	overflow: auto;	
+	margin: 15px 0 15px 0;
+	background: #EFEFEF;
+	padding: 10px 15px 10px 15px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	position: relative;
+	z-index: 1000; 
+}
+pre[class]:after {
+	content: attr(class);
+	display: block;
+	text-align: right;
+	font: normal 95%/1 Sans, Arial, sans-serif;
+	padding-top: 5px;
+	font-style: italic;
+	color: #AEAEAE;
+}
+
+
 
 #facebook-login-box{
 	margin: 0 0 40px 0;
