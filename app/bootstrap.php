@@ -25,7 +25,7 @@ NDebug::$strictMode = TRUE;
 NDebug::$showBar = FALSE;
 
 //NDebug::$maxDepth = 10;  // hloubka zanoření polí
-NDebug::$maxLen   = 999999; // maximální délka řetězce
+//NDebug::$maxLen   = 999999; // maximální délka řetězce
 
 // 2b) load configuration from config.ini file
 NEnvironment::loadConfig();
@@ -68,7 +68,6 @@ $router[] = new NRoute('register', array(
 	'presenter' => 'Register',
 	'action' => 'default',
 ));
-
 $router[] = new NRoute('<post_url>', array(
 	'presenter' => 'Posts',
 	'action' => 'post',

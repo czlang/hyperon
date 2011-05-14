@@ -51,7 +51,7 @@ a:focus
 	background: #E0E0E0;
 	margin: 0;
 	padding: 0;
-	height: 60px;	
+	height: 50px;	
 	border-bottom: solid 1px #DFDFDF;
 }
 #nav ul{
@@ -59,14 +59,13 @@ a:focus
 	padding: 0;
 }
 #nav li{
-	padding: 20px 0px 18px 0px;
+	padding: 15px 0px 15px 0px;
 }
 #nav a{		
 	margin: 0 0 0 0;	
-	padding: 22px 30px 19px 30px;
+	padding: 22px 30px 14px 30px;
 	color: #646464;
 	font-weight: bold;
-	border-right: solid 1px #EAEAEA;
 	text-decoration: none;
 }
 #nav a:hover,
@@ -212,10 +211,38 @@ a:focus
 	margin-right: 10px; 
 }
 
+
+#settings-form{
+	width: 600px;
+}
+#settings-form input{
+	font-size: 110%;
+	width: 400px;
+}
+#settings-form textarea{
+	font-size: 110%;
+	font-family: sans-serif;
+	width: 400px;
+	height: 100px;
+}
+#settings-form #frmeditSettingsForm-send{
+	font-size: 120%;
+	width: 100px;
+	margin: 20px 0 0 20px;
+	padding: 10px 15px 10px 15px;
+}
+#settings-form #frmeditSettingsForm-cancel{
+	width: 80px;
+	margin: 40px 0 0 60px;
+	padding: 5px 10px 5px 10px;
+}
+
+
 .texy-syntax{
-	position: relative;
-	top: -1150px;
-	left: 900px;	
+	font-size: 90%;
+	position: fixed;
+	top: 500px;
+	left: 980px;	
 }
 .texy-syntax h5{
 	margin-bottom: 0;
@@ -223,7 +250,8 @@ a:focus
 
 .logout{
 	float: right;
+	font-size: 90%;
+	margin-top: 15px;
 }
-
 
 

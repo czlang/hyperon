@@ -1,19 +1,19 @@
 	/* (c) 2002 Martin Cohen - www.martincohen.info */
 	
 	/* P H P */
-	.php-keyword1 {color:#d24; font-weight:bold;}
-	.php-keyword2 {color:#d24; }
+	.php-keyword1 {color:#E47D5E; font-weight:bold;}
+	.php-keyword2 {color:#E47D5E; }
 	.php-var {color:#fa0; font-weight:bold;}
-	.php-num {color:red;}
-	.php-quote {color:#843; font-weight:bold;}
+	.php-num {color:#FFA399;}
+	.php-quote {color:#C57784; font-weight:bold;}
 	.php-vquote {color:#fa0;}
-	.php-comment {color:#999; background-color:#ffe;}
+	.php-comment {color:#B4EF9F; }
 
 	/* H T M L */
 	.html-tag {color:#598527; font-weight:bold;}
 	.html-tagin {color:#89A315}
 	.html-quote {color:#598527; font-weight:bold;}
-	.html-comment {color:#999; background-color:#F1FAE4;}
+	.html-comment {color:#B4EF9F; background-color:#F1FAE4;}
 	.html-entity {color:#89A315}
 
 	/* C S S */
@@ -23,18 +23,18 @@
 	.css-property {color:#003663; font-weight:bold; }
 	.css-value {color:#448CCB;}
 	.css-color {color:#0076A3;}
-	.css-comment { background-color:#E5F8FF; color:#999; }
+	.css-comment { background-color:#E5F8FF; color:#B4EF9F; }
 	
 	/* C P P */
 	.cpp-keywords1 {color:blue; font-weight:bold;}
-	.cpp-num {color:red;}
-	.cpp-quote {color:brown; font-weight:bold;}
+	.cpp-num {color:#FFA399;}
+	.cpp-quote {color:#E47D5E; font-weight:bold;}
 	.cpp-comment {color:green;}
 	.cpp-preproc {color:grey;}
 
 	/* J A V A */
 	.java-keywords1 {color:blue; font-weight:bold;}
-	.java-num {color:red;}
+	.java-num {color:#FFA399;}
 	.java-quote {color:brown; font-weight:bold;}
 	.java-comment {color:green;}
 	.java-preproc {color:grey;}
@@ -52,7 +52,7 @@
 	.sql-keyword3 {color: #0000FF; font-weight: bold;}
 	.sql-value {color: #5674B9;}
 	.sql-comment {color: #FFAA00;}
-	.sql-num {color:red;}
+	.sql-num {color:#FFA399;}
 	.sql-option {color: #004A80; font-weight: bold;}
 
 	/* P y t h o n */
@@ -73,12 +73,12 @@
 	.texy-html {color:#6a6;}							/* /---html */
 	.texy-text {color:#66a;}							/* /---html */
 	
-	.texy-err {background-color:red; color:white;}		/* error (TODO) */
+	.texy-err {background-color:#FFA399; color:white;}		/* error (TODO) */
 	
 
 
 	/* C O M M O N */
 	.normal {color:black;}
-	.xlang {color:red; font-weight:bold;}
+	.xlang {color:#FFA399; font-weight:bold;}
 	.count {color:black; background-color:#FFF;}
 

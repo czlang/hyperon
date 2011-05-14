@@ -17,10 +17,71 @@
  
 abstract class BasePresenter extends NPresenter
 {
+	    
 
-	
+    public $templateDir = 'write_cz';
+    
+    
 
+    protected function startup()
+    {
+        parent::startup();
+        //$this->templateDir = dibi::fetchSingle('SELECT ... FROM ...');
+    }
 
+    
+    /**
+	 * Formats layout template file names.
+	 * @param  string
+	 * @param  string
+	 * @return array
+	 */
+    public function formatTemplateFiles($presenter, $view)
+    {
+        $appDir = NEnvironment::getVariable('appDir');
+        $path = '/' . str_replace(':', 'Module/', $presenter);
+        $pathP = substr_replace($path, '/templates/' . $this->templateDir, strrpos($path, '/'), 0);
+        $path = substr_replace($path, '/templates/' . $this->templateDir, strrpos($path, '/'));
+        return array(
+                "$appDir$pathP/$view.latte",
+                "$appDir$pathP.$view.latte",
+                "$appDir$pathP/$view.phtml",
+                "$appDir$pathP.$view.phtml",
+                "$appDir$path/@global.$view.phtml", // deprecated
+        );
+    }
+
+    
+    
+    /**
+	 * Formats layout template file names.
+	 * @param  string
+	 * @param  string
+	 * @return array
+	 */
+    public function formatLayoutTemplateFiles($presenter, $layout)
+    {
+        $appDir = NEnvironment::getVariable('appDir');
+        $path = '/' . str_replace(':', 'Module/', $presenter);
+        $pathP = substr_replace($path, '/templates/' . $this->templateDir, strrpos($path, '/'), 0);
+        $list = array(
+                "$appDir$pathP/@$layout.latte",
+                "$appDir$pathP.@$layout.latte",
+                "$appDir$pathP/@$layout.phtml",
+                "$appDir$pathP.@$layout.phtml",
+        );
+        while (($path = substr($path, 0, strrpos($path, '/'))) !== FALSE) {
+                $list[] = "$appDir$path/templates/" . $this->templateDir . "/@$layout.latte";
+                $list[] = "$appDir$path/templates/" . $this->templateDir . "/@$layout.phtml";
+        }
+        return $list;
+    }
+
+    
+    
+    /**
+	 * @return ITemplate
+	 */
 	protected function createTemplate() {
 		// texy
 		$texy = new fshlTexy();
@@ -28,6 +89,7 @@ abstract class BasePresenter extends NPresenter
 		$texy->allowedTags = Texy::NONE;
 		$texy->allowedStyles = Texy::NONE;
 		$texy->setOutputMode(Texy::HTML5);
+		//$texy->linkModule->forceNoFollow = TRUE;
 		$texy->addHandler('block', array($texy, 'blockHandler'));
 
 		$template = parent::createTemplate();
@@ -40,9 +102,11 @@ abstract class BasePresenter extends NPresenter
 
 
 
-
-
-	public function  beforeRender() {       
+    /**
+	 * Common render method.
+	 * @return void
+	 */
+	public function  beforeRender() {
 
 		$user = NEnvironment::getUser();
 
@@ -50,7 +114,6 @@ abstract class BasePresenter extends NPresenter
 			$logged_user = $user->getIdentity()->getData();
 			$this->template->logged_user = $logged_user;
 		}
-
 
 		$this->template->viewName = $this->view;
 
@@ -67,19 +130,12 @@ abstract class BasePresenter extends NPresenter
 		$settings = new Settings();
 		$settings = $settings->findAll()->fetchPairs('name', 'value');
 		$this->template->settings = $settings;
-		
-		$posts = new Posts();
 
-		$tag_url = $this->getParam('tag_url');
-		if(isset($tag_url)){
-			$tags = new Tags();
-			$tag = $tags->findByUrl($tag_url)->fetch();
-			$beeps = $posts->findAllByTagId($tag->id)->and('posts.state = %i', 2)->orderBy('date DESC')->fetchAll();
-		}
-		else{
-			$beeps = $posts->findAllFrontend()->where('state = %i', 2)->orderBy('date DESC')->fetchAll();
-		}		
-		$this->template->beeps = $beeps;
+
+		$tags = new Tags();
+		$all_tags = $tags->findAll()->fetchAll();
+		$this->template->all_tags = $all_tags;
+
 
 		$this->template->registerHelper('timeAgoInWords', 'Helpers::timeAgoInWords');
 		$this->template->registerHelper('humanizeTime', 'Helpers::humanizeTime');

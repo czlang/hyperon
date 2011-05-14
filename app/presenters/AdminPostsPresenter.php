@@ -61,6 +61,7 @@ final class AdminPostsPresenter extends AdminPresenter
 			$save_draft = $posts->insert($post);
 		}
 		*/
+		
 		$tags = new Tags();
 		$this->template->tags = $tags->findAll()->fetchAll();
 
@@ -160,7 +161,6 @@ final class AdminPostsPresenter extends AdminPresenter
 		$renderer->wrappers['control']['container'] = 'p';
 		$renderer->wrappers['control']['errors'] = TRUE;
 
-		$form->getElementPrototype()->class = 'ajax';
 
 		$form->addGroup();
 			$form->addText('title', 'Title');
@@ -199,7 +199,9 @@ final class AdminPostsPresenter extends AdminPresenter
 
 			$form->addRadioList('lang', '', $lang)
 				->setValue(1)
-				->addRule(NForm::FILLED, 'Choose language');			
+				->addRule(NForm::FILLED, 'Choose language');
+
+			$form->getElementPrototype()->div = 'blabla';
 
 			$form->addSubmit('send', 'Save')->onClick[] = array($this, 'sendPostClicked');			
 		
@@ -217,12 +219,7 @@ final class AdminPostsPresenter extends AdminPresenter
     {
     	if ($button->getForm()->getValues()){
     		$id = (int) $this->getParam('id');
-			$posts = new Posts();
-			/*
-			if ($this->isAjax()) {
-				echo "ajaaaax";
-			}
-			*/
+			$posts = new Posts;
 			if ($id > 0) {
 				$posts->update($id, $button->getForm()->getValues());
 				$this->flashMessage('The post has been updated.');

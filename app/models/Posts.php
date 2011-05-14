@@ -55,7 +55,7 @@ class Posts extends NObject
 	public function findAllFrontend()
 	{
 		return $this->connection
-			->select('posts.*, users.id as user_id, users.username as username')
+			->select('posts.*, users.id as user_id, users.username as username, users.realname as realname')
 			->from($this->table)
 				->leftJoin('users')
 				->on('posts.author_id = users.id');
@@ -67,13 +67,15 @@ class Posts extends NObject
 	public function findSingleFrontend($url)
 	{
 		return $this->connection
-			->select('posts.*, users.id as user_id, users.username as username')
+			->select('posts.*, users.id as user_id, users.username as username, users.realname as realname')
 			->from($this->table)
 				->leftJoin('users')
 				->on('posts.author_id = users.id')
-				->where('state = %i', 1)
-				->and('url = %s', $url);
+				->where('url = %s', $url)
+				->and('(state = %i', 1)
+				->or('state = %i)', 2);
 	}
+
 
 
 	
@@ -112,7 +114,7 @@ class Posts extends NObject
 			->from($this->table)
 				->join('posts_tags')
 					->on('posts_tags.post_id = posts.id')
-				->join('users')
+				->leftJoin('users')
 					->on('posts.author_id = users.id')
 				->where('posts_tags.tag_id = %i', $tag_id);
 	}
@@ -174,6 +176,8 @@ class Posts extends NObject
 	public function insert(array $data)
 	{
 		unset($data['id']);
+
+		$data['id'] = $this->getMaxId() + 1;
 
 		$data['date'] = time();
 		$data['url'] = NString::webalize($data['title']);

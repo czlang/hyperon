@@ -1,7 +1,8 @@
-images
-log
-sessions
-temp
-upload
-script
-graphics
+/graphics
+/images
+/log
+/nbproject
+/script
+/sessions
+/temp
+/upload

@@ -5,6 +5,12 @@ SET foreign_key_checks = 0;
 SET time_zone = 'SYSTEM';
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
+DROP TABLE IF EXISTS `autosave`;
+CREATE TABLE `autosave` (
+  `post_id` int(11) NOT NULL,
+  `text` text CHARACTER SET utf8 COLLATE utf8_czech_ci NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=dec8 COLLATE=dec8_bin;
+
 DROP TABLE IF EXISTS `posts`;
 CREATE TABLE `posts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
