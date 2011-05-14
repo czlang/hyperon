@@ -1,0 +1,26 @@
+{block content}
+
+{*
+
+<div id="facebook-login-box">
+    <h2>Facebook login</h2>
+        <p>
+            <a href="{if isset($facebook_login_url)}{$facebook_login_url}{/if}">
+                <img src="{$baseUri}/images/layout/facebook_logo_s.png" alt="Facebook login">
+            </a>
+        </p>
+</div>
+
+
+
+<div id="twitter-login-box">
+    <h2>Twitter login</h2>
+        <p>
+            <a href="{if isset($twitter_login_url)}{$twitter_login_url}{/if}">
+                <img src="{$baseUri}/images/layout/twitter_logo_s.png" alt="Twitter login">
+            </a>
+        </p>
+</div>
+*}
+
+{widget loginForm}

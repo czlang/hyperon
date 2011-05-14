@@ -1,0 +1,41 @@
+{foreach $posts as $post}
+		<div class="post state{$post->state}">
+			
+			{if $post->state == 1}
+				<h2 class="title"><a href="{plink Posts:post, $post->url}">{$post->title}</a></h2>
+			{else}
+				<p class="title"><a href="{plink Posts:post, $post->url}">{$post->title}</a></p>
+			{/if}
+
+			<p class="info">{!$post->date|timeAgoInWords} napsal {$post->realname} |
+
+				<span class="tags">
+					tagy:
+					{foreach $presenter->getPostTags($post->id) as $tag}
+						<a href="{plink Posts:tag, $tag->tag_url}">{$tag->tag}</a>
+					{/foreach}
+				</span>
+
+			</p>
+
+			{if isset($logged_user)}
+				{if ($logged_user['role']== 'admin')}
+					<p><a href="{plink AdminPosts:editpost, $post->id}">Edit</a> | <a href="{plink Auth:logout}">Logout</a></p>
+				{/if}
+			{/if}
+
+
+			{if $post->perex}
+				{!$post->perex|texy}
+				<p><a href="{plink Posts:post, $post->url}">Číst více</a></p>
+			{else}
+				{!$post->body|texy}
+			{/if}
+			
+
+
+
+		</div>
+
+	{/foreach}
+

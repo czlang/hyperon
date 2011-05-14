@@ -1,0 +1,66 @@
+{block #content}
+
+<h2>Archives</h2>
+
+
+<table id="posts-table">
+	<tr>
+		<th>Posts</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
+	</tr>
+	
+	{foreach $posts as $post}		
+	<tr>
+		<td class="title {if($post->state) == 3}draft-post{/if}" title="{!$post->body|striptags|truncate:200}">
+			{if($post->state) == 3}
+				<span class="draft-sign">Draft</span>
+			{/if}
+
+			{*<a href="{plink Posts:post, $post->url}">*}
+				{$post->title}
+			{*</a> *}
+		</td>
+		<td class="time">
+			{$post->date|date}
+		</td>
+		<td class="edit">
+			<a class="edit-link" href="{plink AdminPosts:editpost, $post->id}">Edit</a>
+		</td>
+		<td class="delete">	
+			<a class="delete-link" href="{plink AdminPosts:deletepost, $post->id}">Delete</a>
+		</td>
+	</tr>
+	{/foreach}	
+</table> 
+
+
+<table id="beeps-table">
+	<tr>
+		<th>Beeps</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
+	</tr>
+	
+	{foreach $beeps as $beep}
+	<tr>
+		<td class="title">
+			{!$beep->body|striptags|truncate:100}
+		</td>
+		<td class="time">
+			{$post->date|date}
+		</td>
+		<td class="edit">
+			<a class="edit-link" href="{plink AdminPosts:editpost, $beep->id}">Edit</a>
+		</td>
+		<td class="delete">	
+			<a class="delete-link" href="{plink AdminPosts:deletepost, $beep->id}">Delete</a>
+		</td>
+	</tr>
+	{/foreach}	
+</table> 
+
+
+<div class="cleaner"></div>
