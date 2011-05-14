@@ -29,7 +29,7 @@ final class AdminSettingsPresenter extends AdminPresenter
 	
 
 	public function renderDefault()
-	{		
+	{
 		$form = $this['editSettingsForm'];
 
 		if (!$form->isSubmitted()) {
@@ -61,6 +61,7 @@ final class AdminSettingsPresenter extends AdminPresenter
 		$form->addText('web_email', 'Email');
 		$form->addTextarea('meta_description', 'Meta description');
 		$form->addTextarea('meta_keywords', 'Meta keywords');
+		$form->addText('template', 'Template');
 
 		$form->addSubmit('cancel', 'Cancel')->setValidationScope(NULL)->onClick[] = array($this, 'CancelClicked');		
 		$form->addSubmit('send', 'Save')->onClick[] = array($this, 'sendEditSettingsClicked');

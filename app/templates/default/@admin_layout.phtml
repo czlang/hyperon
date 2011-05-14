@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Language" content="en">
+    
+	{if isset($robots)}<meta name="robots" content="{$robots}">{/if}
+
+	<title>{$settings["web_name"]} admin</title>
+		
+	<link rel="shortcut icon" href="{$baseUri}favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/blueprint.css" type="text/css">
+	<link rel="stylesheet" media="screen and (min-width: 540px)" href="{$basePath}/css/admin.css" type="text/css">
+	<link rel="stylesheet" media="screen and (max-width: 540px)" href="{$basePath}/css/admin_mobile.css" type="text/css" />
+
+	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/jquery.tagsinput.css" type="text/css">
+    <link rel="stylesheet" media="print" href="{$baseUri}/css/print.css" type="text/css">	
+
+	<script type="text/javascript" src="{$basePath}/js/jquery-1.5.2.min.js"></script>
+    <script type="text/javascript" src="{$basePath}/js/autoresize.jquery.min.js"></script>
+	<script type="text/javascript" src="{$basePath}/js/jquery.tagsinput.js"></script>
+	<script type="text/javascript" src="{$basePath}/js/netteForms.js"></script>
+	<script type="text/javascript" src="{$basePath}/js/nette-ajax.js"></script>
+	<script type="text/javascript" src="{$basePath}/js/typewatch.js"></script>
+
+
+	<script type="text/javascript">
+
+		$(document).ready(function(){
+
+			$(".editor").typeWatch({ 
+				highlight: false, 
+				wait: 500, 
+				captureLength: -1, 
+				callback: autosavePost
+			});
+
+
+			function autosavePost(txt) {				           
+                $.post(
+                	{link autosave!}, {'txt' : txt}
+				);
+			}
+		
+	
+			$(':input:visible:enabled:first').focus();
+		
+			$('#frmpostForm-perex, #frmpostForm-body').autoResize({
+			    onResize : function() {
+			        $(this).css({ opacity:0.8 });
+			    },
+			    animateCallback : function() {
+			        $(this).css({ opacity:1 });
+			    },
+			    animateDuration : 300,
+			    extraSpace : 0
+			});
+		
+			$('#frmpostForm-tags').tagsInput();
+		
+		});
+
+	</script>	
+
+</head>
+<body id="body">
+
+	<p class="logout"><span>{$logged_user["username"]} ({$logged_user["realname"]})</span> <a href="{plink Auth:logout}">Logout</a></p>
+
+	<div id="nav" class="floating-list-menu">
+		<ul>
+			<li class="home-link"><a href="{plink Homepage:}">&laquo;</a></li>
+			<li{ifCurrent AdminPosts:newpost} class="active"{/ifCurrent}><a href="{plink AdminPosts:newpost}">Post</a></li>			
+			<li{ifCurrent AdminPosts:archives} class="active"{/ifCurrent}><a href="{plink AdminPosts:archives}">Archives</a></li>
+			<li{ifCurrent AdminUsers:} class="active"{/ifCurrent}><a href="{plink AdminUsers:}">Users</a></li>
+			<li{ifCurrent AdminSettings:} class="active"{/ifCurrent}><a href="{plink AdminSettings:}">Settings</a></li>
+		<ul>
+		<div class="cleaner"></div>
+	</div>
+
+	<div class="cleaner"></div>
+
+	<div id="flash-box">
+		{foreach $flashes as $flash}<div class="flash {$flash->type}">{$flash->message}</div>{/foreach}
+	</div>
+		
+	<div id="admin-content">
+
+		<div id="admin-primary">				
+			{include #content}
+		</div>
+
+	</div>
+
+	
+</body>
+</html>

@@ -1,0 +1,27 @@
+{block #content}
+
+<h2>Editing  
+	{if ($post_info->state == 1)}
+		post
+	{elseif ($post_info->state == 2)}
+		beep
+	{/if}
+	<a href="{plink Posts:post, $post_info->url}">{$post_info->title}</a>
+</h2>
+
+
+	<div id="newpost-form">
+		{widget postForm}
+	</div>
+
+
+{include ../texy_syntax.phtml}
+
+
+<p id="all-tags">Tags:
+	{foreach $tags as $tag}
+		<a href="#" onclick="return $('#frmpostForm-tags').addTag({$tag->tag});">{$tag->tag}</a>
+	{/foreach}
+</p>
+
+ 

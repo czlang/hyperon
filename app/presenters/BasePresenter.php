@@ -18,18 +18,23 @@
 abstract class BasePresenter extends NPresenter
 {
 	    
-
-    public $templateDir = 'write_cz';
-    
+	public $settings;
     
 
     protected function startup()
     {
         parent::startup();
-        //$this->templateDir = dibi::fetchSingle('SELECT ... FROM ...');
+		$settings = new Settings();
+		$settings = $settings->findAll()->fetchPairs('name', 'value');
+		$this->settings = $settings;
+		$this->template->settings = $settings;
+		if(!$this->settings["template"]){
+			$this->settings["template"] = "default";
+		}		
     }
 
     
+
     /**
 	 * Formats layout template file names.
 	 * @param  string
@@ -40,8 +45,8 @@ abstract class BasePresenter extends NPresenter
     {
         $appDir = NEnvironment::getVariable('appDir');
         $path = '/' . str_replace(':', 'Module/', $presenter);
-        $pathP = substr_replace($path, '/templates/' . $this->templateDir, strrpos($path, '/'), 0);
-        $path = substr_replace($path, '/templates/' . $this->templateDir, strrpos($path, '/'));
+        $pathP = substr_replace($path, '/templates/' . $this->settings["template"], strrpos($path, '/'), 0);
+        $path = substr_replace($path, '/templates/' . $this->settings["template"], strrpos($path, '/'));
         return array(
                 "$appDir$pathP/$view.latte",
                 "$appDir$pathP.$view.latte",
@@ -63,7 +68,7 @@ abstract class BasePresenter extends NPresenter
     {
         $appDir = NEnvironment::getVariable('appDir');
         $path = '/' . str_replace(':', 'Module/', $presenter);
-        $pathP = substr_replace($path, '/templates/' . $this->templateDir, strrpos($path, '/'), 0);
+        $pathP = substr_replace($path, '/templates/' . $this->settings["template"], strrpos($path, '/'), 0);
         $list = array(
                 "$appDir$pathP/@$layout.latte",
                 "$appDir$pathP.@$layout.latte",
@@ -71,8 +76,8 @@ abstract class BasePresenter extends NPresenter
                 "$appDir$pathP.@$layout.phtml",
         );
         while (($path = substr($path, 0, strrpos($path, '/'))) !== FALSE) {
-                $list[] = "$appDir$path/templates/" . $this->templateDir . "/@$layout.latte";
-                $list[] = "$appDir$path/templates/" . $this->templateDir . "/@$layout.phtml";
+                $list[] = "$appDir$path/templates/" . $this->settings["template"] . "/@$layout.latte";
+                $list[] = "$appDir$path/templates/" . $this->settings["template"] . "/@$layout.phtml";
         }
         return $list;
     }
