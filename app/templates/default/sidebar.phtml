@@ -1,34 +1,10 @@
-{*	
-
-	{foreach $beeps as $beep}
-		<div class="beep">
-
-			{if isset($logged_user)}
-				{if ($logged_user['role']== 'admin')}
-					<p><a href="{plink AdminPosts:editpost, $beep->id}">Edit</a> | <a href="{plink Auth:logout}">Logout</a></p>
-				{/if}
-			{/if}
-			
-			{!$beep->body|texy}
-
-			<p class="info">{!$beep->date|timeAgoInWords} napsal {$beep->username}</p>
-
-			<div>
-				tagy:
-				{foreach $presenter->getPostTags($beep->id) as $tag}
-					<a href="{plink Posts:tag, $tag->tag_url}">{$tag->tag}</a>
-				{/foreach}
-			</div>	
-
-		</div>
-
+<div class="tags-box">
+	<h3>Tagy</h3>
+	{foreach $all_tags as $tag}		
+		<a href="{plink Posts:tag, $tag->tag_url}">{$tag->tag}</a>		 	
 	{/foreach}
+</div>
 
-*}
+<p><a href="{plink Feed:}">RSS</a></p>
 
-	<div class="tags">
-		<h3>Tagy</h3>
-		{foreach $all_tags as $tag}		
-			<a href="{plink Posts:tag, $tag->tag_url}">{$tag->tag}</a>		 	
-		{/foreach}
-	</div>
+<p><a href="{plink AdminPosts:newpost}">New Post</a></p>

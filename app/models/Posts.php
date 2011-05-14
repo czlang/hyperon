@@ -110,7 +110,7 @@ class Posts extends NObject
 
 	public function findAllByTagId($tag_id)
 	{
-		return $this->connection->select('posts.*, users.username')
+		return $this->connection->select('posts.*, users.username, users.realname')
 			->from($this->table)
 				->join('posts_tags')
 					->on('posts_tags.post_id = posts.id')

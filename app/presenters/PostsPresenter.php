@@ -43,6 +43,7 @@ final class PostsPresenter extends BasePresenter
 		$posts = new Posts();
 		$posts = $posts->findAllByTagId($tag->id)->and('( posts.state = %i', 1)->or('posts.state = %i )', 2)->orderBy('date DESC')->fetchAll();
 		$this->template->posts = $posts;
+		//NDebug::dump($posts);
 	}
 
 

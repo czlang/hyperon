@@ -1,0 +1,163 @@
+html{
+
+}
+
+body {
+	font-family: Calibri, sans-serif;
+	font-size: 100%;
+	color: #333;
+	background: #fff;
+	padding: 30px 30px 30px 50px;
+}
+
+a[href^="error:"]{background:red;color:white;}
+
+div.flash{
+	color: black;
+	background: #FFF9D7;
+	padding: 10px 30px 5px 30px;
+	margin: -2px 0 0 0;
+}
+
+.error{padding-left:20px;}
+
+a:hover,
+a:focus
+{
+	text-decoration: none;
+}
+
+.cleaner{
+	clear: both;
+}
+
+.floating-list-menu, 
+.no-style-list
+{
+	margin:0;padding:0;
+}
+.floating-list-menu li{
+	list-style:none;
+	float:left;
+	margin:0 15px 0 0px;
+}
+.no-style-list li{
+	list-style:none;
+}
+
+
+#header{	
+	margin: 0;
+	padding: 20px 0 40px 0;  
+}
+#header h1{
+	font-size: 160%;
+	letter-spacing: -1px;
+}
+#header h1 a{
+	color: #000;
+	text-decoration: none;
+}
+#header h1 a:hover,
+#header h1 a:focus
+{
+	text-decoration: underline;
+}
+
+
+#main{
+	width: 700px;
+	float: left;
+	padding: 0 40px 0 0px;
+}
+#secondary{
+	width: 250px;
+	float: left;
+	padding: 22px 0px 0 40px;	
+	line-height: 130%;
+}
+	#secondary .tags-box{
+		margin-bottom: 30px;
+		line-height: 170%;
+	}
+
+
+
+.post{
+	margin-bottom: 70px;
+}
+	.post p{
+		margin: 0 0 10px 0;
+		padding: 0;
+	}
+	.post .title{		
+		letter-spacing: -1px;
+		margin: 0 0 0 0;
+		padding: 0;
+	}
+	.post h1.title{		
+		font-size: 200%;
+		margin: 7px 0 9px 0;
+	}
+	.post .title a{
+		text-decoration: none;
+		border-bottom: solid 1px;
+	}
+	.post .title a:hover,
+	.post .title a:focus
+	{
+		border-bottom: none;
+	}
+	.post .info{
+		color: #808080;
+		margin: 0 0 20px 0;
+		padding: 0;		
+	}
+
+
+
+.beep{
+	margin-bottom: 50px;
+}
+.beep .info{
+	color: #808080;
+	margin-top: -10px;
+}
+
+
+pre{
+	width: 580px;
+	line-height: 140%;	
+	overflow: auto;	
+	margin: 15px 0 15px 0;
+	background: #EFEFEF;
+	padding: 10px 15px 10px 15px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	position: relative;
+	z-index: 1000; 
+}
+pre[class]:after {
+	content: attr(class);
+	display: block;
+	text-align: right;
+	font: normal 95%/1 Sans, Arial, sans-serif;
+	padding-top: 5px;
+	font-style: italic;
+	color: #AEAEAE;
+}
+
+
+
+#facebook-login-box{
+	margin: 0 0 40px 0;
+}
+
+#twitter-login-box{
+	margin: 0 0 40px 0;
+}
+
+
+
+

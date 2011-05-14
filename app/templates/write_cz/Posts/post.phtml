@@ -6,14 +6,17 @@
 		<h1 class="title">{$post->title}</h1>
 
 		<p class="info">
-			{!$post->date|timeAgoInWords} napsal {$post->realname} |
+			{!$post->date|timeAgoInWords} napsal {$post->realname}
 
-			<span class="tags">
-				tagy:
-				{foreach $presenter->getPostTags($post->id) as $tag}
-					<a href="{plink Posts:tag, $tag->tag_url}">{$tag->tag}</a>
-				{/foreach}
-			</span>
+			{if ($presenter->getPostTags($post->id))}
+ 				|
+					<span class="tags">
+						tagy:
+						{foreach $presenter->getPostTags($post->id) as $tag}
+							<a href="{plink Posts:tag, $tag->tag_url}">{$tag->tag}</a>
+						{/foreach}
+					</span>
+			{/if}
 		</p>
 
 

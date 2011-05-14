@@ -179,7 +179,11 @@ abstract class BasePresenter extends NPresenter
 	{
 		$posts_tags = new PostsTags();
 		$post_tags = $posts_tags->findAllByPostId($post_id)->fetchAll();
-	
+
+		if(empty($post_tags[0]->tag_url)){
+			$post_tags = FALSE;
+		};
+
 		return $post_tags;
 	}
 
