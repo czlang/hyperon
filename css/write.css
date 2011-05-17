@@ -82,8 +82,11 @@ h4 {
 	font-size: 1.0em;
 }
 
-h1 span, h2 span, h3 span {
-	display: block;
+h1 span, 
+h2 span, 
+h3 span 
+{
+	/*display: block;*/
 	font-size: 0.7em;
 	margin-top: 5px;
 	font-weight: normal;
@@ -255,6 +258,14 @@ pre[class]:after {
 .post{	
 	margin-bottom: 80px;
 }
+	.draft-sign{
+		font-style: italic;
+		font-variant: small-caps;
+		font-size: 120%;
+		color: #AEAEAE;
+		margin-left: 0px;
+		margin-right: 0px; 
+	}
 
 .state2{
 	font-size: 80%;

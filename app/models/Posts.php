@@ -71,9 +71,9 @@ class Posts extends NObject
 			->from($this->table)
 				->leftJoin('users')
 				->on('posts.author_id = users.id')
-				->where('url = %s', $url)
-				->and('(state = %i', 1)
-				->or('state = %i)', 2);
+				->where('url = %s', $url);
+				//->and('(state = %i', 1)
+				//->or('state = %i)', 2);
 	}
 
 

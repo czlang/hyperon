@@ -24,12 +24,17 @@ final class PostsPresenter extends BasePresenter
 		$posts = new Posts();
 		$post = $posts->findSingleFrontend($post_url)->fetch();
 
-		if($post){
+		$user = NEnvironment::getUser();
+
+		if($user->isLoggedIn() AND $post["state"] == 3){
 			$this->template->post = $post;
 		}
-			else{
-				throw new NBadRequestException(404);
-			}
+		elseif($post AND $post["state"] != 3){
+			$this->template->post = $post;
+		}
+		else{
+			throw new NBadRequestException(404);
+		}
 	}
 
 

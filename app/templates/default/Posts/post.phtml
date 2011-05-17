@@ -3,7 +3,7 @@
 
 	<div class="post">
 
-		<h1 class="title">{$post->title}</h1>
+		<h1 class="title">{$post->title} {if $post->state == 3}<span class="draft-sign">Draft</span>{/if}</h1>
 
 		{if isset($logged_user)}
 			{if ($logged_user['role']== 'admin')}
