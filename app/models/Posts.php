@@ -188,7 +188,7 @@ class Posts extends NObject
 			$data['url'] = $url_already_exists . "-" . time();
 		}
 
-		if(isset($data['tags'])){
+		if( isset($data['tags']) AND ($data['tags'] != '') ){
 			$this->solveTags($data);		
 		}
 
@@ -200,7 +200,7 @@ class Posts extends NObject
 
 
 	public function solveTags($data)
-	{
+	{		
 		$tags_md = new Tags();
 		$posts_tags_md = new PostsTags();
 
