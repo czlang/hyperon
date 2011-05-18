@@ -30,8 +30,7 @@ final class AdminSettingsPresenter extends AdminPresenter
 
 	public function renderDefault($exception)
 	{
-		$form = $this['editSettingsForm'];
-
+		$form = $this['editSettingsForm'];		
 		if (!$form->isSubmitted()) {
 
 			$settings = new Settings();
@@ -41,6 +40,10 @@ final class AdminSettingsPresenter extends AdminPresenter
 				throw new BadRequestException('Record not found');
 			}			
 			$form->setDefaults($settings);
+		}
+
+		if(!$this->settings['template_loaded']) {
+			$this->flashMessage('Chosen template does not exist, falling back to default');
 		}
 
 	}		
@@ -53,19 +56,18 @@ final class AdminSettingsPresenter extends AdminPresenter
 	 * @return mixed
 	 */
 	protected function createComponentEditSettingsForm()
-	{	
-		$form = new NAppForm;
+	{
+		$form = new NAppForm();
 
 		$form->addText('web_name', 'Blog Name');
 		$form->addText('web_desc', 'Blog Description');
 		$form->addText('web_email', 'Email');
 		$form->addTextarea('meta_description', 'Meta description');
-		$form->addTextarea('meta_keywords', 'Meta keywords');
-		$form->addText('template', 'Template');
-
-		$form->addSubmit('cancel', 'Cancel')->setValidationScope(NULL)->onClick[] = array($this, 'CancelClicked');		
+		$form->addTextarea('meta_keywords', 'Meta keywords');		
+		$form->addText('template', 'Template');		
+		
 		$form->addSubmit('send', 'Save')->onClick[] = array($this, 'sendEditSettingsClicked');
-
+		$form->addSubmit('cancel', 'Cancel')->setValidationScope(NULL)->onClick[] = array($this, 'CancelClicked');
 
 		return $form;
 	}
@@ -84,7 +86,6 @@ final class AdminSettingsPresenter extends AdminPresenter
 			$settings->update($button->getForm()->getValues());
 			$this->flashMessage('Settings updated.');
 			$this->redirect('AdminSettings:');
-
     	}
     }
 	

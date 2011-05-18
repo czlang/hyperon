@@ -28,9 +28,13 @@ abstract class BasePresenter extends NPresenter
 		$settings = $settings->findAll()->fetchPairs('name', 'value');
 		$this->settings = $settings;
 		$this->template->settings = $settings;
-		if(!$this->settings["template"]){
-			$this->settings["template"] = "default";
-		}		
+		if( (!$this->settings['template']) OR (!is_dir(APP_DIR . "/templates/" . $this->settings['template'])) ) {		
+			$this->settings['template'] = 'default';
+			$this->settings['template_loaded'] = FALSE;			
+		}
+			else{
+				$this->settings['template_loaded'] = TRUE;				
+			}
     }
 
     

@@ -21,10 +21,8 @@ abstract class AdminPresenter extends BasePresenter
 	protected function startup()
 	{
 		parent::startup();
-
 		
-		$this->setLayout('admin_layout');	
-
+		$this->setLayout('admin_layout');
 				
         $user = NEnvironment::getUser();
             if (!$user->isLoggedIn()) {
@@ -37,8 +35,7 @@ abstract class AdminPresenter extends BasePresenter
 
 		$settings = new Settings();
 		$settings = $settings->findAll()->fetchPairs('name', 'value');
-		$this->template->settings = $settings;
-		
+		$this->template->settings = $settings;		
 	}
 
 

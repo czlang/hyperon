@@ -12,7 +12,7 @@ a[href^="error:"]{background:red;color:white;}
 div.flash{
 	color: black;
 	background: #FFF9D7;
-	padding: 10px 30px 5px 75px;
+	padding: 7px 30px 7px 75px;
 	margin: -2px 0 0 0;
 }
 
@@ -226,14 +226,15 @@ a:focus
 	height: 100px;
 }
 #settings-form #frmeditSettingsForm-send{
-	font-size: 120%;
+	font-size: 140%;
 	width: 100px;
-	margin: 20px 0 0 20px;
+	margin: 40px 0 0 60px;
 	padding: 10px 15px 10px 15px;
 }
 #settings-form #frmeditSettingsForm-cancel{
+	font-size: 100%;
 	width: 80px;
-	margin: 40px 0 0 60px;
+	margin: 20px 0 0 50px;
 	padding: 5px 10px 5px 10px;
 }
 
