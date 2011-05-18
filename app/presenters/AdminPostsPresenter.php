@@ -43,7 +43,7 @@ final class AdminPostsPresenter extends AdminPresenter
 
 	
 
-	public function renderDefault()
+	public function renderDefault($exception)
 	{		
 		$posts = new Posts;
 		$this->template->posts = $posts->findAll()->orderBy('post_date DESC');

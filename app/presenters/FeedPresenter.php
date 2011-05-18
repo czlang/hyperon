@@ -26,7 +26,7 @@ final class FeedPresenter extends BasePresenter
 
 
 
-	public function renderDefault() {
+	public function renderDefault($exception) {
 
 		$texy = new Texy();
 			$texy->encoding = 'UTF-8';

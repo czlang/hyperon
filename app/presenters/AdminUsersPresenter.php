@@ -28,7 +28,7 @@ final class AdminUsersPresenter extends AdminPresenter
 
 	
 
-	public function renderDefault()
+	public function renderDefault($exception)
 	{		
 		$users = new Users();
 		$registered_users = $users->findAll()->orderBy('username DESC')->fetchAll();

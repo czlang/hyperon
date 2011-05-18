@@ -28,7 +28,7 @@ final class AdminSettingsPresenter extends AdminPresenter
 
 	
 
-	public function renderDefault()
+	public function renderDefault($exception)
 	{
 		$form = $this['editSettingsForm'];
 

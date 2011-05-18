@@ -49,8 +49,10 @@ class RssControl extends NControl
 		// properties
 		$properties = $this->getProperties();
 		$this->onPrepareProperties($properties);
+		//$properties["description"] = "sdfsdf";
 		// check
-		if (empty($properties["title"]) || empty($properties["description"]) || empty($properties["link"])) {
+		//if (empty($properties["title"]) || empty($properties["description"]) || empty($properties["link"])) {
+		if (empty($properties["title"]) || empty($properties["link"])) {
 			throw new InvalidStateException("At least one of mandatory properties title, description or link was not set.");
 		}
 

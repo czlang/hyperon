@@ -150,7 +150,7 @@ abstract class BasePresenter extends NPresenter
 
 
 
-	public function renderDefault(){
+	public function renderDefault($exception){
 
 
 

@@ -26,7 +26,7 @@ final class AuthPresenter extends BasePresenter
 
 
 
-    public function renderDefault()
+    public function renderDefault($exception)
 	{
 
 	}
