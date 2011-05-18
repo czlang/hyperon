@@ -140,11 +140,9 @@ abstract class BasePresenter extends NPresenter
 		$settings = $settings->findAll()->fetchPairs('name', 'value');
 		$this->template->settings = $settings;
 
-
 		$tags = new Tags();
 		$all_tags = $tags->findAll()->fetchAll();
 		$this->template->all_tags = $all_tags;
-
 
 		$this->template->registerHelper('timeAgoInWords', 'Helpers::timeAgoInWords');
 		$this->template->registerHelper('humanizeTime', 'Helpers::humanizeTime');

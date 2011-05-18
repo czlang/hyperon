@@ -26,6 +26,23 @@ final class AdminSettingsPresenter extends AdminPresenter
 	}
 	
 
+  	public function renderBackupDbNow()
+	{
+		$db_config = NEnvironment::getConfig()->database;		
+
+		set_time_limit(0);
+		ignore_user_abort(1);
+
+		$path = WWW_DIR . '/backup/mysql/';
+		$file = 'mysql_' . date('Y-m-d_H-i') . '.sql.gz';
+
+		$dump = new MySQLDump(new mysqli($db_config['host'], $db_config['username'], $db_config['password'], $db_config['database']));		
+		$dump->save($path . $file);
+
+		$this->flashmessage($file . ' created');
+		$this->redirect('AdminSettings:default');		
+	}
+
 	
 
 	public function renderDefault($exception)
