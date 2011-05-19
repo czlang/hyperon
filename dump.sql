@@ -37,11 +37,23 @@ CREATE TABLE `posts_tags` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 
+
 DROP TABLE IF EXISTS `settings`;
 CREATE TABLE `settings` (
   `name` varchar(255) COLLATE utf8_czech_ci NOT NULL,
   `value` text COLLATE utf8_czech_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+INSERT INTO `settings` (`name`, `value`) VALUES
+('web_name',	'My Blog'),
+('web_desc',	''),
+('web_email',	''),
+('meta_description',	''),
+('meta_keywords',	''),
+('template',	'default'),
+('google_analytics_id',	'');
+
+-- 2011-05-19 12:24:40
 
 
 

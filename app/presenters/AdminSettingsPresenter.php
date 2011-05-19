@@ -80,7 +80,8 @@ final class AdminSettingsPresenter extends AdminPresenter
 		$form->addText('web_desc', 'Blog Description');
 		$form->addText('web_email', 'Email');
 		$form->addTextarea('meta_description', 'Meta description');
-		$form->addTextarea('meta_keywords', 'Meta keywords');		
+		$form->addTextarea('meta_keywords', 'Meta keywords');
+		$form->addText('google_analytics_id', 'Google analytics id');
 		$form->addText('template', 'Template');		
 		
 		$form->addSubmit('send', 'Save')->onClick[] = array($this, 'sendEditSettingsClicked');
