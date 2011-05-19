@@ -31,5 +31,17 @@
 
 	</div>
 
-	
 
+<h3>Komentáře</h3>
+	{foreach $comments as $comment}
+		<div class="comment">
+			<p class="author">{$comment->author}</p>			
+			<div class="body">{!$comment->body|texy}</div>
+			<p class="author">{$comment->time|timeAgoInWords}</p>
+		</div>
+		<br>
+	{/foreach}
+
+	
+<h3>Přidat komentář</h3>
+	{widget commentForm}

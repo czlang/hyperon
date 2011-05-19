@@ -122,6 +122,20 @@ a:focus
 	}
 
 
+.comment {
+}
+	.comment .author,
+	.comment .time
+	{
+		margin: 0;
+		padding: 0;
+	}
+	.comment .time{
+		float: right;
+	}
+
+
+
 .beep{
 	margin-bottom: 50px;
 }

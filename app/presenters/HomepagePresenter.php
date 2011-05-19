@@ -26,7 +26,6 @@ class HomepagePresenter extends BasePresenter
 		$posts = new Posts();
 		$posts = $posts->findAllFrontend()->where('state = %i', 1)->or('state = %i', 2)->orderBy('date DESC')->fetchAll();
 		$this->template->posts = $posts;
-
 	}
 
 

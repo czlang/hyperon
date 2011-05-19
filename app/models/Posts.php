@@ -130,7 +130,7 @@ class Posts extends NObject
 	
 	public function findId($post_url)
 	{
-		return $this->connection->select('id')->from($this->table)->where('post_url=%s', $post_url);
+		return $this->connection->select('id')->from($this->table)->where('url=%s', $post_url);
 	}
 	
 	
