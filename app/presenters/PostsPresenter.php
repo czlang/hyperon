@@ -76,17 +76,27 @@ final class PostsPresenter extends BasePresenter
 			$post_id = $posts->findId($post_url)->fetchSingle();
 		}
 
+        $user = NEnvironment::getUser();        
+
+        $logged_user_realname = "";
+        
+		if ($user->isLoggedIn()) {
+            $logged_user = $user->getIdentity()->getData();
+            $logged_user_realname = $logged_user['realname'];
+		}
+        
 		$form = new NAppForm();
 
         $form->addGroup();
 		$form->addText('author', 'Vaše jméno *')
-            ->addRule(NForm::FILLED, 'Dont forget the post body.');
+            ->addRule(NForm::FILLED, 'Dont forget the post body.')
+                ->setValue($logged_user_realname);
 
 		$form->addTextarea('body', 'Komentář *')
 			->addRule(NForm::FILLED, 'Dont forget the post body.');		
 
 		$form->addHidden('post_id', '')->setValue($post_id);
-
+        
         $form->addGroup()
             ->setOption('container', NHtml::el('div')->class('nospam'));
       

@@ -73,7 +73,14 @@ class Comments extends NObject
 	{				
 		$data['time'] = time();		
 		$data['visible'] = 1;
-        unset($data['nospam']);
+        unset($data['nospam']);        
+
+        $user = NEnvironment::getUser();
+        if ($user->isLoggedIn()) {
+            $logged_user = $user->getIdentity()->getData();         
+            $data['user_id'] = $logged_user['id'];            
+        }
+        
 		return $this->connection->insert($this->table, $data)->execute(dibi::IDENTIFIER);
 	}
     
