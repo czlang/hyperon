@@ -188,6 +188,16 @@ abstract class BasePresenter extends NPresenter
 
 		return $post_tags;
 	}
+    
+    
+    
+    public function getCommentsCount($post_id)
+	{
+		$comments = new Comments();
+        $comments_count =  $comments->countByPostId($post_id);
+
+		return $comments_count;
+	}
 
 
 

@@ -16,6 +16,16 @@ html, body, div, span, p, a, img, ul, ol, li, table, th, tr, td, form, fieldset,
 	border: 0;
 }
 
+div.flash{
+	position: fixed;
+	width: 100%;
+	z-index: 100;
+	color: black;
+	background: #FFF9D7;
+	padding: 6px 30px 5px 30px;
+	margin: -2px 0 0 0;
+}
+
 ul, ol {
 	list-style-type: none;
 	margin-bottom: 15px;
@@ -320,6 +330,52 @@ pre[class]:after {
 }
 
 
+.comment {
+	margin-bottom: 15px;
+}
+	.comment .info{
+		margin: 0;
+		padding: 0;
+	}
+	.comment .author{	
+		margin: 0;
+		padding: 0;	
+	}
+	.comment .time{
+		color: #808080;
+	}
+	.comment .body{
+		line-height: 140%;
+		margin: 0;
+		padding: 0;
+	}
+	#frm-commentForm{
+		margin: 25px 0 0 0;
+	}
+	#frm-commentForm table tr{
+		vertical-align: top;
+	}
+	#frmcommentForm-author{		
+		width: 300px;
+		margin: 0 0 15px 5px;
+		padding: 3px;		
+	}
+	#frmcommentForm-body{
+		width: 502px;
+		height: 300px;
+		margin: 0 0 10px 5px;
+		padding: 3px;
+	}
+	#frm-commentForm fieldset{
+		border: none;
+		margin: 0;
+		padding: 0;
+	}
+	#frmcommentForm-send{
+		font-size: 110%;
+		margin-left: 90px;
+		padding: 10px 15px 10px 15px;				
+	}
 
 /* other styles */
 hr {

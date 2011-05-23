@@ -24,6 +24,7 @@ CREATE TABLE `posts` (
   `title` varchar(255) COLLATE utf8_czech_ci NOT NULL,
   `perex` text COLLATE utf8_czech_ci NOT NULL,
   `body` text COLLATE utf8_czech_ci NOT NULL,
+  `comments_disabled` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   FULLTEXT KEY `post_title` (`title`,`body`),
   FULLTEXT KEY `post_title_2` (`title`,`body`)
@@ -51,7 +52,9 @@ INSERT INTO `settings` (`name`, `value`) VALUES
 ('meta_description',	''),
 ('meta_keywords',	''),
 ('template',	'default'),
-('google_analytics_id',	'');
+('google_analytics_id',	''),
+('comments_enabled', '1');
+
 
 -- 2011-05-19 12:24:40
 

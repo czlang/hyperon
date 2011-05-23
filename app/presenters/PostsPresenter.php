@@ -18,7 +18,7 @@
 final class PostsPresenter extends BasePresenter
 {
 
-
+                
 
 	public function renderPost($post_url){
 		$posts = new Posts();
@@ -29,16 +29,17 @@ final class PostsPresenter extends BasePresenter
 
 		$user = NEnvironment::getUser();
 
-		if($user->isLoggedIn() AND $post["state"] == 3){
+		if($user->isLoggedIn() AND $post['state'] == 3){
 			$this->template->post = $post;
 		}
-		elseif($post AND $post["state"] != 3){
+		elseif($post AND $post['state'] != 3){
 			$this->template->post = $post;
 			$this->template->comments = $comments;
 		}
 		else{
 			throw new NBadRequestException(404);
-		}
+		}        
+
 	}
 
 
@@ -76,22 +77,24 @@ final class PostsPresenter extends BasePresenter
 		}
 
 		$form = new NAppForm();
-/*
-		$renderer = $form->renderer;
-		$renderer->wrappers['group']['container'] = NULL;
-		$renderer->wrappers['pair']['container'] = NULL;
-		$renderer->wrappers['label']['container'] = '';
-		$renderer->wrappers['controls']['container'] = '';
-		$renderer->wrappers['control']['container'] = 'p';
-		$renderer->wrappers['control']['errors'] = TRUE;
-*/
-		$form->addText('author', 'Vaše jméno');
 
-		$form->addTextarea('body', 'Body *')
+        $form->addGroup();
+		$form->addText('author', 'Vaše jméno *')
+            ->addRule(NForm::FILLED, 'Dont forget the post body.');
+
+		$form->addTextarea('body', 'Komentář *')
 			->addRule(NForm::FILLED, 'Dont forget the post body.');		
 
 		$form->addHidden('post_id', '')->setValue($post_id);
 
+        $form->addGroup()
+            ->setOption('container', NHtml::el('div')->class('nospam'));
+      
+            $form->addText('nospam', 'Fill in „nospam“')
+                ->addRule(NForm::FILLED, 'You are looking like a spambot!')
+                ->addRule(NForm::EQUAL, 'You are looking like a spambot!', 'nospam');
+
+        $form->addGroup();
 		$form->addSubmit('send', 'Odeslat')->onClick[] = array($this, 'sendCommentClicked');			
 		
 		return $form;
@@ -110,8 +113,8 @@ final class PostsPresenter extends BasePresenter
     	if ($button->getForm()->getValues()){    		
 			$comments = new Comments();	
 			$comments->insert($button->getForm()->getValues());
-			$this->flashMessage('Posted!.');
-			$this->redirect('Posts:post', $post_url);			
+			$this->flashMessage('Komentář odeslán.');			
+            $this->redirectUri($this->link('//Posts:post', $post_url) . '#comments');
     	}
     }
 	

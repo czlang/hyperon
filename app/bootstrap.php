@@ -19,10 +19,11 @@ require LIBS_DIR . '/Nette/Nette/loader.php';
 // Step 2: Configure environment
 // 2a) enable NDebug for better exception and error visualisation
 NDebug::enable();
-//NDebug::enable(NDebug::DEVELOPMENT);
-//NDebug::enable(NDebug::PRODUCTION);
 NDebug::$strictMode = TRUE;
 NDebug::$showBar = FALSE;
+
+if(NEnvironment::isProduction()) NDebug::enable(NDebug::PRODUCTION);
+    else NDebug::enable(NDebug::DEVELOPMENT);
 
 //NDebug::$maxDepth = 10;  // hloubka zanoření polí
 //NDebug::$maxLen   = 999999; // maximální délka řetězce
@@ -48,7 +49,9 @@ $user->setExpiration("+ 365 days", FALSE);
 $application = NEnvironment::getApplication();
 
 $application->errorPresenter = 'Error';
-$application->catchExceptions = TRUE;
+if(NEnvironment::isProduction()) $application->catchExceptions = TRUE;
+    else $application->catchExceptions = FALSE;
+
 
 $application->onStartup[] = 'Users::initialize';
 

@@ -33,6 +33,11 @@
 					</span>
 				{/if}
 
+                
+                {if ($settings['comments_enabled']) == 1 AND (!$post->comments_disabled)}
+                    | <a href="{plink Posts:post, $post->url}#comments">Komentáře: {$presenter->getCommentsCount($post->id)}</a>
+				{/if}
+                
 			</p>
 
 

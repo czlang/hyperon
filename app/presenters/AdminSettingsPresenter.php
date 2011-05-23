@@ -82,7 +82,8 @@ final class AdminSettingsPresenter extends AdminPresenter
 		$form->addTextarea('meta_description', 'Meta description');
 		$form->addTextarea('meta_keywords', 'Meta keywords');
 		$form->addText('google_analytics_id', 'Google analytics id');
-		$form->addText('template', 'Template');		
+		$form->addText('template', 'Template');
+		$form->addCheckbox('comments_enabled', 'Comments globally enabled');
 		
 		$form->addSubmit('send', 'Save')->onClick[] = array($this, 'sendEditSettingsClicked');
 		$form->addSubmit('cancel', 'Cancel')->setValidationScope(NULL)->onClick[] = array($this, 'CancelClicked');

@@ -64,3 +64,33 @@
 
 
 <div class="cleaner"></div>
+
+
+
+<table id="comments-table">
+	<tr>
+		<th>Comments</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
+	</tr>
+	
+	{foreach $comments as $comment}
+	<tr>
+		<td class="">
+			{$comment->time|timeAgoInWords} {$comment->author}
+		</td>
+		<td class="" title="{$comment->body}">
+            <a href="{plink Posts:post, $comment->post_url}#comment{$comment->id}">{!$comment->body|truncate:100|texy}</a>
+		</td>
+        {*
+		<td class="edit">
+			<a class="edit-link" href="{plink AdminPosts:editcomment, $comment->id}">Edit</a>
+		</td>
+        *}        
+		<td class="delete">	
+			<a class="delete-link" href="{link deletecomment!, $comment->id}">Delete</a>
+		</td>
+	</tr>
+	{/foreach}	
+</table> 

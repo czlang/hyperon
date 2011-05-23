@@ -72,7 +72,13 @@
 				}, function() {
 					$(this).stop(true, false).animate({ width:720});					
 				});
+                
+                $(".nospam").hide();
+                $("#frmcommentForm-nospam").val("no" + "spam");
 
+                $(".flash").ready(function () {
+                    $(".flash").fadeOut(6000);
+                });
 			});
 
 		</script>
@@ -95,10 +101,8 @@
 </head>
 <body>
 
-
-
 	<div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
-
+    
 	<div id="pgWrap">
 		<div id="layout">
 			<div class="contObal">

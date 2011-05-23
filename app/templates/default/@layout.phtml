@@ -1,4 +1,4 @@
-<!DOCTYPE>
+<!DOCTYPE html>
 {if isset($post->lang)}
 	{if $post->lang == 1}
 		{var $lang = "cs"}
@@ -63,8 +63,10 @@
 					}
 				}, function() {
 					$(this).stop(true, false).animate({ width:720});					
-				});
-
+				});                
+   
+                $(".nospam").hide();
+                $("#frmcommentForm-nospam").val("no" + "spam");
 			});
 
 		</script>

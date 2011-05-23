@@ -40,6 +40,15 @@ final class AdminPostsPresenter extends AdminPresenter
 
     	$autosave->autosave($post_id, $txt);		
 	}
+    
+    
+    
+   	public function handleDeleteComment($id)
+	{
+		$comments = new Comments();
+        $comments->delete($id);
+        $this->redirect('AdminPosts:archives');
+	}
 
 	
 
@@ -112,7 +121,10 @@ final class AdminPostsPresenter extends AdminPresenter
 		$beeps = $posts->findAllFrontend()->where('state = %i', 2)->orderBy('date DESC')->fetchAll();		
 		$this->template->beeps = $beeps;
 
-
+        $comments = new Comments();
+		$comments = $comments->findAllWithPosts()->fetchAll();		
+        //NDebug::dump($comments);
+		$this->template->comments = $comments;
 	}
 
 
@@ -200,8 +212,10 @@ final class AdminPostsPresenter extends AdminPresenter
 			$form->addRadioList('lang', '', $lang)
 				->setValue(1)
 				->addRule(NForm::FILLED, 'Choose language');
-
-			$form->getElementPrototype()->div = 'blabla';
+            
+            if($this->settings['comments_enabled']){                
+                $form->addCheckbox('comments_disabled', 'Disable comments for this posts');
+            }            
 
 			$form->addSubmit('send', 'Save')->onClick[] = array($this, 'sendPostClicked');			
 		
@@ -267,9 +281,8 @@ final class AdminPostsPresenter extends AdminPresenter
 		$this->redirect('AdminPosts:archives');
 	}
 	
-	
-
-
+    
+    
 
    /**
 	* Cancel clicked.

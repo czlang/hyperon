@@ -169,7 +169,8 @@ a:focus
 
 
 #posts-table,
-#users-table
+#users-table,
+#comments-table
 {
 	width: 600px;	
 	float: left;
@@ -191,7 +192,8 @@ a:focus
 #posts-table tr:hover,
 #beeps-table tr:hover,
 #users-table tr:hover,
-#users-table .logged
+#users-table .logged,
+#comments-table tr:hover
 {
 	background: #EFEFEF; 
 }
@@ -212,17 +214,17 @@ a:focus
 }
 
 
+#comments-table td{
+	vertical-align: top;
+}
+
+
 #settings-form{
 	width: 600px;
 }
-#settings-form input{
-	font-size: 110%;
-	width: 400px;
-}
 #settings-form textarea{
 	font-size: 110%;
-	font-family: sans-serif;
-	width: 400px;
+	font-family: sans-serif;	
 	height: 100px;
 }
 #settings-form #frmeditSettingsForm-send{
@@ -242,7 +244,7 @@ a:focus
 .texy-syntax{
 	font-size: 90%;
 	position: fixed;
-	top: 500px;
+	top: 600px;
 	left: 980px;	
 }
 .texy-syntax h5{

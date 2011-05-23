@@ -15,7 +15,7 @@ a[href^="error:"]{background:red;color:white;}
 div.flash{
 	color: black;
 	background: #FFF9D7;
-	padding: 10px 30px 5px 30px;
+	padding: 8px 30px 5px 30px;
 	margin: -2px 0 0 0;
 }
 
@@ -124,16 +124,29 @@ a:focus
 
 .comment {
 }
-	.comment .author,
-	.comment .time
-	{
+	.comment .info{
 		margin: 0;
 		padding: 0;
 	}
+	.comment .author{
+		font-size: 130%;
+		margin: 0;
+		padding: 0;	
+	}
 	.comment .time{
-		float: right;
+		color: #808080;
+	}
+	.comment .body{
+		line-height: 140%;
+		margin: 0;
+		padding: 0;
 	}
 
+	#frm-commentForm fieldset{
+		border: none;
+		margin: 0;
+		padding: 0;
+	}
 
 
 .beep{
