@@ -35,13 +35,28 @@ class Posts extends NObject
 	{
 		return count($this->connection->select('*')->from($this->table));
 	}
+
+
+
+	public function countPostsByTag($tag_id)
+	{
+		return count($this->connection->select('*')
+					->from($this->table)
+					->join('posts_tags')
+					->on('posts_tags.post_id = posts.id')					
+					->where('posts_tags.tag_id = %i', $tag_id));
+	}
 	
 	
 	
 	public function applyLimit($offset, $itemsPerPage)
-	{		
-		return $this->connection->select('*')->from($this->table)->limit($offset . ', ' . $itemsPerPage);	
-		
+	{	
+		return $this->connection
+			->select('posts.*, users.id as user_id, users.username as username, users.realname as realname')
+			->from($this->table)
+				->leftJoin('users')
+				->on('posts.author_id = users.id')
+				->limit($offset . ', ' . $itemsPerPage);		
 	}
 	
 	
@@ -52,13 +67,19 @@ class Posts extends NObject
 	}
 
 
-	public function findAllFrontend()
+	public function findAllFrontend($offset, $itemsPerPage)
 	{
 		return $this->connection
 			->select('posts.*, users.id as user_id, users.username as username, users.realname as realname')
+				->select(
+					dibi::select('count(*)')
+	                ->from('comments')
+	                ->where('comments.post_id = posts.id')
+				)->as('comments_count')
 			->from($this->table)
 				->leftJoin('users')
-				->on('posts.author_id = users.id');
+				->on('posts.author_id = users.id')
+				->limit($offset . ', ' . $itemsPerPage);
 	}
 
 
@@ -68,12 +89,15 @@ class Posts extends NObject
 	{
 		return $this->connection
 			->select('posts.*, users.id as user_id, users.username as username, users.realname as realname')
+				->select(
+					dibi::select('count(*)')
+	                ->from('comments')
+	                ->where('comments.post_id = posts.id')
+				)->as('comments_count')
 			->from($this->table)
 				->leftJoin('users')
 				->on('posts.author_id = users.id')
 				->where('url = %s', $url);
-				//->and('(state = %i', 1)
-				//->or('state = %i)', 2);
 	}
 
 
@@ -108,15 +132,22 @@ class Posts extends NObject
 	
 
 
-	public function findAllByTagId($tag_id)
+	public function findAllByTagId($tag_id, $offset, $itemsPerPage)
 	{
-		return $this->connection->select('posts.*, users.username, users.realname')
+		return $this->connection
+			->select('posts.*, users.username, users.realname')
+				->select(
+					dibi::select('count(*)')
+	                ->from('comments')
+	                ->where('comments.post_id = posts.id')
+				)->as('comments_count')
 			->from($this->table)
 				->join('posts_tags')
 					->on('posts_tags.post_id = posts.id')
 				->leftJoin('users')
 					->on('posts.author_id = users.id')
-				->where('posts_tags.tag_id = %i', $tag_id);
+				->where('posts_tags.tag_id = %i', $tag_id)
+				->limit($offset . ', ' . $itemsPerPage);
 	}
 
 

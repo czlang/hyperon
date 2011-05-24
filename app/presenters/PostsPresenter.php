@@ -23,7 +23,7 @@ final class PostsPresenter extends BasePresenter
 	public function renderPost($post_url){
 		$posts = new Posts();
 		$post = $posts->findSingleFrontend($post_url)->fetch();
-	
+
 		$comments = new Comments();
 		$comments = $comments->findAllByPostId($post['id'])->fetchAll();
 
@@ -52,7 +52,13 @@ final class PostsPresenter extends BasePresenter
 		if($tag){
 			$this->template->tag = $tag;
 			$posts = new Posts();
-			$posts = $posts->findAllByTagId($tag->id)->and('( posts.state = %i', 1)->or('posts.state = %i )', 2)->orderBy('date DESC')->fetchAll();
+			
+			$vp = new VisualPaginator($this, 'vp');
+			
+			$vp->paginator->itemsPerPage = 10;
+	        $vp->paginator->itemCount = $posts->countPostsByTag($tag->id);
+
+	        $posts = $posts->findAllByTagId($tag->id, $vp->paginator->offset, $vp->paginator->itemsPerPage)->where(' ( state = %i', 1)->or('state = %i ) ', 2)->orderBy('date DESC')->fetchAll();
 			$this->template->posts = $posts;
 		}
 		else{

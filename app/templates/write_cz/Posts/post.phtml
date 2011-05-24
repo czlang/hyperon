@@ -19,7 +19,7 @@
 			{/if}            
 
             {if ($settings['comments_enabled']) == 1 AND (!$post->comments_disabled) AND ($post['state'] != 3)}
-                | <a href="#comments">Komentáře: {$presenter->getCommentsCount($post->id)}</a>
+                | <a href="#comments">Komentáře: {$post->comments_count}</a>
             {/if}
             
 		</p>

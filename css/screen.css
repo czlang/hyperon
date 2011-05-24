@@ -191,6 +191,20 @@ pre[class]:after {
 	margin: 0 0 40px 0;
 }
 
-
-
-
+.paginator {
+	text-align: center;
+}
+.paginator .button{
+	color: #808080;
+	/*border: solid 1px green;*/
+	padding: 5px 13px;
+}
+.paginator .current{
+	color: #808080;
+	/*border: solid 1px blue;*/
+	padding: 5px 13px;
+}
+.paginator a{
+	/*border: solid 1px red;*/
+	padding: 5px 13px;
+}

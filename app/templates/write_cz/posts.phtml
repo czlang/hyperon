@@ -9,11 +9,12 @@
 
 			<p class="info">{!$post->date|timeAgoInWords} napsal {$post->realname}
 
-				{if ($presenter->getPostTags($post->id))}
+				{var $tags = $presenter->getPostTags($post->id)}
+				{if ($tags)}					
  				|
 					<span class="tags">
 						tagy:
-						{foreach $presenter->getPostTags($post->id) as $tag}
+						{foreach $tags as $tag}
 							<a href="{plink Posts:tag, $tag->tag_url}">{$tag->tag}</a>
 						{/foreach}
 					</span>

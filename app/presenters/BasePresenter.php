@@ -136,10 +136,6 @@ abstract class BasePresenter extends NPresenter
 		    $this->template->presenterName = substr($this->name, $a + 1);
       	}
 
-		$settings = new Settings();
-		$settings = $settings->findAll()->fetchPairs('name', 'value');
-		$this->template->settings = $settings;
-
 		$tags = new Tags();
 		$all_tags = $tags->findAll()->fetchAll();
 		$this->template->all_tags = $all_tags;
@@ -147,7 +143,6 @@ abstract class BasePresenter extends NPresenter
 		$this->template->registerHelper('timeAgoInWords', 'Helpers::timeAgoInWords');
 		$this->template->registerHelper('humanizeTime', 'Helpers::humanizeTime');
 		$this->template->registerHelper('humanizeTimeDate', 'Helpers::humanizeTimeDate');
-
 	}
 
 

@@ -20,10 +20,7 @@ require LIBS_DIR . '/Nette/Nette/loader.php';
 // 2a) enable NDebug for better exception and error visualisation
 NDebug::enable();
 NDebug::$strictMode = TRUE;
-NDebug::$showBar = FALSE;
-
-if(NEnvironment::isProduction()) NDebug::enable(NDebug::PRODUCTION);
-    else NDebug::enable(NDebug::DEVELOPMENT);
+NDebug::$showBar = TRUE;
 
 //NDebug::$maxDepth = 10;  // hloubka zanoření polí
 //NDebug::$maxLen   = 999999; // maximální délka řetězce
@@ -63,6 +60,16 @@ $router = $application->getRouter();
 
 //$router[] = new NRoute('/<username>', 'Products:user');
 
+$router[] = new NRoute('tag/<tag_url>/strana/<vp-page>', array(
+	'presenter' => 'Posts',
+	'action' => 'tag',
+	'id' => array('tag_url', 'vp-page'),
+));
+$router[] = new NRoute('strana/<vp-page>', array(
+	'presenter' => 'Homepage',
+	'action' => 'default',
+	'id' => 'vp-page',
+));
 $router[] = new NRoute('rss/posts', array(
 	'presenter' => 'Feed',
 	'action' => 'default',
@@ -81,6 +88,8 @@ $router[] = new NRoute('tag/<tag_url>', array(
 	'action' => 'tag',
 	'id' => 'tag_url',
 ));
+
+
 
 
 $router[] = new NSimpleRouter('Homepage:default');

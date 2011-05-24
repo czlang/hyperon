@@ -23,11 +23,12 @@
 			
 			<p class="info">{!$post->date|timeAgoInWords} napsal {$post->realname}
 
-				{if ($presenter->getPostTags($post->id))}
+				{var $tags = $presenter->getPostTags($post->id)}
+				{if ($tags)}					
  				|
 					<span class="tags">
 						tagy:
-						{foreach $presenter->getPostTags($post->id) as $tag}
+						{foreach $tags as $tag}
 							<a href="{plink Posts:tag, $tag->tag_url}">{$tag->tag}</a>
 						{/foreach}
 					</span>
@@ -35,7 +36,7 @@
 
                 
                 {if ($settings['comments_enabled']) == 1 AND (!$post->comments_disabled)}
-                    | <a href="{plink Posts:post, $post->url}#comments">Komentáře: {$presenter->getCommentsCount($post->id)}</a>
+                    | <a href="{plink Posts:post, $post->url}#comments">Komentáře: {$post->comments_count}</a>
 				{/if}
                 
 			</p>
@@ -45,3 +46,4 @@
 
 	{/foreach}
 
+{widget vp}

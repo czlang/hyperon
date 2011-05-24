@@ -62,18 +62,9 @@ final class AdminPostsPresenter extends AdminPresenter
 
 
     public function renderNewPost($data)
-	{
-		//NDebug::dump($data);
-		/*
-		if(isset($draft)){
-			$posts = new Posts();
-			$save_draft = $posts->insert($post);
-		}
-		*/
-		
+	{		
 		$tags = new Tags();
 		$this->template->tags = $tags->findAll()->fetchAll();
-
 	}
 
 
@@ -116,14 +107,14 @@ final class AdminPostsPresenter extends AdminPresenter
 	public function renderArchives()
 	{			
 		$posts = new Posts();
-		$this->template->posts = $posts->findAll()->where('state = %i', 1)->or('state = %i', 3)->orderBy('date DESC')->fetchAll();
+		$comments = new Comments();
 
-		$beeps = $posts->findAllFrontend()->where('state = %i', 2)->orderBy('date DESC')->fetchAll();		
+		$beeps = $posts->findAll()->where('state = %i', 2)->orderBy('date DESC')->fetchAll();
+		$posts = $posts->findAll()->where('state = %i', 1)->or('state = %i', 3)->orderBy('date DESC')->fetchAll();		        
+		$comments = $comments->findAllWithPosts()->fetchAll();
+
+		$this->template->posts = $posts;
 		$this->template->beeps = $beeps;
-
-        $comments = new Comments();
-		$comments = $comments->findAllWithPosts()->fetchAll();		
-        //NDebug::dump($comments);
 		$this->template->comments = $comments;
 	}
 
@@ -174,7 +165,7 @@ final class AdminPostsPresenter extends AdminPresenter
 		$renderer->wrappers['control']['errors'] = TRUE;
 
 
-		$form->addGroup();
+		$form->addGroup()->setOption('container', NHtml::el('div')->id('main'));
 			$form->addText('title', 'Title');
 				//->addRule(NForm::FILLED, 'Nezapomeňte titulek.');
 
@@ -217,7 +208,7 @@ final class AdminPostsPresenter extends AdminPresenter
                 $form->addCheckbox('comments_disabled', 'Disable comments for this posts');
             }            
 
-			$form->addSubmit('send', 'Save')->onClick[] = array($this, 'sendPostClicked');			
+			$form->addSubmit('send', 'Save post')->onClick[] = array($this, 'sendPostClicked');			
 		
 		return $form;
 	}
