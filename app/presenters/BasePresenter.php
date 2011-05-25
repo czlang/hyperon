@@ -211,7 +211,7 @@ abstract class BasePresenter extends NPresenter
 	}
 
 
-
-
-
+	public function actionDownload($file) {
+	        $this->sendResponse( new NDownloadResponse($file) );
+	}
 }

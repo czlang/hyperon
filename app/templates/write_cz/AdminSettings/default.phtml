@@ -10,3 +10,10 @@
 <h2>System</h2>
 
 	<p><a href="{plink AdminSettings:backupdbnow}">Backup database now</a></p>
+	{if isset($mysql_backup_files)}
+		<ul>			
+			{foreach $mysql_backup_files as $mysql_backup_file}				
+				<li><a href="{plink download, $mysql_backup_file->getRealpath()}" title="download">{$mysql_backup_file->getFilename()}</a></li> 
+			{/foreach}
+		</ul>
+	{/if}
