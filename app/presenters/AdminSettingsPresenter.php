@@ -45,7 +45,7 @@ final class AdminSettingsPresenter extends AdminPresenter
 			$this->flashMessage('Chosen template does not exist, falling back to default');
 		}
 
-		$dir = WWW_DIR . "\backup\mysql";		
+		$dir = WWW_DIR . "/backup/mysql";
 		foreach (NFinder::findFiles('*.*')->in($dir) as $file) {		
 			$file_array[] = $file;
 		}
