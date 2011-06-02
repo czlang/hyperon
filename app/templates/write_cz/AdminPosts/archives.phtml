@@ -94,3 +94,29 @@
 	</tr>
 	{/foreach}	
 </table> 
+
+
+
+<table id="tags-table">
+	<tr>
+		<th>Tags</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
+	</tr>
+	
+	{foreach $tags as $tag}
+	<tr>
+		<td class="">
+			{$tag->tag}
+		</td>
+		<td class="edit">
+			<a class="edit-link" href="{plink AdminPosts:edittag, $tag->id}">Edit</a>
+		</td>     
+		<td class="delete">	
+			<a class="delete-link" href="{link deletetag!, $tag->id}">Delete</a>
+		</td>
+	</tr>
+	{/foreach}	
+</table>
+

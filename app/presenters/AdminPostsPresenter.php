@@ -50,6 +50,19 @@ final class AdminPostsPresenter extends AdminPresenter
         $this->redirect('AdminPosts:archives');
 	}
 
+
+
+   	public function handleDeleteTag($id)
+	{
+		$tags = new Tags();
+		$post_tags = new PostsTags();
+
+		$post_tags->delete($id);
+        $tags->delete($id);
+		
+        $this->redirect('AdminPosts:archives');
+	}
+
 	
 
 	public function renderDefault($exception)
@@ -60,13 +73,31 @@ final class AdminPostsPresenter extends AdminPresenter
 	}		
 	
 
+    
+    public function renderArchives()
+	{			
+		$posts = new Posts();
+		$comments = new Comments();
+		$tags = new Tags();
+
+		$beeps = $posts->findAll()->where('state = %i', 2)->orderBy('date DESC')->fetchAll();
+		$posts = $posts->findAll()->where('state = %i', 1)->or('state = %i', 3)->orderBy('date DESC')->fetchAll();		        
+		$comments = $comments->findAllWithPosts()->fetchAll();
+		$tags = $tags->findAll()->orderBy('tag DESC')->fetchAll();
+
+		$this->template->posts = $posts;
+		$this->template->beeps = $beeps;
+		$this->template->comments = $comments;
+		$this->template->tags = $tags;
+	}
+    
+    
 
     public function renderNewPost($data)
 	{		
 		$tags = new Tags();
 		$this->template->tags = $tags->findAll()->fetchAll();
 	}
-
 
 
 
@@ -104,18 +135,21 @@ final class AdminPostsPresenter extends AdminPresenter
 
 
 
-	public function renderArchives()
-	{			
-		$posts = new Posts();
-		$comments = new Comments();
+    public function renderEditTag($id = 0)
+	{
+		$id = $this->getParam('id');
+		
+		$tags = new Tags();
+        $tag = $tags->find($id)->fetch();
+        $this->template->tag = $tag;	
 
-		$beeps = $posts->findAll()->where('state = %i', 2)->orderBy('date DESC')->fetchAll();
-		$posts = $posts->findAll()->where('state = %i', 1)->or('state = %i', 3)->orderBy('date DESC')->fetchAll();		        
-		$comments = $comments->findAllWithPosts()->fetchAll();
-
-		$this->template->posts = $posts;
-		$this->template->beeps = $beeps;
-		$this->template->comments = $comments;
+		$form = $this['tagForm'];
+		if (!$form->isSubmitted()) {
+			if (!$tag) {
+				throw new BadRequestException('Record not found');
+			}			
+			$form->setDefaults($tag);
+		}
 	}
 
 
@@ -213,9 +247,25 @@ final class AdminPostsPresenter extends AdminPresenter
 		return $form;
 	}
 	
-	
 
+    
+    /**
+	 * Post delete form component factory.
+	 * @return mixed
+	 */
+	protected function createComponentDeletePostForm()
+	{
+		$form = new NAppForm;		
+		
+		$form->addSubmit('delete', 'Yes delete!')->getControlPrototype()->class('default');
+		$form->addSubmit('cancel', 'Cancel');
+		$form->onSubmit[] = array($this, 'deletePostFormSubmitted');		
 
+		return $form;
+	}
+    
+
+    
    /**
 	* New post form clicked.
 	* 
@@ -237,25 +287,7 @@ final class AdminPostsPresenter extends AdminPresenter
     	}
     }
 	
-		
-	
-	
-    /**
-	 * Post delete form component factory.
-	 * @return mixed
-	 */
-	protected function createComponentDeletePostForm()
-	{
-		$form = new NAppForm;		
-		
-		$form->addSubmit('delete', 'Yes delete!')->getControlPrototype()->class('default');
-		$form->addSubmit('cancel', 'Cancel');
-		$form->onSubmit[] = array($this, 'deletePostFormSubmitted');		
-
-		return $form;
-	}
-	
-	
+    
 	
    /**
 	* Delete post form clicked.
@@ -271,9 +303,41 @@ final class AdminPostsPresenter extends AdminPresenter
 
 		$this->redirect('AdminPosts:archives');
 	}
-	
+
     
     
+	/**
+	 * Tag form component factory.
+	 * @return mixed
+	 */
+	protected function createComponentTagForm()
+	{
+		$form = new NAppForm;
+		$form->addText('tag', 'Tag');
+		$form->addSubmit('send', 'Save tag')->onClick[] = array($this, 'sendTagClicked');
+
+		return $form;
+	}    
+
+
+
+   /**
+	* Tag form clicked.
+	* 
+	*/
+    public function sendTagClicked(NSubmitButton $button)
+    {
+    	if ($button->getForm()->getValues()){
+    		$id = (int) $this->getParam('id');
+			$tags = new Tags;
+			
+			$tags->update($id, $button->getForm()->getValues());
+			$this->flashMessage('Tag has been updated.');
+			$this->redirect('AdminPosts:archives');			
+    	}
+    }
+
+
 
    /**
 	* Cancel clicked.

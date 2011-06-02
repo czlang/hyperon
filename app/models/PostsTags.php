@@ -65,6 +65,11 @@ class PostsTags extends NObject
 		return $this->connection->insert($this->table, $data)->execute();
 	}
 
-	
+
+
+	public function delete($id)
+	{
+		return $this->connection->delete($this->table)->where('tag_id=%i', $id)->execute();
+	}	
 
 }

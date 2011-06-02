@@ -38,6 +38,12 @@ class Tags extends NObject
 
 
 
+	public function find($id)
+	{	
+		return $this->connection->select('*')->from($this->table)->where('id = %i', $id);
+	}
+
+
 
 	public function findByUrl($tag_url)
 	{	
@@ -66,6 +72,21 @@ class Tags extends NObject
 	public function insert(array $data)
 	{
 		return $this->connection->insert($this->table, $data)->execute(dibi::IDENTIFIER);
+	}
+
+
+
+	public function delete($id)
+	{
+		return $this->connection->delete($this->table)->where('id=%i', $id)->execute();
+	}
+
+
+
+	public function update($id, array $data)
+	{
+		$data["tag_url"] = NString::webalize($data["tag"]);
+		return $this->connection->update($this->table, $data)->where('id=%i', $id)->execute();
 	}
 
 }

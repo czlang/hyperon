@@ -177,7 +177,9 @@ a:focus
 	margin-left: -10px;
 }
 
-#beeps-table{
+#beeps-table,
+#tags-table
+{
 	font-size: 90%;
 	width: 400px;
 	float: left;
