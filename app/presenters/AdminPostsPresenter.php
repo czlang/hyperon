@@ -258,7 +258,7 @@ final class AdminPostsPresenter extends AdminPresenter
 		$form = new NAppForm;		
 		
 		$form->addSubmit('delete', 'Yes delete!')->getControlPrototype()->class('default');
-		$form->addSubmit('cancel', 'Cancel');
+		$form->addSubmit('cancel', 'Cancel')->setValidationScope(NULL)->onClick[] = array($this, 'CancelClicked');
 		$form->onSubmit[] = array($this, 'deletePostFormSubmitted');		
 
 		return $form;
@@ -315,6 +315,7 @@ final class AdminPostsPresenter extends AdminPresenter
 		$form = new NAppForm;
 		$form->addText('tag', 'Tag');
 		$form->addSubmit('send', 'Save tag')->onClick[] = array($this, 'sendTagClicked');
+		$form->addSubmit('cancel', 'Cancel')->setValidationScope(NULL)->onClick[] = array($this, 'CancelClicked');
 
 		return $form;
 	}    
@@ -343,7 +344,7 @@ final class AdminPostsPresenter extends AdminPresenter
 	* Cancel clicked.
 	* 
 	*/
-    public function CancelClicked(SubmitButton $button)
+    public function CancelClicked(NSubmitButton $button)
     {    	
 		$this->redirect('AdminPosts:archives');    	
     }
