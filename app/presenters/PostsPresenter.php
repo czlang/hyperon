@@ -150,14 +150,14 @@ final class PostsPresenter extends BasePresenter
     	if ($button->getForm()->getValues()){
 			$comments = new Comments();	
 			$insert_comment = $comments->insert($button->getForm()->getValues());
-
+/*
 			$mail = new NMail();
 			$mail->setFrom(''.$this->settings["web_name"].' <'.$this->settings["web_email"].'>')
 				->addTo($this->settings["web_email"])
 				->setSubject('Nový komentář')
     			->setBody('Nový komentář na '.$this->settings["web_name"].' '.$this->baseUri())
 				->send();
-
+*/
 			$this->flashMessage('Díky za komentář', 'info');
             $uri = NEnvironment::getHttpRequest()->getReferer();
 			$uri->appendQuery(array(self::FLASH_KEY => $this->getParam(self::FLASH_KEY)));

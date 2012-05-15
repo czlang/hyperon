@@ -55,25 +55,21 @@ class Search extends NObject
 			SELECT 
 				url,
 				title, 
-				perex,
 				body,
 				date
 			FROM posts 	WHERE state = 1 AND
 			    MATCH(
 					title, 
-					perex,
 					body
 			    )
 			    AGAINST ('" . $s_query  . "' IN BOOLEAN MODE)
 			    ORDER BY 5 * MATCH(
 					title, 
-					perex,
 					body
 			    ) 
 			    AGAINST ('" . $s_query  . "') 
 				+ MATCH(
 					title, 
-					perex,
 					body
 				) 
 				AGAINST ('" . $s_query  . "') DESC

@@ -123,13 +123,8 @@ class Comments extends NObject
 			->fetch();
 	}
 
-	public function insert(array $data)
-	{	
-		/*
-		 this threaded discuss solution inspired by 
-		 http://php.vrana.cz/diskuse-s-reakcemi.php
-		 thanks a lot
-		 */
+	public function insert(array $data) {	
+		/* threaded discussion solution inspired by  http://php.vrana.cz/diskuse-s-reakcemi.php, thanks a lot */
 
 		if($data["parent_id"] > 0){
 			$parent = $this->find($data["parent_id"])->fetch();
@@ -153,9 +148,9 @@ class Comments extends NObject
 			$data["sort"] = $max_sort + 1;
 		}
 		$data["body"] = htmlspecialchars($data["body"], ENT_NOQUOTES);
-		$data['time'] = time();		
+		$data['time%sql'] = 'NOW()';
 		$data['visible'] = 1;
-        unset($data['nospam']);        
+        unset($data['nospam']);
 
         $user = NEnvironment::getUser();
         if ($user->isLoggedIn()) {

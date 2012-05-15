@@ -58,7 +58,7 @@ final class FeedPresenter extends BasePresenter
         foreach ($items as $item) {
         	$item["link"] = $this->link("//Posts:post", $item["link"]);
 			$item["description"] = $texy->process($item["description"]);
-			$item["description"] = $texy->process($item["perex"].$item["description"]);
+			//$item["description"] = $texy->process($item["perex"].$item["description"]);
             unset($item["id"]);
             unset($item["perex"]);
         }		

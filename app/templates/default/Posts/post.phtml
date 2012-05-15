@@ -11,8 +11,6 @@
 			{/if}
 		{/if}	
 
-		{!$post->perex|texy}
-
 		{!$post->body|texy}
 
 		<p class="info">
@@ -42,25 +40,40 @@
 
     <div id="comments">
 
-        <h3>Komentáře</h3>
+        <h2 id="comments-heading">Komentáře</h2>
         {if count($comments) > 0}
             {foreach $comments as $comment}
-                <div id="comment{$comment->id}" class="comment">
+                <div id="comment{$comment->id}" class="comment depth-{$comment->depth}">
                     <p class="info">
                         <span class="author"><b>{$comment->author}</b></span>
                         <span class="time">{$comment->time|timeAgoInWords}</span>
+                        <a href="#frm-commentForm" onclick="document.getElementById('frmcommentForm-parent_id').value = '{!$comment->id}'; location.href = '#frm-commentForm'; return false;">Reagovat</a>
                     </p>
 
-                    <div class="body">{!$comment->body|texy}</div>                
+                    <div class="body">{!$comment->body|texy}</div>
                 </div>
             {/foreach}
         {else}
             <p>Zatím žádné komentáře.</p>
         {/if}
 
+        
+    	<h2 id="comment-form-heading">Přidat komentář</h2>
+	    	<ul id="comment-help">
+	    		<li>Můžete použít <a href="http://texy.info/cs/syntax">Texy syntaxi</a>, HTML není povoleno</li>
+	    		<li>Například: *<em>kurzíva</em>*, **<b>tučně</b>**, "text odkazu":adresa</li>
+	    	</ul>
+        	{widget commentForm}
+
+        
+
+		<p class="toplink"><a href="#post-main">Nahoru</a> &uarr;</p>
+
+		<div class="cleaner"></div>
+
     </div>
 
-    <h3>Přidat komentář</h3>
-        {widget commentForm}
 
 {/if}
+
+

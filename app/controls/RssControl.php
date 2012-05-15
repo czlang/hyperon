@@ -88,7 +88,7 @@ class RssControl extends NControl
 			$date = (int) $date;
 		}
 
-		if (is_string($date) && !String::endsWith($date, "GMT")) {
+		if (is_string($date) && !NString::endsWith($date, "GMT")) {
 			$date = strtotime($date);
 		}
 

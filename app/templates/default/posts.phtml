@@ -13,13 +13,7 @@
 			{/if}
 		{/if}
 
-
-		{if $post->perex}
-			{!$post->perex|texy}
-			<p><a href="{plink Posts:post, $post->url}">Číst více</a></p>
-		{else}
-			{!$post->body|texy}
-		{/if}
+		{!$post->body|texy}
 		
 		<p class="info">{!$post->date|timeAgoInWords} napsal {$post->realname}
 			{var $tags = $presenter->processPostTags($post->tags)}

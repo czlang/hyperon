@@ -1,9 +1,5 @@
 <?php
 
-
-
-
-
 /**
  * Posts model.
  */
@@ -17,25 +13,19 @@ class Posts extends NObject
 	
 	
 
-	public static function initialize()
-	{
+	public static function initialize() {
 		dibi::connect(Environment::getConfig('database'));
 	}
 
 
-
-	public function __construct()
-	{
+	public function __construct() {
 		$this->connection = dibi::getConnection();
 	}
 
 	
-	
-	public function count()
-	{
+	public function count() {
 		return count($this->connection->select('*')->where('state = %i', 1)->from($this->table));
 	}
-
 
 
 	public function countPostsByTag($tag_id) {
@@ -47,7 +37,6 @@ class Posts extends NObject
 	}
 	
 	
-	
 	public function applyLimit($offset, $itemsPerPage) {	
 		return $this->connection
 			->select('posts.*, users.id as user_id, users.username as username, users.realname as realname')
@@ -56,7 +45,6 @@ class Posts extends NObject
 				->on('posts.author_id = users.id')
 				->limit($offset . ', ' . $itemsPerPage);		
 	}
-	
 	
 
 	public function findAll() {
@@ -132,8 +120,7 @@ class Posts extends NObject
 			id, 
 			title as title, 
 			date as pubDate, 
-			url as link, 
-			perex,
+			url as link,
 			body as description
 		')->from($this->table);
 	}
@@ -219,34 +206,26 @@ class Posts extends NObject
 	
 
 
-	public function insert(array $data)
-	{
+	public function insert(array $data) {
 		unset($data['id']);
 
 		$data['id'] = $this->getMaxId() + 1;
 
-		if(!$data['date']){
-			$data['date'] = time();
+		if($data['date'] == ""){
+			$data['date%sql'] = 'NOW()';
+			unset($data['date']);
 		}
-			else{
-				$data["date"] = strtotime($data["date"]);
-			}
-		// ndebug::dump($data);
-		// die;
 		$data['url'] = NString::webalize($data['title']);
-
 		$url_already_exists = $this->findUrl($data['url'])->fetchSingle();
-
 		if($url_already_exists){
 			$data['url'] = $url_already_exists . "-" . time();
 		}
-
 		if( isset($data['tags']) AND ($data['tags'] != '') ){
 			$this->solveTags($data);		
 		}
-
-		unset($data['tags']);
-				
+		unset($data['tags']);				
+		//ndebug::dump($data);
+		//die;
 		return $this->connection->insert($this->table, $data)->execute(dibi::IDENTIFIER);
 	}
 
@@ -286,9 +265,8 @@ class Posts extends NObject
 
 
 
-	public function update($id, array $data)
-	{		
-		$data["date"] = strtotime($data["date"]);
+	public function update($id, array $data) {		
+		//$data["date"] = strtotime($data["date"]);
 		// ndebug::dump(strftime("%Y-%m-%d", $data["date"]));
 		// die;
 		$data['url'] = NString::webalize($data['title']);	

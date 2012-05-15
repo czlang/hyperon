@@ -148,15 +148,20 @@ a:focus
 		padding: 0;
 	}
 
-
-.beep{
-	margin-bottom: 50px;
+.depth-2{    
+  margin-left: 30px;
+  width: 660px;
 }
-.beep .info{
-	color: #808080;
-	margin-top: -10px;
+.depth-3{  
+  margin-left: 60px;
+  width: 630px;
 }
-
+.depth-4{  
+  margin-left: 90px;
+}
+.depth-5{  
+  margin-left: 120px;
+}
 
 pre{
 	width: 580px;

@@ -282,7 +282,9 @@ abstract class BasePresenter extends NPresenter
 		$tags_final = array();
 		foreach ($tags_array as $key => $value) {
 			$sub_tag = explode("-", $value);
-			$tags_final[$sub_tag[0]] = $sub_tag[1];
+			if(isset($sub_tag[1])){
+				$tags_final[$sub_tag[0]] = $sub_tag[1];
+			}
 		}
 		return $tags_final;
 	}

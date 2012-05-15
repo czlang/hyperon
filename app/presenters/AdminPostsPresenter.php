@@ -111,8 +111,7 @@ final class AdminPostsPresenter extends AdminPresenter
 
 
 
-    public function renderEditPost($id = 0)
-	{
+    public function renderEditPost($id = 0) {
 		$id = $this->getParam('id');
 		
 		$posts = new Posts();
@@ -126,7 +125,7 @@ final class AdminPostsPresenter extends AdminPresenter
 		if (!$form->isSubmitted()) {
 			$posts = new Posts;
 			$row = $posts->find($id)->fetch();
-			$row["date"] = strftime("%Y-%m-%d", $row["date"]);
+			//$row["date"] = strftime("%Y-%m-%d", $row["date"]);
 			//ndebug::dump(strftime("%Y-%m-%d", $row["date"]));
 			if (!$row) {
 				throw new BadRequestException('Record not found');
@@ -173,13 +172,7 @@ final class AdminPostsPresenter extends AdminPresenter
 	{
 		$action = array(
 	    	'1' => 'Post',
-	    	// '2' => 'Beep',
-	    	'3' => 'Draft',
-		);
-
-		$lang = array(
-	    	'1' => 'Czech',
-	    	'2' => 'English',
+	    	'2' => 'Draft',
 		);
 
 		$user = NEnvironment::getUser();
@@ -220,11 +213,7 @@ final class AdminPostsPresenter extends AdminPresenter
 				->addRule(NForm::FILLED, 'Dont forget the post body.')
 				->getControlPrototype()->class = "editor";
 
-			$form->addText('date', 'Pubish time');
-
-			$form->addText('meta_description', 'Meta description');
-
-			// $form->addText('meta_keywords', 'Meta keywords');
+			//$form->addText('date', 'Pubish time');
 
 			if($post_id){
 				$form->addText('tags', 'Tags')->setValue($post_tags_string);
@@ -239,17 +228,11 @@ final class AdminPostsPresenter extends AdminPresenter
 			$form->addHidden('id', '')
 				->setValue($post_id);
 
-
-
 		$form->addGroup()->setOption('container', NHtml::el('div')->id('panel'));
 
 			$form->addRadioList('state', '', $action)
 				->setValue(1)
 				->addRule(NForm::FILLED, 'Content type');
-
-			$form->addRadioList('lang', '', $lang)
-				->setValue(1)
-				->addRule(NForm::FILLED, 'Choose language');
             
             if($this->settings['comments_enabled']){                
                 $form->addCheckbox('comments_disabled', 'Disable comments for this posts');
