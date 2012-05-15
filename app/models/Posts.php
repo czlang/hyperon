@@ -33,13 +33,12 @@ class Posts extends NObject
 	
 	public function count()
 	{
-		return count($this->connection->select('*')->from($this->table));
+		return count($this->connection->select('*')->where('state = %i', 1)->from($this->table));
 	}
 
 
 
-	public function countPostsByTag($tag_id)
-	{
+	public function countPostsByTag($tag_id) {
 		return count($this->connection->select('*')
 					->from($this->table)
 					->join('posts_tags')
@@ -49,8 +48,7 @@ class Posts extends NObject
 	
 	
 	
-	public function applyLimit($offset, $itemsPerPage)
-	{	
+	public function applyLimit($offset, $itemsPerPage) {	
 		return $this->connection
 			->select('posts.*, users.id as user_id, users.username as username, users.realname as realname')
 			->from($this->table)
@@ -61,14 +59,12 @@ class Posts extends NObject
 	
 	
 
-	public function findAll()
-	{
+	public function findAll() {
 		return $this->connection->select('*')->from($this->table);
 	}
 
 
-	public function findAllFrontend($offset, $itemsPerPage)
-	{
+	public function findAllFrontend($offset, $itemsPerPage) {
 		return $this->connection
 			->select('posts.*, users.id as user_id, users.username as username, users.realname as realname')
 				->select(
@@ -76,6 +72,13 @@ class Posts extends NObject
 	                ->from('comments')
 	                ->where('comments.post_id = posts.id')
 				)->as('comments_count')
+				->select(
+						dibi::select('GROUP_CONCAT(tag, "-", tag_url)')
+							->from('tags')
+							->leftJoin('posts_tags')
+								->on('tags.id = posts_tags.tag_id')
+							->where('posts.id = posts_tags.post_id ')
+					)->as('tags')
 			->from($this->table)
 				->leftJoin('users')
 				->on('posts.author_id = users.id')
@@ -83,17 +86,21 @@ class Posts extends NObject
 	}
 
 
-
-
-	public function findSingleFrontend($url)
-	{
+	public function findSingleFrontend($url) {
 		return $this->connection
 			->select('posts.*, users.id as user_id, users.username as username, users.realname as realname')
-				->select(
-					dibi::select('count(*)')
-	                ->from('comments')
-	                ->where('comments.post_id = posts.id')
-				)->as('comments_count')
+				 ->select(
+				 	dibi::select('count(*)')
+	                 ->from('comments')
+	                 ->where('comments.post_id = posts.id')
+				 )->as('comments_count')
+ 				->select(
+						dibi::select('GROUP_CONCAT(tag, "-", tag_url)')
+							->from('tags')
+							->leftJoin('posts_tags')
+								->on('tags.id = posts_tags.tag_id')
+							->where('posts.id = posts_tags.post_id ')
+					)->as('tags')
 			->from($this->table)
 				->leftJoin('users')
 				->on('posts.author_id = users.id')
@@ -126,6 +133,7 @@ class Posts extends NObject
 			title as title, 
 			date as pubDate, 
 			url as link, 
+			perex,
 			body as description
 		')->from($this->table);
 	}
@@ -141,6 +149,13 @@ class Posts extends NObject
 	                ->from('comments')
 	                ->where('comments.post_id = posts.id')
 				)->as('comments_count')
+				->select(
+						dibi::select('GROUP_CONCAT(tag, "-", tag_url)')
+							->from('tags')
+							->leftJoin('posts_tags')
+								->on('tags.id = posts_tags.tag_id')
+							->where('posts.id = posts_tags.post_id ')
+					)->as('tags')
 			->from($this->table)
 				->join('posts_tags')
 					->on('posts_tags.post_id = posts.id')
@@ -210,7 +225,14 @@ class Posts extends NObject
 
 		$data['id'] = $this->getMaxId() + 1;
 
-		$data['date'] = time();
+		if(!$data['date']){
+			$data['date'] = time();
+		}
+			else{
+				$data["date"] = strtotime($data["date"]);
+			}
+		// ndebug::dump($data);
+		// die;
 		$data['url'] = NString::webalize($data['title']);
 
 		$url_already_exists = $this->findUrl($data['url'])->fetchSingle();
@@ -266,6 +288,9 @@ class Posts extends NObject
 
 	public function update($id, array $data)
 	{		
+		$data["date"] = strtotime($data["date"]);
+		// ndebug::dump(strftime("%Y-%m-%d", $data["date"]));
+		// die;
 		$data['url'] = NString::webalize($data['title']);	
 		if(isset($data['tags'])){
 			$this->solveTags($data);		

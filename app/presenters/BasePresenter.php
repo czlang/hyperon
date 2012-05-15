@@ -19,11 +19,11 @@ abstract class BasePresenter extends NPresenter
 {
 	    
 	public $settings;
-    
+    private $mobile_template_folder;
 
-    protected function startup()
-    {
+    protected function startup() {
         parent::startup();
+
 		$settings = new Settings();
 		$settings = $settings->findAll()->fetchPairs('name', 'value');
 		$this->settings = $settings;
@@ -35,7 +35,13 @@ abstract class BasePresenter extends NPresenter
 			else{
 				$this->settings['template_loaded'] = TRUE;				
 			}
-    }
+
+		$this->mobile_template_folder = "";
+		if(Functions::isBrowserMobile()){
+			$this->mobile_template_folder = "/mobile";
+		}
+
+	}
 
     
 
@@ -47,10 +53,10 @@ abstract class BasePresenter extends NPresenter
 	 */
     public function formatTemplateFiles($presenter, $view)
     {
-        $appDir = NEnvironment::getVariable('appDir');
+    	$appDir = NEnvironment::getVariable('appDir');
         $path = '/' . str_replace(':', 'Module/', $presenter);
-        $pathP = substr_replace($path, '/templates/' . $this->settings["template"], strrpos($path, '/'), 0);
-        $path = substr_replace($path, '/templates/' . $this->settings["template"], strrpos($path, '/'));
+        $pathP = substr_replace($path, '/templates/' . $this->settings["template"].$this->mobile_template_folder, strrpos($path, '/'), 0);
+        $path = substr_replace($path, '/templates/' . $this->settings["template"].$this->mobile_template_folder, strrpos($path, '/'));
         return array(
                 "$appDir$pathP/$view.latte",
                 "$appDir$pathP.$view.latte",
@@ -80,8 +86,8 @@ abstract class BasePresenter extends NPresenter
                 "$appDir$pathP.@$layout.phtml",
         );
         while (($path = substr($path, 0, strrpos($path, '/'))) !== FALSE) {
-                $list[] = "$appDir$path/templates/" . $this->settings["template"] . "/@$layout.latte";
-                $list[] = "$appDir$path/templates/" . $this->settings["template"] . "/@$layout.phtml";
+                $list[] = "$appDir$path/templates/" . $this->settings["template"].$this->mobile_template_folder."/@$layout.latte";
+                $list[] = "$appDir$path/templates/" . $this->settings["template"].$this->mobile_template_folder."/@$layout.phtml";
         }
         return $list;
     }
@@ -98,7 +104,8 @@ abstract class BasePresenter extends NPresenter
 		$texy->allowedTags = Texy::NONE;
 		$texy->allowedStyles = Texy::NONE;
 		$texy->setOutputMode(Texy::HTML5);
-		//$texy->linkModule->forceNoFollow = TRUE;
+		$texy->headingModule->balancing = TexyHeadingModule::FIXED;
+		$texy->headingModule->generateID = TRUE;
 		$texy->addHandler('block', array($texy, 'blockHandler'));
 
 		$template = parent::createTemplate();
@@ -134,15 +141,13 @@ abstract class BasePresenter extends NPresenter
       	} else {
 		    $this->template->moduleName = substr($this->name, 0, $a + 1);
 		    $this->template->presenterName = substr($this->name, $a + 1);
-      	}
-
-		$tags = new Tags();
-		$all_tags = $tags->findAll()->fetchAll();
-		$this->template->all_tags = $all_tags;
+      	}		
 
 		$this->template->registerHelper('timeAgoInWords', 'Helpers::timeAgoInWords');
 		$this->template->registerHelper('humanizeTime', 'Helpers::humanizeTime');
 		$this->template->registerHelper('humanizeTimeDate', 'Helpers::humanizeTimeDate');
+		$this->template->registerHelper('czechDay', 'Helpers::czechDay');
+		$this->template->registerHelper('czechMonth', 'Helpers::czechMonth');
 	}
 
 
@@ -172,6 +177,55 @@ abstract class BasePresenter extends NPresenter
 
 
 
+
+	/**
+	 * Comment form component factory.
+	 * @return mixed
+	 */
+	protected function createComponentSearchForm()
+	{
+		$s_query = $this->getParam('s_query');
+		if($this->getParam('lang')){$search = "Search";}
+		else{$search = "Hledat";}
+		
+		$form = new NAppForm;
+
+		$renderer = $form->getRenderer();
+		$renderer->wrappers['controls']['container'] = '';
+		$renderer->wrappers['control']['container'] = '';
+		$renderer->wrappers['pair']['container'] = '';
+		$renderer->wrappers['label']['container'] = '';
+		
+		$form->setMethod('get');
+		
+		$renderer = $form->getRenderer();
+		$renderer->wrappers['controls']['container'] = '';		
+		$renderer->wrappers['control']['container'] = '';
+		$renderer->wrappers['pair']['container'] = '';
+		$renderer->wrappers['label']['container'] = '';
+		
+		$form->addText('s_query', '')
+			->addRule(NForm::FILLED, '?')
+			->setValue($s_query);
+		
+		$form->addSubmit('search', $search)->onClick[] = array($this, 'sendSearchFormClicked');
+		
+		return $form;
+	}
+	
+	
+	
+    public function sendSearchFormClicked(NSubmitButton $button)
+    {
+    	if ($button->getForm()->getValues()){
+ 			$dump = $button->getForm()->getValues();
+			$this->redirect('Search:result', $dump['s_query']);
+    	}
+    }        
+    
+
+
+
 	public function getPostTags($post_id)
 	{
 		$posts_tags = new PostsTags();
@@ -186,8 +240,7 @@ abstract class BasePresenter extends NPresenter
     
     
     
-    public function getCommentsCount($post_id)
-	{
+    public function getCommentsCount($post_id) {
 		$comments = new Comments();
         $comments_count =  $comments->countByPostId($post_id);
 
@@ -214,4 +267,27 @@ abstract class BasePresenter extends NPresenter
 	public function actionDownload($file) {
 	        $this->sendResponse( new NDownloadResponse($file) );
 	}
+
+
+
+	public function getAllTags() {
+		$tags = new Tags();
+		$all_tags = $tags->findAll()->fetchAll();
+		return $all_tags;
+	}
+
+
+	public function processPostTags($tags) {
+		$tags_array = explode(",", $tags);
+		$tags_final = array();
+		foreach ($tags_array as $key => $value) {
+			$sub_tag = explode("-", $value);
+			$tags_final[$sub_tag[0]] = $sub_tag[1];
+		}
+		return $tags_final;
+	}
+
+	
+
+
 }

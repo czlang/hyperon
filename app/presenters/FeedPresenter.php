@@ -41,11 +41,11 @@ final class FeedPresenter extends BasePresenter
 
         // properties
    		$rss->title = $settings['web_name'] . "  - RSS odběr";
-        $rss->description = $settings['web_desc'];
+        $rss->description = $texy->process($settings['web_desc']);
 
-		$rss->link = $this->basePath();
-        $rss->setChannelProperty("lastBuildDate", time());
-
+		$rss->link = $this->baseUri();
+        // $rss->setChannelProperty("lastBuildDate", time());
+        
         // items
         $posts = new Posts();
 		$items = $posts->findAllForRSS()
@@ -54,11 +54,13 @@ final class FeedPresenter extends BasePresenter
 					->orderBy('id DESC')
 					->limit('0, 10')
 					->fetchAll();
-
+		//ndebug::dump($items);
         foreach ($items as $item) {
         	$item["link"] = $this->link("//Posts:post", $item["link"]);
 			$item["description"] = $texy->process($item["description"]);
+			$item["description"] = $texy->process($item["perex"].$item["description"]);
             unset($item["id"]);
+            unset($item["perex"]);
         }		
         $rss->items = $items;
     }

@@ -18,14 +18,15 @@
 		<p class="info">
 			{!$post->date|timeAgoInWords} napsal {$post->realname}
 
-			{if ($presenter->getPostTags($post->id))}
- 				|
-					<span class="tags">
-						tagy:
-						{foreach $presenter->getPostTags($post->id) as $tag}
-							<a href="{plink Posts:tag, $tag->tag_url}">{$tag->tag}</a>
-						{/foreach}
-					</span>
+			{var $tags = $presenter->processPostTags($post->tags)}
+			{if ($tags)}					
+				|
+				<span class="tags">
+					tagy:
+					{foreach $tags as $tag => $tag_url}
+						<a href="{plink Posts:tag, $tag_url}">{$tag}</a>
+					{/foreach}
+				</span>
 			{/if}
             
             {if ($settings['comments_enabled']) == 1 AND (!$post->comments_disabled) AND ($post['state'] != 3)}

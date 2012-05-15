@@ -1,48 +1,46 @@
 {foreach $posts as $post}
-		<div class="post state{$post->state}">
-			
-			{if $post->state == 1}
-				<h2 class="title"><a href="{plink Posts:post, $post->url}">{$post->title}</a></h2>
-			{else}
-				<p class="title"><a href="{plink Posts:post, $post->url}">{$post->title}</a></p>
+	<div class="post state{$post->state}">
+		
+		{if $post->state == 1}
+			<h2 class="title"><a href="{plink Posts:post, $post->url}">{$post->title}</a></h2>
+		{else}
+			<p class="title"><a href="{plink Posts:post, $post->url}">{$post->title}</a></p>
+		{/if}
+
+		{if isset($logged_user)}
+			{if ($logged_user['role']== 'admin')}
+				<p><a href="{plink AdminPosts:editpost, $post->id}">Edit</a> | <a href="{plink Auth:logout}">Logout</a></p>
 			{/if}
+		{/if}
 
-			{if isset($logged_user)}
-				{if ($logged_user['role']== 'admin')}
-					<p><a href="{plink AdminPosts:editpost, $post->id}">Edit</a> | <a href="{plink Auth:logout}">Logout</a></p>
-				{/if}
+
+		{if $post->perex}
+			{!$post->perex|texy}
+			<p><a href="{plink Posts:post, $post->url}">Číst více</a></p>
+		{else}
+			{!$post->body|texy}
+		{/if}
+		
+		<p class="info">{!$post->date|timeAgoInWords} napsal {$post->realname}
+			{var $tags = $presenter->processPostTags($post->tags)}
+			{if ($tags)}					
+				|
+				<span class="tags">
+					tagy:
+					{foreach $tags as $tag => $tag_url}
+						<a href="{plink Posts:tag, $tag_url}">{$tag}</a>
+					{/foreach}
+				</span>
 			{/if}
-
-
-			{if $post->perex}
-				{!$post->perex|texy}
-				<p><a href="{plink Posts:post, $post->url}">Číst více</a></p>
-			{else}
-				{!$post->body|texy}
+            
+            {if ($settings['comments_enabled']) == 1 AND (!$post->comments_disabled)}
+                | <a href="{plink Posts:post, $post->url}#comments">Komentáře: {$post->comments_count}</a>
 			{/if}
-			
-			<p class="info">{!$post->date|timeAgoInWords} napsal {$post->realname}
-
-				{var $tags = $presenter->getPostTags($post->id)}
-				{if ($tags)}					
- 				|
-					<span class="tags">
-						tagy:
-						{foreach $tags as $tag}
-							<a href="{plink Posts:tag, $tag->tag_url}">{$tag->tag}</a>
-						{/foreach}
-					</span>
-				{/if}
-
-                
-                {if ($settings['comments_enabled']) == 1 AND (!$post->comments_disabled)}
-                    | <a href="{plink Posts:post, $post->url}#comments">Komentáře: {$post->comments_count}</a>
-				{/if}
-                
-			</p>
+            
+		</p>
 
 
-		</div>
+	</div>
 
 	{/foreach}
 

@@ -8,27 +8,27 @@
 
 	<title>{$settings["web_name"]} admin</title>
 		
-	<link rel="shortcut icon" href="{$baseUri}favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="{$baseUri}/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/blueprint.css" type="text/css">
 	<link rel="stylesheet" media="screen and (min-width: 540px)" href="{$basePath}/css/admin.css" type="text/css">
 	<link rel="stylesheet" media="screen and (max-width: 540px)" href="{$basePath}/css/admin_mobile.css" type="text/css" />
 
+	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/flick/jquery-ui-1.8.13.custom.css" type="text/css">
 	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/jquery.tagsinput.css" type="text/css">
     <link rel="stylesheet" media="print" href="{$baseUri}/css/print.css" type="text/css">	
 
 	<script type="text/javascript" src="{$basePath}/js/jquery-1.5.2.min.js"></script>
+	<script type="text/javascript" src="{$basePath}/js/jquery-ui-1.8.13.custom.min.js"></script>	
     <script type="text/javascript" src="{$basePath}/js/jquery.elastic.js"></script>
 	<script type="text/javascript" src="{$basePath}/js/jquery.tagsinput.js"></script>
 	<script type="text/javascript" src="{$basePath}/js/netteForms.js"></script>
 	<script type="text/javascript" src="{$basePath}/js/nette-ajax.js"></script>
-	<script type="text/javascript" src="{$basePath}/js/typewatch.js"></script>
+	<script type="text/javascript" src="{$basePath}/js/typewatch.js"></script>		
 
 
 	<script type="text/javascript">
-
 		$(document).ready(function(){
-
 			$(".editor").typeWatch({ 
 				highlight: false, 
 				wait: 500, 
@@ -36,22 +36,38 @@
 				callback: autosavePost
 			});
 
-
-			function autosavePost(txt) {				           
+			function autosavePost(txt) {
                 $.post(
                 	{link autosave!}, {'txt' : txt}
 				);
 			}		
 	
-			$(':input:visible:enabled:first').focus();
-		
-			$('#frmpostForm-perex, #frmpostForm-body').elastic();
-		
+			$(':input:visible:enabled:first').focus();		
+			$('#frmpostForm-perex, #frmpostForm-body').elastic();		
 			$('#frmpostForm-tags').tagsInput();
-		
+
+			$('#frmpostForm-date').datepicker({
+				dateFormat: 'yy-mm-dd',
+				// monthNames: ['Leden','Únor','Březen','Duben','Květen','Červen','Červenec','Srpen','Září','Říjen','Listopad','Prosinec'],
+				// dayNames: ['Neděle', 'Pondělí', 'Úterý', 'Středa', 'Čtvrtek', 'Pátek', 'Sobota'],
+				// dayNamesMin: ['Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So'],
+				showButtonPanel: true,
+				changeYear: true,
+				firstDay: 1
+			});
+
+			$("a.ajax, .paginator a").live("click", function (event) {
+    			event.preventDefault();
+    			$.get(this.href);
+			});
+
+			$( "#tabs" ).tabs();
+
 		});
 
 	</script>	
+
+
 
 </head>
 <body id="body">

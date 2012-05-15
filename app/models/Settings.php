@@ -53,9 +53,8 @@ class Settings extends NObject
 	{
 		//@TODO: cant do this better? without foreach and with dibi type identifier??
 		foreach ($data as $key=>$value) {
-			dibi::query('UPDATE ' .  $this->table . ' SET `value` = "' . $value . '" WHERE `name` = "' . $key . '"');
+			dibi::query('UPDATE '.$this->table.' SET value=%s', $value, 'WHERE name=%s', $key);
   		}
-		
 	}
 
 

@@ -22,6 +22,7 @@ final class AuthPresenter extends BasePresenter
     protected function startup()
 	{
 		parent::startup();
+		$this->setLayout('login');
 	}
 
 
@@ -36,8 +37,7 @@ final class AuthPresenter extends BasePresenter
     
 	public function renderLogin()
 	{
-		//$this->twitterLoginLinkConstruct();
-        //$this->facebookLogin();
+		$this->template->title = 'Login';
 	}
 	
 	
@@ -101,7 +101,7 @@ final class AuthPresenter extends BasePresenter
 			$logged_user = $user->getIdentity()->getData();
 
 			$this->redirect('AdminPosts:newpost');
-		} catch (AuthenticationException $e) {
+		} catch (NAuthenticationException $e) {
 			$form->addError($e->getMessage());
 		}
 	}

@@ -137,8 +137,7 @@ class Users extends NObject implements IAuthenticator
 		unset($data['user_id']);
 		unset($data['password2']);
 		unset($data['nospam']);
-		return $this->connection->insert($this->table, $data)->execute(dibi::IDENTIFIER);
-		
+		return $this->connection->insert($this->table, $data)->execute(dibi::IDENTIFIER);		
 	}
 
 

@@ -15,16 +15,19 @@
  * @author     John Doe
  * @package    MyApplication
  */
-class HomepagePresenter extends BasePresenter
+final class HomepagePresenter extends BasePresenter
 {
 
-	public function renderDefault($exception)
-	{
+    protected function startup() {
+        parent::startup();
+	}
+
+
+	public function renderDefault($exception) {
         $users = new Users();
-        $this->template->users = $users->findAll()->fetchAll();
+        $this->template->users = $users->findAll()->fetchAll();		
 
-		$posts = new Posts();
-
+   		$posts = new Posts();	
 		$vp = new VisualPaginator($this, 'vp');
 		
 		$vp->paginator->itemsPerPage = 10;

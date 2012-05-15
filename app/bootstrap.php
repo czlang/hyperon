@@ -21,6 +21,8 @@ require LIBS_DIR . '/Nette/Nette/loader.php';
 NDebug::enable();
 NDebug::$strictMode = TRUE;
 NDebug::$showBar = TRUE;
+//NDebug::$email = '';
+
 
 //NDebug::$maxDepth = 10;  // hloubka zanoření polí
 //NDebug::$maxLen   = 999999; // maximální délka řetězce
@@ -47,7 +49,8 @@ $application = NEnvironment::getApplication();
 
 $application->errorPresenter = 'Error';
 if(NEnvironment::isProduction()) $application->catchExceptions = TRUE;
-    else $application->catchExceptions = FALSE;
+   else $application->catchExceptions = FALSE;
+// $application->catchExceptions = TRUE;
 
 
 $application->onStartup[] = 'Users::initialize';
@@ -60,6 +63,25 @@ $router = $application->getRouter();
 
 //$router[] = new NRoute('/<username>', 'Products:user');
 
+$router[] = new NRoute('admin/', array(
+	'presenter' => 'AdminPosts',
+	'action' => 'newpost',
+));
+
+$router[] = new NRoute('hledat/', array(
+	'presenter' => 'Search',
+	'action' => 'result',
+));
+$router[] = new NRoute('archiv/strana/<vp-page>', array(
+	'presenter' => 'Posts',
+	'action' => 'archives',
+	'id' => 'vp-page',
+));
+$router[] = new NRoute('archiv/', array(
+	'presenter' => 'Posts',
+	'action' => 'archives',	
+));
+
 $router[] = new NRoute('tag/<tag_url>/strana/<vp-page>', array(
 	'presenter' => 'Posts',
 	'action' => 'tag',
@@ -70,7 +92,7 @@ $router[] = new NRoute('strana/<vp-page>', array(
 	'action' => 'default',
 	'id' => 'vp-page',
 ));
-$router[] = new NRoute('rss/posts', array(
+$router[] = new NRoute('feed/rss', array(
 	'presenter' => 'Feed',
 	'action' => 'default',
 ));
@@ -88,6 +110,7 @@ $router[] = new NRoute('tag/<tag_url>', array(
 	'action' => 'tag',
 	'id' => 'tag_url',
 ));
+
 
 
 

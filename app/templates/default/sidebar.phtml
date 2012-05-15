@@ -1,5 +1,6 @@
 <div class="tags-box">
 	<h3>Tagy</h3>
+	{var $all_tags = $presenter->getAllTags()}
 	{foreach $all_tags as $tag}		
 		<a href="{plink Posts:tag, $tag->tag_url}">{$tag->tag}</a>		 	
 	{/foreach}

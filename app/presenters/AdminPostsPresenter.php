@@ -80,15 +80,25 @@ final class AdminPostsPresenter extends AdminPresenter
 		$comments = new Comments();
 		$tags = new Tags();
 
-		$beeps = $posts->findAll()->where('state = %i', 2)->orderBy('date DESC')->fetchAll();
-		$posts = $posts->findAll()->where('state = %i', 1)->or('state = %i', 3)->orderBy('date DESC')->fetchAll();		        
+//		$beeps = $posts->findAll()->where('state = %i', 2)->orderBy('date DESC')->fetchAll();
+//		$posts = $posts->findAll()->where('state = %i', 1)->or('state = %i', 3)->orderBy('date DESC')->fetchAll();
+
+		$posts = new Posts();
+		$vp = new VisualPaginator($this, 'vp');
+
+		$vp->paginator->itemsPerPage = 10;
+        $vp->paginator->itemCount = $posts->count();
+        $posts = $posts->findAllFrontend($vp->paginator->offset, $vp->paginator->itemsPerPage)->orderBy('date DESC')->fetchAll();
+		$this->template->posts = $posts;
+
 		$comments = $comments->findAllWithPosts()->fetchAll();
 		$tags = $tags->findAll()->orderBy('tag DESC')->fetchAll();
 
 		$this->template->posts = $posts;
-		$this->template->beeps = $beeps;
+//		$this->template->beeps = $beeps;
 		$this->template->comments = $comments;
 		$this->template->tags = $tags;
+		$this->invalidateControl();
 	}
     
     
@@ -116,7 +126,8 @@ final class AdminPostsPresenter extends AdminPresenter
 		if (!$form->isSubmitted()) {
 			$posts = new Posts;
 			$row = $posts->find($id)->fetch();
-
+			$row["date"] = strftime("%Y-%m-%d", $row["date"]);
+			//ndebug::dump(strftime("%Y-%m-%d", $row["date"]));
 			if (!$row) {
 				throw new BadRequestException('Record not found');
 			}			
@@ -162,7 +173,7 @@ final class AdminPostsPresenter extends AdminPresenter
 	{
 		$action = array(
 	    	'1' => 'Post',
-	    	'2' => 'Beep',
+	    	// '2' => 'Beep',
 	    	'3' => 'Draft',
 		);
 
@@ -203,15 +214,17 @@ final class AdminPostsPresenter extends AdminPresenter
 			$form->addText('title', 'Title');
 				//->addRule(NForm::FILLED, 'Nezapomeňte titulek.');
 
-			$form->addTextarea('perex', 'Perex');
+			// $form->addTextarea('perex', 'Perex');
 
 			$form->addTextarea('body', 'Body *')
 				->addRule(NForm::FILLED, 'Dont forget the post body.')
 				->getControlPrototype()->class = "editor";
 
+			$form->addText('date', 'Pubish time');
+
 			$form->addText('meta_description', 'Meta description');
 
-			$form->addText('meta_keywords', 'Meta keywords');
+			// $form->addText('meta_keywords', 'Meta keywords');
 
 			if($post_id){
 				$form->addText('tags', 'Tags')->setValue($post_tags_string);

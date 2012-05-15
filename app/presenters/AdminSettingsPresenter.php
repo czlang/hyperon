@@ -88,10 +88,15 @@ final class AdminSettingsPresenter extends AdminPresenter
 
 		$form->addText('web_name', 'Blog Name');
 		$form->addText('web_desc', 'Blog Description');
+		$form->addTextarea('about', 'Short about');
 		$form->addText('web_email', 'Email');
 		$form->addTextarea('meta_description', 'Meta description');
-		$form->addTextarea('meta_keywords', 'Meta keywords');
+		// $form->addTextarea('meta_keywords', 'Meta keywords');
 		$form->addText('google_analytics_id', 'Google analytics id');
+		$form->addCheckbox('socials', 'Socials');
+		$form->addCheckbox('tw_social', 'Twitter share button');
+		$form->addCheckbox('fb_social', 'Facebook like button');
+		$form->addCheckbox('gplus_social', 'Google + share button');
 		$form->addText('template', 'Template');
 		$form->addCheckbox('comments_enabled', 'Comments globally enabled');
 		
